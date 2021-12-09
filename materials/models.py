@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework.serializers import Field
 from wagtail.core.models import Page
 from wagtail.api import APIField
+from wagtail.api.v2.utils import get_object_detail_url
 from wagtail.core.query import PageQuerySet
 
 
@@ -17,8 +18,7 @@ class Textbook(Page):
 
 class CompletedSerializer(Field):
     """Supplies the user object to the completed method from both the 
-       lesson and section classes. Feels like an antipattern, but it
-       does the trick."""
+       lesson and section classes."""
     def to_representation(self, func: Callable):
         student = self.context['request'].user
         return func(student)
@@ -33,7 +33,7 @@ class Section(Page):
 
     api_fields = [
         APIField('title'),
-        APIField('completed', serializer=CompletedSerializer())
+        APIField('completed', serializer=CompletedSerializer()),
     ]
 
     def completed(self, student: User):
@@ -42,13 +42,16 @@ class Section(Page):
 
 class SectionSerializer(Field):
     def to_representation(self, sections: List[Section]) -> List[dict]:
-        student = self.context['request'].user
+        request = self.context['request']
+        
         return [
             {
                 'id': section.id,
                 'title': section.title,
-                'url': section.url,
-                'completed': section.specific.completed(student),
+                'detail_url': get_object_detail_url(
+                    self.context['router'], request, Section, section.pk
+                    ),
+                'completed': section.specific.completed(request.user),
             } for section in sections
         ]
 
@@ -65,7 +68,7 @@ class Lesson(Page):
         APIField('completed', serializer=CompletedSerializer()),
         APIField('sections', serializer=SectionSerializer()),
     ]
-    
+
     @property
     def sections(self) -> PageQuerySet:
         return self.get_children().public().live()
@@ -96,8 +99,11 @@ class Resource(Page):
 class Grade(models.Model):
     """The grade is a simple entry that shows a User has marked a Section 
        complete."""
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
-    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    student: User = models.ForeignKey(User, on_delete=models.CASCADE)
+    section: Section = models.ForeignKey(Section, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ['student', 'section']
+
+    def __str__(self):
+        return f'{self.section.title} marked complete for {self.student.username}'

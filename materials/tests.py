@@ -78,7 +78,7 @@ class TestAPI(APITestCase):
     def test_lesson_endpoint_is_not_empty(self):
         lesson, student = build_lesson()
 
-        response = self.client.get('/api/v2/lessons/')
+        response = self.client.get('/api/lessons/')
     
 
         content = json.loads(response.content)
@@ -88,7 +88,7 @@ class TestAPI(APITestCase):
     def test_section_endpoint_is_not_empty(self):
         lesson, student = build_lesson()
 
-        response = self.client.get('/api/v2/sections/')
+        response = self.client.get('/api/sections/')
 
         content = json.loads(response.content)
 
@@ -99,12 +99,14 @@ class TestAPI(APITestCase):
             content['items'][0]['id']
             )
 
+    def test_lesson_sections(self):
+        pass
+
     def test_lesson_detail_endpoint(self):
         pass
 
     def test_section_detail_endpoint(self):
         pass
-
 
     def test_section_completed(self):
         lesson, student = build_lesson()
@@ -112,7 +114,7 @@ class TestAPI(APITestCase):
         Grade.objects.create(student=student, section=section)
         self.client.force_login(user=student)
 
-        response = self.client.get(f'/api/v2/sections/{section.id}/')
+        response = self.client.get(f'/api/sections/{section.id}/')
 
         content = json.loads(response.content)
         self.logger.info(content)
@@ -124,7 +126,7 @@ class TestAPI(APITestCase):
         section = lesson.get_children().specific().first()
         self.client.force_login(user=student)
 
-        response = self.client.get(f'/api/v2/sections/{section.id}/')
+        response = self.client.get(f'/api/sections/{section.id}/')
 
         content = json.loads(response.content)
         self.assertFalse(content['completed'])
@@ -135,7 +137,7 @@ class TestAPI(APITestCase):
             Grade.objects.create(student=student, section=section)
         self.client.force_login(user=student)
 
-        response = self.client.get(f'/api/v2/lessons/{lesson.id}/')
+        response = self.client.get(f'/api/lessons/{lesson.id}/')
 
         content = json.loads(response.content)
         self.logger.info(content)
@@ -146,7 +148,7 @@ class TestAPI(APITestCase):
         lesson, student = build_lesson()
         self.client.force_login(user=student)
 
-        response = self.client.get(f'/api/v2/lessons/{lesson.id}/')
+        response = self.client.get(f'/api/lessons/{lesson.id}/')
 
         content = json.loads(response.content)
         self.logger.info(content)
@@ -159,9 +161,18 @@ class TestAPI(APITestCase):
         Grade.objects.create(student=student, section=section)
         self.client.force_login(user=student)
 
-        response = self.client.get(f'/api/v2/lessons/{lesson.id}/')
+        response = self.client.get(f'/api/lessons/{lesson.id}/')
 
         content = json.loads(response.content)
         self.logger.info(content)
 
         self.assertFalse(content['completed'])
+
+    def test_grade_post(self):
+        section = Section.add_root(title='Section one')
+        student = User.objects.create(username='harvey')
+        self.client.force_login(user=student)
+
+        response = self.client.post('/api/grades/', {'section': section.id, 'student': student.id})
+
+        self.assertTrue(Grade.objects.filter(section=section, student=student))
