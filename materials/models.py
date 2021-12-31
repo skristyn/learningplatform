@@ -109,6 +109,9 @@ class Section(Page):
         context["slides"] = self.slides
         return context
 
+    def _mark_complete(self, student: User) -> None:
+        Grade.objects.create(section=self, student=student)
+
 
 class SectionsSerializer(Field):
     """
@@ -176,6 +179,14 @@ class Lesson(Page):
         context: dict = super().get_context(request)
         context["sections"] = self.sections
         return context
+
+    def _mark_complete(self, student: User) -> None:
+        """
+        Mark all sections complete for the lesson. For testing.
+        """
+
+        for section in self.sections:
+            section.specific._mark_complete(student)
 
 
 class LessonsSerializer(Field):
@@ -247,6 +258,15 @@ class Textbook(Page):
         """
         Append the lesson pages to the context provided to the template.
         """
+        
         context = super().get_context(request)
         context["lessons"] = self.lessons
         return context
+
+    def completed(self, student: User) -> bool:
+        """
+        For now we have to 1+n it, because going to deep in the treebeard hierarchy with
+        prefetch_related is confusing.
+        """
+
+        return all(lesson.specific.completed(student) for lesson in self.get_children())
