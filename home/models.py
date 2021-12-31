@@ -1,25 +1,25 @@
+from typing import Callable
 from django.db import models
 from django.urls import reverse
-from django.http import HttpResponseRedirect
-
+from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
 from wagtail.core.models import Page
 
 
-def wagtail_require_login(serve):
+def wagtail_require_login(serve: Callable) -> Callable:
     """
     To guarentee the user is authenticated before seeing this page, you can
     wrap the serve function with this.
     """
 
-    def wrapped_serve(self, request, *args, **kwargs):
+    def wrapped_serve(self: Page, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         """
         If the user is not logged in return a redirect response object pointed at
         the login url otherwise return the template response object as usual.
         """
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse("users:login"))
-        return serve(self, request, *args, **kwargs)
-
+        success_response: HttpResponse = serve(self, request, *args, **kwargs)
+        return success_response
     return wrapped_serve
 
 
@@ -30,10 +30,12 @@ class HomePage(Page):
 
     max_count = 1
 
-    def get_context(self, request):
-        context = super().get_context(request)
+    def get_context(self, request: HttpRequest) -> dict:
+        context: dict = super().get_context(request)
         return context
 
     @wagtail_require_login
-    def serve(self, request, *args, **kwargs):
-        return super().serve(request, *args, **kwargs)
+    def serve(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        response: HttpResponse = super().serve(request, *args, **kwargs)
+        return response
+

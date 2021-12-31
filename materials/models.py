@@ -18,6 +18,11 @@ class Textbook(Page):
     subpage_types = ["materials.Lesson"]
     max_count = 1
 
+    api_fields = [
+        APIField('title'),
+        APIField('lessons'),
+    ]
+
     @property
     def lessons(self):
         return self.get_children().public().live()
@@ -197,6 +202,28 @@ class Lesson(Page):
         context: dict = super().get_context(request)
         context["sections"] = self.sections
         return context
+
+
+class LessonsSerializer(Field):
+    """
+    Serializes the lesson page model like the SectionsSerializer.
+    """
+
+    def to_representation(self, lessons: List[Lesson]) -> List[dict]:
+        request = self.context["request"]
+
+        return [
+            {
+                "id": lesson.id,
+                "title": lesson.title,
+                "detail_url": get_object_detail_url(
+                    self.context["router"], request, Lesson, lesson.pk
+                ),
+                "sections": lesson.sections,
+                "completed": lesson.specific.completed(request.user),
+            }
+            for lesson in lessons
+        ]
 
 
 class Grade(models.Model):

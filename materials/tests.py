@@ -2,6 +2,7 @@ import logging
 import json
 from django.test import TestCase
 from django.contrib.auth.models import User
+from django.db.models import signals
 from rest_framework.test import APITestCase
 from .models import Section, Grade, Lesson
 
@@ -21,6 +22,9 @@ def build_lesson():
 
 
 class TestGrade(TestCase):
+    def setUp(self):
+        signals.post_save.disconnect(sender=User, dispatch_uid="irrelevant")
+
     def test_create_grade(self):
         section: Section = Section.add_root(title="First title")
         student: User = User.objects.create(username="harvey")
@@ -77,25 +81,22 @@ class TestGrade(TestCase):
 
 class TestAPI(APITestCase):
     logger = logging.getLogger("tests.api")
+    
+    def setUp(self):
+        signals.post_save.disconnect(sender=User, dispatch_uid="irrelevant")
 
     def test_lesson_endpoint_is_not_empty(self):
         lesson, student = build_lesson()
-
         response = self.client.get("/api/v1/lessons/")
-
         content = json.loads(response.content)
-
         self.assertEqual(lesson.id, content["items"][0]["id"])
 
     def test_section_endpoint_is_not_empty(self):
         lesson, student = build_lesson()
-
         response = self.client.get("/api/v1/sections/")
-
         content = json.loads(response.content)
 
         # This is fragile, change it.
-
         self.assertEqual(
             lesson.get_children().specific().first().id, content["items"][0]["id"]
         )

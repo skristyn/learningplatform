@@ -1,5 +1,11 @@
 from wagtail.api.v2.router import WagtailAPIRouter
-from materials.views import LessonViewSet, SectionViewSet, GradeViewSet, SlideViewSet
+from materials.views import (
+    LessonViewSet,
+    SectionViewSet,
+    GradeViewSet,
+    SlideViewSet,
+    TextbookViewSet,
+)
 
 # The wagtail api router is slightly different than the vanilla drf api router,
 # so to deliver everything to the correct url we have to write ViewSets that
@@ -7,10 +13,11 @@ from materials.views import LessonViewSet, SectionViewSet, GradeViewSet, SlideVi
 # the documentation is lousy.
 
 # Set the router instance
-api_router = WagtailAPIRouter('learningplatformapi')
+api_router = WagtailAPIRouter("learningplatformapi")
 
 # register the endpoints.
-api_router.register_endpoint('lessons', LessonViewSet)
-api_router.register_endpoint('sections', SectionViewSet)
-api_router.register_endpoint('slides', SlideViewSet)
-api_router.register_endpoint('grades', GradeViewSet)
+api_router.register_endpoint("courses", TextbookViewSet)
+api_router.register_endpoint("lessons", LessonViewSet)
+api_router.register_endpoint("sections", SectionViewSet)
+api_router.register_endpoint("slides", SlideViewSet)
+api_router.register_endpoint("grades", GradeViewSet)
