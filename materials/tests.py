@@ -81,7 +81,7 @@ class TestGrade(TestCase):
 
 class TestAPI(APITestCase):
     logger = logging.getLogger("tests.api")
-    
+
     def setUp(self):
         signals.post_save.disconnect(sender=User, dispatch_uid="irrelevant")
 

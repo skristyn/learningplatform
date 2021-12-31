@@ -10,32 +10,6 @@ from wagtail.api.v2.utils import get_object_detail_url
 from wagtail.core.query import PageQuerySet
 
 
-class Textbook(Page):
-    """
-    The container for the all course materials.
-    """
-
-    subpage_types = ["materials.Lesson"]
-    max_count = 1
-
-    api_fields = [
-        APIField('title'),
-        APIField('lessons'),
-    ]
-
-    @property
-    def lessons(self):
-        return self.get_children().public().live()
-
-    def get_context(self, request):
-        """
-        Append the lesson pages to the context provided to the template.
-        """
-        context = super().get_context(request)
-        context["lessons"] = self.lessons
-        return context
-
-
 class Slide(Page):
     """
     A section comprises several slides. They're where the information is
@@ -149,10 +123,10 @@ class SectionsSerializer(Field):
             {
                 "id": section.id,
                 "title": section.title,
+                "completed": section.specific.completed(request.user),
                 "detail_url": get_object_detail_url(
                     self.context["router"], request, Section, section.pk
                 ),
-                "completed": section.specific.completed(request.user),
             }
             for section in sections
         ]
@@ -210,17 +184,27 @@ class LessonsSerializer(Field):
     """
 
     def to_representation(self, lessons: List[Lesson]) -> List[dict]:
+        """
+        The current context must be added to the sections serializer instance context.
+        There is probably a better way to do this, but for now this will suffice.
+        """
         request = self.context["request"]
+
+        # !
+        sections_serializer = SectionsSerializer()
+        sections_serializer._context = self.context
 
         return [
             {
                 "id": lesson.id,
                 "title": lesson.title,
+                "completed": lesson.specific.completed(request.user),
                 "detail_url": get_object_detail_url(
                     self.context["router"], request, Lesson, lesson.pk
                 ),
-                "sections": lesson.sections,
-                "completed": lesson.specific.completed(request.user),
+                "sections": sections_serializer.to_representation(
+                    lesson.specific.sections
+                ),
             }
             for lesson in lessons
         ]
@@ -240,3 +224,29 @@ class Grade(models.Model):
 
     def __str__(self) -> str:
         return f"{self.section.title} marked complete for {self.student.username}"
+
+
+class Textbook(Page):
+    """
+    The container for the all course materials.
+    """
+
+    subpage_types = ["materials.Lesson"]
+    max_count = 1
+
+    api_fields = [
+        APIField("title"),
+        APIField("lessons", serializer=LessonsSerializer()),
+    ]
+
+    @property
+    def lessons(self):
+        return self.get_children().public().live()
+
+    def get_context(self, request):
+        """
+        Append the lesson pages to the context provided to the template.
+        """
+        context = super().get_context(request)
+        context["lessons"] = self.lessons
+        return context
