@@ -24,6 +24,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
     'home',
     'search',
     'materials',
@@ -86,6 +87,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'learningplatform.wsgi.application'
 
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'users:login'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

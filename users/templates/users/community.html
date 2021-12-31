@@ -1,0 +1,47 @@
+{% extends "users/base.html" %}
+{% block content %}
+
+<div class="container">
+	<div class="row">
+		<h1>Your community</h1>
+	</div>
+	<div class="row">
+		<div class="col-lg-12 announcements">
+			{{ announcement.text|safe }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-6 community-feature-box">
+			<h2><a href="/forum">Forum</a></h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-4 offset-lg-6 col-sm-12 buddy">
+      <h2>Your Buddy</h2>
+      {% for buddy in user.buddy.all %}
+	      <div>
+		      <img src="{{ buddy.profile_picture.url }}" width='100px' height='auto'/>
+	      </div>
+	      <p><a href="{{ buddy.get_absolute_url }}">{{ buddy.first_name }}</a></p>
+      {% endfor %}
+		</div>
+		<div class="col-lg-8 col-sm-12 team">
+			<h2>Your team:</h2>
+			<h4>{{ user.team.name }}</h4>
+			<h5>Team bio:</h5>
+			<p>{{ user.team.bio }}</p>
+
+			{% for teammember in user.team.user_set.all %}
+				<div>
+      		<img src="{{ teammember.profile_picture.url }}" width='100px' height='auto' />
+				</div>
+				{% if teammember == request.user %}
+					<p>YOU</p>
+				{% else %}
+					<p><a href="{{ teammember.get_absolute_url }}">{{ teammember.first_name }}</a></p>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>  <!-- end row -->
+</div> <!-- end main container -->
+{% endblock content %}

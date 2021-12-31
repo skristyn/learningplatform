@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "learningplatform"
+version = "0.1.0"
+description = "Learning management system for EII training."
+authors = ["mvickers <vickers.mike@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+wagtail = "^2.15.1"
+
+[tool.poetry.dev-dependencies]
+mypy = "^0.910"
+pylint = "^2.12.2"
+black = "^21.12b0"
+pytest-django = "^4.5.2"
+django-stubs = "^1.9.0"
+types-Pillow = "^8.3.11"
+djangorestframework-stubs = "^1.4.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
