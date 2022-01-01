@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
 from wagtail.core.models import Page
 
 
-def wagtail_require_login(serve: Callable) -> Callable:
+def wagtail_require_login(page: Callable) -> Callable:
     """
     To guarentee the user is authenticated before seeing this page, you can
     wrap the serve function with this.
