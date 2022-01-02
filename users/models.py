@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from PIL import Image
+from materials.models import Textbook
 
 
 def user_picture_path(instance, filename):
@@ -25,6 +26,30 @@ class Team(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Enrollment(models.Model):
+    """
+    This table will hold data related to students enrollment in courses. It will
+    hold the current course enrollment, completion status, and past enrollments as
+    well any courses they are set as an instructor or mentor on.
+    """
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # Currently the foreign key is directly to the textbook but further work should separate
+    # concerns so we have a course model that holds the students, mentors and instructors together.
+    active_course = models.ForeignKey(
+        Textbook, on_delete=models.SET_NULL, blank=True, null=True
+    )
+    history = models.ManyToManyField(Textbook, related_name="course_history")
+
+    @property
+    def completion_status(self):
+        """
+        Currently this returns the boolean for is the active course complete or not,
+        but eventually this will help handle more complex cases.
+        """
+        return self.active_course.completed(self.user)
 
 
 class Profile(models.Model):
@@ -72,9 +97,10 @@ class Profile(models.Model):
 
 
 @receiver(post_save, sender=User, dispatch_uid="irrelevant")
-def create_profile(sender, instance, created, **kwargs) -> None:
+def create_student_records(sender, instance, created, **kwargs) -> None:
     """
     Creates a new profile any time a new user is created.
     """
     if created:
         Profile.objects.create(user=instance)
+        Enrollment.objects.create(user=instance)

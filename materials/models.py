@@ -12,13 +12,6 @@ from wagtail.core.query import PageQuerySet
 from home.models import wagtail_require_login
 
 
-"""
-NOTE: The overwriting of the serve function with the wagtail_require_login decorator wont
-be necessary once the course front end has moved to Vue. This is just to serve the template
-pages in the meantime.
-"""
-
-
 class Slide(Page):
     """
     A section comprises several slides. They're where the information is
@@ -120,7 +113,7 @@ class Section(Page):
 
     def _mark_complete(self, student: User) -> None:
         Grade.objects.create(section=self, student=student)
-    
+
     @wagtail_require_login
     def serve(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         response: HttpResponse = super().serve(request, *args, **kwargs)
@@ -201,7 +194,7 @@ class Lesson(Page):
 
         for section in self.sections:
             section.specific._mark_complete(student)
-    
+
     @wagtail_require_login
     def serve(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         response: HttpResponse = super().serve(request, *args, **kwargs)
@@ -267,6 +260,7 @@ class Textbook(Page):
     api_fields = [
         APIField("title"),
         APIField("lessons", serializer=LessonsSerializer()),
+        APIField("completed", serializer=CompletedSerializer()),
     ]
 
     @property
@@ -277,7 +271,7 @@ class Textbook(Page):
         """
         Append the lesson pages to the context provided to the template.
         """
-        
+
         context = super().get_context(request)
         context["lessons"] = self.lessons
         return context
@@ -289,9 +283,8 @@ class Textbook(Page):
         """
 
         return all(lesson.specific.completed(student) for lesson in self.get_children())
-    
+
     @wagtail_require_login
     def serve(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         response: HttpResponse = super().serve(request, *args, **kwargs)
         return response
-

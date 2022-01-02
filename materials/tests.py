@@ -62,7 +62,7 @@ class TestGrade(TestCase):
     def test_check_lesson_completion(self):
         lesson = build_lesson()
         student = build_student()
-        
+
         lesson._mark_complete(student)
 
         result = lesson.completed(student)
@@ -91,7 +91,7 @@ class TestGrade(TestCase):
     def test_course_complete(self):
         course = Textbook.add_root(title="test textbook")
         lesson = build_lesson(parent=course)
-        lesson_two = build_lesson(title='second', parent=course)
+        lesson_two = build_lesson(title="second", parent=course)
         student = build_student()
 
         lesson._mark_complete(student)
@@ -104,7 +104,7 @@ class TestGrade(TestCase):
     def test_course_complete_false(self):
         course = Textbook.add_root(title="test textbook")
         lesson = build_lesson(parent=course)
-        lesson_two = build_lesson(title='second', parent=course)
+        lesson_two = build_lesson(title="second", parent=course)
         student = build_student()
         lesson._mark_complete(student)
 
@@ -147,7 +147,7 @@ class TestAPI(APITestCase):
         pass
 
     def test_section_completed(self):
-        lesson  = build_lesson()
+        lesson = build_lesson()
         student = build_student()
         section = lesson.get_children().specific().first()
         Grade.objects.create(student=student, section=section)
@@ -161,7 +161,7 @@ class TestAPI(APITestCase):
         self.assertTrue(content["completed"])
 
     def test_section_not_completed(self):
-        lesson  = build_lesson()
+        lesson = build_lesson()
         student = build_student()
         section = lesson.get_children().specific().first()
         self.client.force_login(user=student)
@@ -172,7 +172,7 @@ class TestAPI(APITestCase):
         self.assertFalse(content["completed"])
 
     def test_lesson_completed(self):
-        lesson  = build_lesson()
+        lesson = build_lesson()
         student = build_student()
         for section in lesson.get_children().specific():
             Grade.objects.create(student=student, section=section)
@@ -186,7 +186,7 @@ class TestAPI(APITestCase):
         self.assertTrue(content["completed"])
 
     def test_lesson_not_completed(self):
-        lesson  = build_lesson()
+        lesson = build_lesson()
         student = build_student()
         self.client.force_login(user=student)
 
@@ -198,7 +198,7 @@ class TestAPI(APITestCase):
         self.assertFalse(content["completed"])
 
     def test_lesson_partial_completed(self):
-        lesson  = build_lesson()
+        lesson = build_lesson()
         student = build_student()
         section = lesson.get_children().specific().first()
         Grade.objects.create(student=student, section=section)

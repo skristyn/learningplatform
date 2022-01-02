@@ -1,17 +1,20 @@
 from typing import Callable
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
 from wagtail.core.models import Page
 
 
-def wagtail_require_login(page: Callable) -> Callable:
+def wagtail_require_login(serve: Callable) -> Callable:
     """
     To guarentee the user is authenticated before seeing this page, you can
     wrap the serve function with this.
     """
 
-    def wrapped_serve(self: Page, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+    def wrapped_serve(
+        self: Page, request: HttpRequest, *args, **kwargs
+    ) -> HttpResponse:
         """
         If the user is not logged in return a redirect response object pointed at
         the login url otherwise return the template response object as usual.
@@ -20,6 +23,7 @@ def wagtail_require_login(page: Callable) -> Callable:
             return HttpResponseRedirect(reverse("users:login"))
         success_response: HttpResponse = serve(self, request, *args, **kwargs)
         return success_response
+
     return wrapped_serve
 
 
@@ -30,6 +34,12 @@ class HomePage(Page):
 
     max_count = 1
 
+    def next_incomplete_section(self, student: User):
+        pass
+
+    def course_overview(self, student: User):
+        pass
+
     def get_context(self, request: HttpRequest) -> dict:
         context: dict = super().get_context(request)
         return context
@@ -38,4 +48,3 @@ class HomePage(Page):
     def serve(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         response: HttpResponse = super().serve(request, *args, **kwargs)
         return response
-

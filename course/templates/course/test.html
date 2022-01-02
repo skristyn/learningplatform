@@ -1,0 +1,29 @@
+<!--course/templates/course/test.html-->
+<html>
+    <head>
+        <title>Test vue page</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        <div id="vue_app">
+            <h1 v-for='book in textbooks'>[[ book.title ]] <span v-if="book.completed">COMPLETED</span><span v-else>NOT COMPELTE</span></h1>
+        </div>
+        <script type="text/javascript">
+            const app = new Vue({
+                el: "#vue_app",
+                delimiters: ['[[', ']]'],
+                data () {
+                    return {
+                        textbooks: []
+                    }
+                },
+                mounted () {
+                    axios
+                    .get("http://localhost:8000/api/v1/textbooks/?fields=title,completed")
+                    .then(response => (this.textbooks = response.data.items))
+                }
+            });
+        </script>
+    </body>
+</html>
