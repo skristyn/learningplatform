@@ -4,27 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
 from wagtail.core.models import Page
-
-
-def wagtail_require_login(serve: Callable) -> Callable:
-    """
-    To guarentee the user is authenticated before seeing this page, you can
-    wrap the serve function with this.
-    """
-
-    def wrapped_serve(
-        self: Page, request: HttpRequest, *args, **kwargs
-    ) -> HttpResponse:
-        """
-        If the user is not logged in return a redirect response object pointed at
-        the login url otherwise return the template response object as usual.
-        """
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse("users:login"))
-        success_response: HttpResponse = serve(self, request, *args, **kwargs)
-        return success_response
-
-    return wrapped_serve
+from wagtail.api import APIField
 
 
 class HomePage(Page):
@@ -38,13 +18,9 @@ class HomePage(Page):
         pass
 
     def course_overview(self, student: User):
-        pass
+        course = student.enrollment.active_course
 
     def get_context(self, request: HttpRequest) -> dict:
         context: dict = super().get_context(request)
         return context
 
-    @wagtail_require_login
-    def serve(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        response: HttpResponse = super().serve(request, *args, **kwargs)
-        return response

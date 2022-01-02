@@ -9,7 +9,6 @@ from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.api import APIField
 from wagtail.api.v2.utils import get_object_detail_url
 from wagtail.core.query import PageQuerySet
-from home.models import wagtail_require_login
 
 
 class Slide(Page):
@@ -114,11 +113,6 @@ class Section(Page):
     def _mark_complete(self, student: User) -> None:
         Grade.objects.create(section=self, student=student)
 
-    @wagtail_require_login
-    def serve(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        response: HttpResponse = super().serve(request, *args, **kwargs)
-        return response
-
 
 class SectionsSerializer(Field):
     """
@@ -194,11 +188,6 @@ class Lesson(Page):
 
         for section in self.sections:
             section.specific._mark_complete(student)
-
-    @wagtail_require_login
-    def serve(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        response: HttpResponse = super().serve(request, *args, **kwargs)
-        return response
 
 
 class LessonsSerializer(Field):
@@ -284,7 +273,3 @@ class Textbook(Page):
 
         return all(lesson.specific.completed(student) for lesson in self.get_children())
 
-    @wagtail_require_login
-    def serve(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        response: HttpResponse = super().serve(request, *args, **kwargs)
-        return response
