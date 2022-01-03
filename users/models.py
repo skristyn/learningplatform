@@ -41,7 +41,9 @@ class Enrollment(models.Model):
     active_course = models.ForeignKey(
         Textbook, on_delete=models.SET_NULL, blank=True, null=True
     )
-    history = models.ManyToManyField(Textbook, related_name="course_history", blank=True)
+    history = models.ManyToManyField(
+        Textbook, related_name="course_history", blank=True
+    )
 
     @property
     def completion_status(self):

@@ -1,4 +1,5 @@
 from typing import Callable, List, Optional
+from itertools import chain
 from django.db import models
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpRequest
@@ -189,7 +190,10 @@ class Lesson(Page):
         if self.completed(student):
             return None
         return next(
-            filter(lambda section: not section.specific.completed(student), self.get_children())
+            filter(
+                lambda section: not section.specific.completed(student),
+                self.get_children(),
+            )
         )
 
     def _mark_complete(self, student: User) -> None:
@@ -290,4 +294,4 @@ class Textbook(Page):
                 lambda lesson: lesson.specific.next_section(student) is not None,
                 self.get_children(),
             )
-        )
+        ).specific.next_section(student)

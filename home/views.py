@@ -13,6 +13,7 @@ class RootViewSet(BaseAPIViewSet):
     This viewset should return the link to the users enrolled course, along with
     a link to their next incomplete section.
     """
+
     model = HomePage
 
     @classmethod
@@ -27,30 +28,26 @@ class RootViewSet(BaseAPIViewSet):
         Kinda a framework carcrash.
         """
         # The api_view decorator expects to wrap a simple function-based django views
-        # not a wagtail APIViewset method. So wrapping an inner function. All knees 
+        # not a wagtail APIViewset method. So wrapping an inner function. All knees
         # and elbows.
         router = self.get_serializer_context()["router"]
         course = request.user.enrollment.active_course
         next_section = course.specific.next_section(request.user)
         print(next_section)
 
-        @api_view(['GET'])
+        @api_view(["GET"])
         def inner_view(request, *args, **kwargs):
-            return Response({
-                "next_section": get_object_detail_url( 
-                    router,
-                    request,
-                    Section,
-                    next_section.pk),
-                "course_overview": get_object_detail_url(
-                    router,
-                    request,
-                    Textbook,
-                    course.pk)
-                })
+            return Response(
+                {
+                    "next_section": get_object_detail_url(
+                        router, request, Section, next_section.pk
+                    ),
+                    "course_overview": get_object_detail_url(
+                        router, request, Textbook, course.pk
+                    ),
+                }
+            )
 
         # The view cannot be called with a drf request object, but the underlying
         # django request object accessed by the _request attribute.
         return inner_view(request._request)
-    
-
