@@ -1,4 +1,4 @@
-from typing import Callable, List
+from typing import Callable, List, Optional
 from django.db import models
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpRequest
@@ -181,6 +181,17 @@ class Lesson(Page):
         context["sections"] = self.sections
         return context
 
+    def next_section(self, student: User) -> Optional[Section]:
+        """
+        Returns the next section that is not complete, and if the whole lesson has
+        been finished it returns None.
+        """
+        if self.completed(student):
+            return None
+        return next(
+            filter(lambda section: not section.specific.completed(student), self.get_children())
+        )
+
     def _mark_complete(self, student: User) -> None:
         """
         Mark all sections complete for the lesson. For testing.
@@ -273,3 +284,10 @@ class Textbook(Page):
 
         return all(lesson.specific.completed(student) for lesson in self.get_children())
 
+    def next_section(self, student: User) -> Section:
+        return next(
+            filter(
+                lambda lesson: lesson.specific.next_section(student) is not None,
+                self.get_children(),
+            )
+        )
