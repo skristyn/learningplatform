@@ -19,6 +19,7 @@ djangorestframework-stubs = "^1.4.0"
 coverage = "^6.2"
 PyYAML = "^6.0"
 uritemplate = "^4.1.1"
+drf-spectacular = {extras = ["sidecar"], version = "^0.21.1"}
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
