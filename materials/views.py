@@ -49,16 +49,36 @@ class GradeViewSet(BaseAPIViewSet):
 
 
 class TextbookViewSet(BaseAPIViewSet):
+    """
+    The textbook is the root of the course content tree. Its children are lessons.
+    """
+
     model = Textbook
 
 
 class LessonViewSet(BaseAPIViewSet):
+    """
+    Lessons are the broadest subdivision of the course content. They are analagous
+    to a chapter in a book.
+    """
+
     model = Lesson
 
 
 class SectionViewSet(BaseAPIViewSet):
+    """
+    Sections are the subdivision of the course material that a user will work through
+    in one sitting ideally. They are the unit that the student can mark completed, though
+    this is done with an appropriate POST request to the .../grades/ endpoint.
+    """
+
     model = Section
 
 
 class SlideViewSet(BaseAPIViewSet):
+    """
+    Slides are where the bulk of the content is grouped. The course author will spend
+    most of the time developing on the slides.
+    """
+
     model = Slide

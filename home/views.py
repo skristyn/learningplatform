@@ -10,8 +10,7 @@ from .models import HomePage
 
 class RootViewSet(BaseAPIViewSet):
     """
-    This viewset should return the link to the users enrolled course, along with
-    a link to their next incomplete section.
+    These links aid in reaching the users current course and their next section.
     """
 
     model = HomePage
@@ -39,12 +38,18 @@ class RootViewSet(BaseAPIViewSet):
         def inner_view(request, *args, **kwargs):
             return Response(
                 {
-                    "next_section": get_object_detail_url(
-                        router, request, Section, next_section.pk
-                    ),
-                    "course_overview": get_object_detail_url(
-                        router, request, Textbook, course.pk
-                    ),
+                    "current_course": {
+                        "title": course.title,
+                        "detail_url": get_object_detail_url(
+                            router, request, Textbook, course.pk
+                        ),
+                    },
+                    "next_section": {
+                        "title": next_section.title,
+                        "detail_url": get_object_detail_url(
+                            router, request, Section, next_section.pk
+                        ),
+                    },
                 }
             )
 
