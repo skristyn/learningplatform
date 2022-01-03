@@ -1,2 +1,9 @@
-EII Learning Platform
+# EII Learning Platform
 
+## USING POETRY TO MANAGE DEPENDENCIES
+## LOADING FIXTURES
+## ACCESSING SITE
+## API
+### Base wagtail fields
+
+## EXAMPLE CALLS
