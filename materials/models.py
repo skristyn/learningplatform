@@ -288,10 +288,16 @@ class Textbook(Page):
 
         return all(lesson.specific.completed(student) for lesson in self.get_children())
 
-    def next_section(self, student: User) -> Section:
-        return next(
+    def next_section(self, student: User) -> Optional[Section]:
+        """
+        Returns the next incomplete section for the user, unless course is compelte, then None.
+        """
+        section = next(
             filter(
                 lambda lesson: lesson.specific.next_section(student) is not None,
                 self.get_children(),
             )
-        ).specific.next_section(student)
+        , None)
+        if section is None:
+            return None
+        return section.specific.next_section(student)
