@@ -1,0 +1,19 @@
+{% block slideshow %}
+<div class="section-body" id="slideshow">
+
+	{% for slide in self.get_children.specific %}
+        <div class="slide">
+            <div class="slide-content">
+                {{ slide.body|safe }}
+            </div>
+        <p class="slide-counter">{{ forloop.counter }}/{{ self.get_children.count }}</p> 
+        </div>
+    {% endfor %}
+
+    <button id="prev" style="float: left;" onclick="plusSlides(-1)">&#10094;</button>
+	<button id="next" style="float: right;" onclick="plusSlides(1)">&#10095;</button>
+</div>
+{% endblock %}
+
+
+<!-- if forloop.counter == slides.count , display mark as complete button -->

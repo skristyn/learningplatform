@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    {% include 'materials/css_include.html' %}
+    <script type="text/javascript" src="{% static 'materials/bootstrap/js/bootstrap.bundle.min.js' %}"></script> 
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Learning Platform</title>
+</head>
+<body>
+	<div class="container">
+		<nav class="navbar navbar-expand">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="">Learning Platform</a>
+				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" href=""><i class="bi bi-people-fill"><span class="icon-label">community</span></i></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href=""><i class="bi bi-person-circle"><span class="icon-label">profile</span></i></a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		{% if messages %}
+	            {% for message in messages %}
+	              <div> <!-- bootstrap has a way to handle this with: class="alert alert-{{ message.tags }}" -->
+	                Message: {{ message }}
+	              </div>
+	            {% endfor %}
+	          {% endif %}
+
+		{% block content %}
+		{% endblock %}
+	</div>
+	
+</body>
+</html>

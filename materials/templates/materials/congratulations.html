@@ -1,0 +1,6 @@
+{% extends 'courses/base.html' %}
+{% block content %}
+	<h1>Congratulations! You completed lesson {{ section.lesson.lesson_order }} section {{ section.section_order }}: {{ section.name }}</h1>
+	<p><a href="{% url 'home' %}">Return home</a></p>
+	<p><a href="{% url 'courses:course_overview' section.course.id %}">Return to course overview</a></p>
+{% endblock content %}

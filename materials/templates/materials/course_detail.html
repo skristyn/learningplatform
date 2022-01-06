@@ -1,0 +1,66 @@
+{% extends 'courses/base.html' %}
+{% block content %}
+<span class="overview">
+	<div class="row">
+	<h1>{{ title }}</h1>
+		<p>YOUR PROGRESS:
+			<svg id="progress" width="750" height="20">
+				<rect width="{% widthratio portion_complete 1 750 %}" height = "20" color="#FF00FF" />
+			</svg>
+		</p>
+		{% if course_complete %}
+		<div class="section-body">
+			<h2>Course is complete, congratulations</h2>
+		</div>
+		{% else %}
+
+		<button id="overview-continue" onclick="window.location.href='{{ next_section.url }}';"><h3 style="display: inline;">Continue where you left off</h3> &nbsp;>>&nbsp; 
+			<!-- change from pk to slugs to make pointing to resources more readable -->
+			<!-- these links should use 'get_absolute_url' instead of this junk-->
+			<a href= '{{ next_section.get_absolute_url }}'/>
+				{{ next_section.index_label }}{{ next_section.name }}</a>
+		</button>
+
+			{% endif %}
+		</div> <!-- end first row -->
+	<div class="row">
+	<ul class="nav nav-tabs" id="courseTabs" role="tablist">
+		<li class="nav-item" role="presentation">
+			<button class="nav-link active" id="lessons-tab" data-bs-toggle="tab" data-bs-target="#lessons" type="button" role="tab" aria-controls="lessons" aria-selected="true"><h2>Lessons</h2></button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button class="nav-link" id="resources-tab" data-bs-toggle="tab" data-bs-target="#resources" type="button" role="tab" aria-controls="resources" aria-selected="false"><h2>Resources</h2></button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button class="nav-link" id="project-tab" data-bs-toggle="tab" data-bs-target="#project" type="button" role="tab" aria-controls="project" aria-selected="false"><h2>Project</h2></button>
+		</li>
+		</ul>
+	</div> <!-- end tab nav row -->
+		<div class="tab-content" id="tabContent">
+		<div class="tab-pane fade show active" id="lessons" role="tabpanel" aria-labelledby="home-tab">
+			{% for lesson in lessons %}
+			<div class="lesson-title"><h3>{% if lesson.completed %}
+					(Completed!)
+				{% else %}{% endif %}
+			{{ lesson.title }}</h3> <span class="lesson-time"> <i class="bi bi-clock"></i> {{ lesson.time_remaining }} minutes remaining</span></div>
+			{% for section in lesson.sections %}
+				<div class="section-title">{% if section.is_complete or section.id == next_section.id %}
+					<a href = '{{ section.url }}'>
+					{% endif %}
+						{% if section.is_complete %}
+						<h4><svg xmlns="http://www.w3.org/2000/svg" width="3%" height="3%" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0  250 130" preserveAspectRatio="xMinYMin meet" ><rect id="svgEditorBackground" x="0" y="0" width="250" height="130" style="fill: none; stroke: none;"/><polygon id="complete" id="e2_polygon" points="98,64 146,117 243,36 223,14 147,77 119,46"/></svg> 
+						{{ section.title }}</h4> <span class="lesson-time"> <i class="bi bi-clock"></i> <span style="line-height: 1.2em;">{{ section.time_to_complete }} minutes</span></span>
+						{% else %}
+						<h4><svg xmlns="http://www.w3.org/2000/svg" width="3%" height="3%" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0  250 130" preserveAspectRatio="xMinYMin meet" ><rect id="svgEditorBackground" x="0" y="0" width="250" height="130" style="fill: none; stroke: none;"/><polygon id="complete" style="stroke:#8bc68e;fill:none;stroke-width:2px;" id="e2_polygon" points="98,64 146,117 243,36 223,14 147,77 119,46"/></svg> 
+						{{ section.title }}</h4> <span class="lesson-time"> <i class="bi bi-clock"></i> <span style="line-height: 1.2em;">{{ section.time_to_complete }} minutes</span></span>
+						{% endif %}
+					</a>
+				</div>
+			{% endfor %}
+		{% endfor %}
+		<div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="profile-tab">...</div>
+		<div class="tab-pane fade" id="project" role="tabpanel" aria-labelledby="project-tab">...</div>
+		</div>
+	</div> <!-- end third row -->	  
+</span>	
+{% endblock content %}

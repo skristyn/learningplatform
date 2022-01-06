@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+	{% include 'materials/css_include.html' %}
+    {% include 'materials/js_include.html' %}
+	{% if title %}
+		<title>Learning Platform - {{ page.title }}</title>
+	{% else %}
+		<title>Learning Platform</title>
+	{% endif %}
+</head>
+<body>
+	<div class="container-fluid" id="in-lesson-container">
+
+<!-- MODAL -->
+<!-- Button trigger modal 
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+	Launch demo modal
+  </button>
+  -->
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+		  ...
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		  <button type="button" class="btn btn-primary">Save changes</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+  
+<!-- END MODAL-->
+		<div class="row">
+			<div class="col-md-4 lesson-menu-col">
+			<div class="lesson-menu-box">
+				<h1><span style="font-size: 2rem; font-weight: 400;"></span></h1>
+				<p><span style="font-weight: 600;">Exit to: &nbsp;</span>
+					<a href="">Home</a> &nbsp;
+					<a href="">Course Overview</a>
+				</p>
+				<div style="vertical-align: bottom;" id="lesson-interactive">
+					<div class="tab-content" id="tabContent">
+						<div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chat-button"> chat </div>
+						<div class="tab-pane fade" id="notes" role="tabpanel" aria-labelledby="notes-button">notes</div>
+						<div class="tab-pane fade" id="message" role="tabpanel" aria-labelledby="message-button">messaging</div>
+						<div class="tab-pane fade" id="tips" role="tabpanel" aria-labelledby="tips-button">tips</div>
+					</div>
+					<div class="in-lesson-tabs">
+						<ul class="nav nav-pills nav-justified" id="lesson-tabs" role="tablist">
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="chat-button" data-bs-toggle="tab" data-bs-target="#chat" type="button" role="tab" aria-controls="instant chat" aria-selected="false">Instant Chat</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="notes-button" data-bs-toggle="tab" data-bs-target="#notes" type="button" role="tab" aria-controls="take notes" aria-selected="false">Take Notes</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="message-button" data-bs-toggle="tab" data-bs-target="#message" type="button" role="tab" aria-controls="direct message" aria-selected="false">Send a Message</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="tips-button" data-bs-toggle="tab" data-bs-target="#tips" type="button" role="tab" aria-controls="tips and hints" aria-selected="false">Tips & hints</button>
+							</li>
+						</ul>
+					</div> <!-- end in-lesson tabs -->
+				</div>  <!-- end lesson-interactive -->
+			</div>  <!-- end lesson-menu-box -->
+			</div>   <!-- end col-4 -->
+
+			<div class="col-md-8 slideshow-col">
+					{% include 'materials/slideshow.html' %}
+			</div> <!-- end col-8 -->
+		</div> <!-- end row -->
+
+<div style="text-align: center">
+	{% if section_complete  %}
+	<p>Section is complete!</p>
+	<p><a href = "">Return home</a></p>
+		{% if section.is_last_section %}
+		<p>This is the final section of this lesson</p>
+		{% else %}
+		<p><a href = "">Next section</a></p>
+		<p>{{ next_section }}</p>
+		{% endif %} 
+	{% else %}
+		<form method="POST">
+		{% csrf_token %}
+			<button type="submit">Mark section as complete</button>
+		</form>
+	{% endif %}
+</div>
+</div> <!-- end main container -->
+
+<script type="text/javascript" src="{% static 'materials/js/main.js' %}"></script>
+
+</body>
+</html>

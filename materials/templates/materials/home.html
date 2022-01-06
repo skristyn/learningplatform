@@ -1,0 +1,38 @@
+{% extends 'courses/base.html' %}
+{% block content %}
+	<div class="row" id="welcome-banner">
+		<div class="col-lg-8 welcome-msg">
+			<h1>Welcome, {{ request.user.first_name }}</h1>
+			<p>A welcome message or tip goes here.</p>
+		</div>
+		<div class="col-lg-4 section-body">
+			{% if course_finished %}
+				<h2>Course is complete! Congratulations.</h2>
+					<h3>Want to review from the beginning?</h3>
+						<p><a class="btn btn-primary" href= '{{ next_section.get_absolute_url }}'>
+							{{ index_label }}{{ next_section }}</a></p>
+			{% else %}
+					<h2>Want to continue where you left off?</h2>
+					<p><a class="btn btn-primary" href= '{{ next_section.get_absolute_url }}'>
+						{{ index_label }}{{ next_section }}
+					</a></p>
+			{% endif %}	
+			<p><a href='{{ course.get_absolute_url }}'>Go to course overview: {{ course.name }}</a></p>
+		</div>
+	</div>
+	<div class="col-lg-12 announcements">
+		<p>{{ announcement.text|safe }}</p>
+	</div>
+	<div class="row" id="home-feature-links">
+		<div class="col-lg-6">
+		<div class="circle">
+			<h2><a href="{% url 'resources:resource_list' %}">Resource Kit</a></h2>
+		</div>
+		</div>
+		<div class="col-lg-6">
+		<div class="circle">
+			<h2><a href="{% url 'users:community' %}">Community</a></h2>
+		</div>
+		</div>
+	</div>
+{% endblock content %}
