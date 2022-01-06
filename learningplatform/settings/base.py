@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     "modelcluster",
     "taggit",
     "rest_framework",
-    "drf_spectacular_sidecar",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
