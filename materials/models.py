@@ -68,8 +68,9 @@ class Resource(Page):
 
 class CompletedSerializer(Field):
     """
-    Supplies the user object to the completed method from both the
-    lesson and section classes.
+    Originally written to suply the request's user object to the completed method from 
+    both the lesson and section classes. Should rename because it can be used to supply
+    the user to any model method.
     """
 
     def to_representation(self, func: Callable[[User], bool]) -> bool:
@@ -82,12 +83,17 @@ class Section(Page):
     The section is the core informational unit of the platform. Once a student
     begins a section they are brought into the learning Vue application.
     """
-
+    time_to_complete = models.IntegerField(blank=True, null=True)
     parent_page_types = ["materials.Lesson"]
     subpage_types = ["materials.Slide", "materials.Resource"]
+    
+    content_panels = Page.content_panels + [
+            FieldPanel('time_to_complete'),
+    ]
 
     api_fields = [
         APIField("title"),
+        APIField("time_to_complete"),
         APIField("completed", serializer=CompletedSerializer()),
         APIField("slides", serializer=SlideSerializer()),
     ]
@@ -129,6 +135,7 @@ class SectionsSerializer(Field):
                 "id": section.id,
                 "title": section.title,
                 "completed": section.specific.completed(request.user),
+                "time_to_complete": section.specific.time_to_complete,
                 "detail_url": get_object_detail_url(
                     self.context["router"], request, Section, section.pk
                 ),
@@ -156,6 +163,7 @@ class Lesson(Page):
         APIField("title"),
         APIField("completed", serializer=CompletedSerializer()),
         APIField("sections", serializer=SectionsSerializer()),
+        APIField("time_remaining", serializer=CompletedSerializer()),
     ]
 
     @property
@@ -195,6 +203,8 @@ class Lesson(Page):
                 self.get_children(),
             )
         )
+    def time_remaining(self, student: User) -> int:
+        return sum(section.specific.time_to_complete for section in self.get_children() if not section.specific.completed(student))
 
     def _mark_complete(self, student: User) -> None:
         """
@@ -226,6 +236,7 @@ class LessonsSerializer(Field):
                 "id": lesson.id,
                 "title": lesson.title,
                 "completed": lesson.specific.completed(request.user),
+                "time_remaining": lesson.specific.time_remaining(request.user),
                 "detail_url": get_object_detail_url(
                     self.context["router"], request, Lesson, lesson.pk
                 ),

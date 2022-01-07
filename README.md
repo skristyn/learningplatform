@@ -43,10 +43,10 @@ response to expect.
 
 ### Main endpoints
 All api endpoints are found at `<...localhost...>/api/v1` and they include the following:
-- `/textbooks/` fields: title, completed, lessons
-- `/lessons/` fields: title, completed, sections
-- `/sections/` fields: title, completed, slides
-- `/slides/` fields: title, body
+- `/textbooks/` fields: `title, completed, lessons`
+- `/lessons/` fields: `title, completed, sections, time_remaining`
+- `/sections/` fields: `title, completed, slides, time_to_complete`
+- `/slides/` fields: `title, body`
 - `/grades/` [only accepts POST]
 - `/` _Root endpoint returns the authenticated user's current course and next section._
 
