@@ -3,6 +3,7 @@ from itertools import chain
 from django.db import models
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpRequest
+from django.shortcuts import redirect
 from rest_framework.serializers import Field
 from wagtail.core.models import Page
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
@@ -101,22 +102,32 @@ class Section(RoutablePageMixin, Page):
         APIField("slides", serializer=SlideSerializer()),
     ]
 
-    @property
-    def slides(self):
-        return self.get_children().public().live()
-    
     def get_context(self, request) -> dict:
         """
         Append the slide pages to the context provided to the template.
         """
         context: dict = super().get_context(request)
         context["slides"] = self.slides
-        context["is_complete"] = self.specific.completed(request.user)
-        context["home_page"]= HomePage.objects.first()
+        context["home_page"] = HomePage.objects.first()
+        context["textbook"] = self.course
         return context
     
+    def serve(self, request, *args, **kwargs):
+        """
+        Overwriting the serve method to allow for a post request marking the
+        section as complete for the user.
+        """
+        if request.method == 'POST':
+            self._mark_complete(request.user)
+            return redirect(self.url + 'congratulations')
+        return super().serve(request, *args, **kwargs)
+
     @route(r'^congratulations')
     def serve_congratulations(self, request):
+        """
+        This serves the same model, but to a different template to congratulate
+        the user on completing the lesson.
+        """
         return self.render(
                 request,
                 template="materials/congratulations.html"
@@ -130,11 +141,15 @@ class Section(RoutablePageMixin, Page):
         return self.grade_set.filter(student=student).exists()  # type: ignore
 
     @property
-    def get_course(self) -> Page:
+    def course(self) -> Page:
         return self.get_parent().get_parent()
 
+    @property
+    def slides(self):
+        return self.get_children().public().live()
+    
     def _mark_complete(self, student: User) -> None:
-        Grade.objects.create(section=self, student=student)
+        Grade.objects.get_or_create(section=self, student=student)
 
 
 class SectionsSerializer(Field):
