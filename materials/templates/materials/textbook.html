@@ -2,7 +2,7 @@
 {% block content %}
 <span class="overview">
 	<div class="row">
-	<h1>{{ title }}</h1>
+	<h1>{{ page.title }}</h1>
 		<p>YOUR PROGRESS:
 			<svg id="progress" width="750" height="20">
 				<rect width="{% widthratio portion_complete 1 750 %}" height = "20" color="#FF00FF" />
@@ -42,17 +42,17 @@
 			<div class="lesson-title"><h3>{% if lesson.completed %}
 					(Completed!)
 				{% else %}{% endif %}
-			{{ lesson.title }}</h3> <span class="lesson-time"> <i class="bi bi-clock"></i> {{ lesson.time_remaining }} minutes remaining</span></div>
-			{% for section in lesson.sections %}
+			{{ lesson.title }}</h3> <span class="lesson-time"> <i class="bi bi-clock"></i> {{ lesson.specific.time_remaining }} minutes remaining</span></div>
+			{% for section in lesson.get_children %}
 				<div class="section-title">{% if section.is_complete or section.id == next_section.id %}
 					<a href = '{{ section.url }}'>
 					{% endif %}
 						{% if section.is_complete %}
 						<h4><svg xmlns="http://www.w3.org/2000/svg" width="3%" height="3%" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0  250 130" preserveAspectRatio="xMinYMin meet" ><rect id="svgEditorBackground" x="0" y="0" width="250" height="130" style="fill: none; stroke: none;"/><polygon id="complete" id="e2_polygon" points="98,64 146,117 243,36 223,14 147,77 119,46"/></svg> 
-						{{ section.title }}</h4> <span class="lesson-time"> <i class="bi bi-clock"></i> <span style="line-height: 1.2em;">{{ section.time_to_complete }} minutes</span></span>
+						{{ section.title }}</h4> <span class="lesson-time"> <i class="bi bi-clock"></i> <span style="line-height: 1.2em;">{{ section.specific.time_to_complete }} minutes</span></span>
 						{% else %}
 						<h4><svg xmlns="http://www.w3.org/2000/svg" width="3%" height="3%" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0  250 130" preserveAspectRatio="xMinYMin meet" ><rect id="svgEditorBackground" x="0" y="0" width="250" height="130" style="fill: none; stroke: none;"/><polygon id="complete" style="stroke:#8bc68e;fill:none;stroke-width:2px;" id="e2_polygon" points="98,64 146,117 243,36 223,14 147,77 119,46"/></svg> 
-						{{ section.title }}</h4> <span class="lesson-time"> <i class="bi bi-clock"></i> <span style="line-height: 1.2em;">{{ section.time_to_complete }} minutes</span></span>
+						{{ section.title }}</h4> <span class="lesson-time"> <i class="bi bi-clock"></i> <span style="line-height: 1.2em;">{{ section.specific.time_to_complete }} minutes</span></span>
 						{% endif %}
 					</a>
 				</div>

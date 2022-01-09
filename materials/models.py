@@ -5,11 +5,14 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpRequest
 from rest_framework.serializers import Field
 from wagtail.core.models import Page
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.contrib.redirects.models import Redirect
 from wagtail.api import APIField
 from wagtail.api.v2.utils import get_object_detail_url
 from wagtail.core.query import PageQuerySet
+from home.models import HomePage
 
 
 class Slide(Page):
@@ -78,7 +81,7 @@ class CompletedSerializer(Field):
         return func(student)
 
 
-class Section(Page):
+class Section(RoutablePageMixin, Page):
     """
     The section is the core informational unit of the platform. Once a student
     begins a section they are brought into the learning Vue application.
@@ -101,6 +104,23 @@ class Section(Page):
     @property
     def slides(self):
         return self.get_children().public().live()
+    
+    def get_context(self, request) -> dict:
+        """
+        Append the slide pages to the context provided to the template.
+        """
+        context: dict = super().get_context(request)
+        context["slides"] = self.slides
+        context["is_complete"] = self.specific.completed(request.user)
+        context["home_page"]= HomePage.objects.first()
+        return context
+    
+    @route(r'^congratulations')
+    def serve_congratulations(self, request):
+        return self.render(
+                request,
+                template="materials/congratulations.html"
+        )
 
     def completed(self, student: User) -> bool:
         """
@@ -109,13 +129,9 @@ class Section(Page):
         """
         return self.grade_set.filter(student=student).exists()  # type: ignore
 
-    def get_context(self, request) -> dict:
-        """
-        Append the slide pages to the context provided to the template.
-        """
-        context: dict = super().get_context(request)
-        context["slides"] = self.slides
-        return context
+    @property
+    def get_course(self) -> Page:
+        return self.get_parent().get_parent()
 
     def _mark_complete(self, student: User) -> None:
         Grade.objects.create(section=self, student=student)
@@ -204,7 +220,10 @@ class Lesson(Page):
             )
         )
     def time_remaining(self, student: User) -> int:
-        return sum(section.specific.time_to_complete for section in self.get_children() if not section.specific.completed(student))
+        return sum(
+                section.specific.time_to_complete for section in self.get_children() 
+                if not section.specific.completed(student)
+        )
 
     def _mark_complete(self, student: User) -> None:
         """
@@ -282,13 +301,15 @@ class Textbook(Page):
     def lessons(self):
         return self.get_children().public().live()
 
-    def get_context(self, request):
+    def get_context(self, request) -> dict:
         """
         Append the lesson pages to the context provided to the template.
         """
 
         context = super().get_context(request)
         context["lessons"] = self.lessons
+        context["next_section"] = self.next_section(request.user)
+        context["time_remaining"] = self.time_remaining(request.user)
         return context
 
     def completed(self, student: User) -> bool:
@@ -298,17 +319,24 @@ class Textbook(Page):
         """
 
         return all(lesson.specific.completed(student) for lesson in self.get_children())
+    
+    def time_remaining(self, student: User) -> int:
+        """
+        Return the time remaining for the entire course. This needs to be rewritten to have
+        a more effecient query.
+        """
+        return sum(lesson.specific.time_remaining(student) for lesson in self.get_children())
 
     def next_section(self, student: User) -> Optional[Section]:
         """
         Returns the next incomplete section for the user, unless course is compelte, then None.
         """
-        section = next(
+        lesson = next(
             filter(
                 lambda lesson: lesson.specific.next_section(student) is not None,
                 self.get_children(),
-            )
-        , None)
-        if section is None:
+            ), 
+        None)
+        if lesson is None:
             return None
-        return section.specific.next_section(student)
+        return lesson.specific.next_section(student)

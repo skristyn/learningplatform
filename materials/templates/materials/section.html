@@ -2,10 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 	{% include 'materials/css_include.html' %}
     {% include 'materials/js_include.html' %}
-	{% if title %}
+	{% if page.title %}
 		<title>Learning Platform - {{ page.title }}</title>
 	{% else %}
 		<title>Learning Platform</title>
@@ -45,8 +44,8 @@
 			<div class="lesson-menu-box">
 				<h1><span style="font-size: 2rem; font-weight: 400;"></span></h1>
 				<p><span style="font-weight: 600;">Exit to: &nbsp;</span>
-					<a href="">Home</a> &nbsp;
-					<a href="">Course Overview</a>
+                <a href="{{ home_page.get_url }}">Home</a> &nbsp;
+                    <a href="{{ page.specific.get_course.get_url }}">Course Overview</a>
 				</p>
 				<div style="vertical-align: bottom;" id="lesson-interactive">
 					<div class="tab-content" id="tabContent">
@@ -79,24 +78,6 @@
 					{% include 'materials/slideshow.html' %}
 			</div> <!-- end col-8 -->
 		</div> <!-- end row -->
-
-<div style="text-align: center">
-	{% if section_complete  %}
-	<p>Section is complete!</p>
-	<p><a href = "">Return home</a></p>
-		{% if section.is_last_section %}
-		<p>This is the final section of this lesson</p>
-		{% else %}
-		<p><a href = "">Next section</a></p>
-		<p>{{ next_section }}</p>
-		{% endif %} 
-	{% else %}
-		<form method="POST">
-		{% csrf_token %}
-			<button type="submit">Mark section as complete</button>
-		</form>
-	{% endif %}
-</div>
 </div> <!-- end main container -->
 
 <script type="text/javascript" src="{% static 'materials/js/main.js' %}"></script>
