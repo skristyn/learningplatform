@@ -234,6 +234,7 @@ class Lesson(Page):
                 self.get_children(),
             )
         )
+    
     def time_remaining(self, student: User) -> int:
         return sum(
                 section.specific.time_to_complete for section in self.get_children() 
@@ -314,6 +315,9 @@ class Textbook(Page):
 
     @property
     def lessons(self):
+        """
+        All publsihed lessons for the textbook.
+        """
         return self.get_children().public().live()
 
     def get_context(self, request) -> dict:
