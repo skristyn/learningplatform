@@ -16,8 +16,12 @@ def build_lesson(title="Lesson One", parent=None):
     else:
         lesson = Lesson(title=title)
         parent.add_child(instance=lesson)
-    section_one: Section = Section(title=f"{lesson.title}-Section one", time_to_complete=10)
-    section_two: Section = Section(title=f"{lesson.title}-Section two", time_to_complete=20)
+    section_one: Section = Section(
+        title=f"{lesson.title}-Section one", time_to_complete=10
+    )
+    section_two: Section = Section(
+        title=f"{lesson.title}-Section two", time_to_complete=20
+    )
     lesson.add_child(instance=section_one)
     lesson.add_child(instance=section_two)
 
@@ -112,6 +116,7 @@ class TestGrade(TestCase):
 
         self.assertFalse(result)
 
+
 class TestTimeToComplete(TestCase):
     def setUp(self):
         signals.post_save.disconnect(sender=User, dispatch_uid="irrelevant")
@@ -129,7 +134,9 @@ class TestTimeToComplete(TestCase):
         student = build_student()
 
         section_one, section_two = lesson.get_children()
-        section_one.specific._mark_complete(student) # section two has 20 minutes remaining
+        section_one.specific._mark_complete(
+            student
+        )  # section two has 20 minutes remaining
 
         result = lesson.specific.time_remaining(student)
 
@@ -140,12 +147,13 @@ class TestTimeToComplete(TestCase):
         student = build_student()
 
         section_one, section_two = lesson.get_children()
-        section_one.specific._mark_complete(student) 
-        section_two.specific._mark_complete(student) 
+        section_one.specific._mark_complete(student)
+        section_two.specific._mark_complete(student)
 
         result = lesson.specific.time_remaining(student)
-        
+
         self.assertEqual(result, 0)
+
 
 class TestAPI(APITestCase):
     logger = logging.getLogger("tests.api")

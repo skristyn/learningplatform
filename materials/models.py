@@ -72,7 +72,7 @@ class Resource(Page):
 
 class CompletedSerializer(Field):
     """
-    Originally written to suply the request's user object to the completed method from 
+    Originally written to suply the request's user object to the completed method from
     both the lesson and section classes. Should rename because it can be used to supply
     the user to any model method.
     """
@@ -87,12 +87,13 @@ class Section(RoutablePageMixin, Page):
     The section is the core informational unit of the platform. Once a student
     begins a section they are brought into the learning Vue application.
     """
+
     time_to_complete = models.IntegerField(blank=True, null=True)
     parent_page_types = ["materials.Lesson"]
     subpage_types = ["materials.Slide", "materials.Resource"]
-    
+
     content_panels = Page.content_panels + [
-            FieldPanel('time_to_complete'),
+        FieldPanel("time_to_complete"),
     ]
 
     api_fields = [
@@ -111,27 +112,24 @@ class Section(RoutablePageMixin, Page):
         context["home_page"] = HomePage.objects.first()
         context["textbook"] = self.course
         return context
-    
+
     def serve(self, request, *args, **kwargs):
         """
         Overwriting the serve method to allow for a post request marking the
         section as complete for the user.
         """
-        if request.method == 'POST':
+        if request.method == "POST":
             self._mark_complete(request.user)
-            return redirect(self.url + 'congratulations')
+            return redirect(self.url + "congratulations")
         return super().serve(request, *args, **kwargs)
 
-    @route(r'^congratulations')
+    @route(r"^congratulations")
     def serve_congratulations(self, request):
         """
         This serves the same model, but to a different template to congratulate
         the user on completing the lesson.
         """
-        return self.render(
-                request,
-                template="materials/congratulations.html"
-        )
+        return self.render(request, template="materials/congratulations.html")
 
     def completed(self, student: User) -> bool:
         """
@@ -147,7 +145,7 @@ class Section(RoutablePageMixin, Page):
     @property
     def slides(self):
         return self.get_children().public().live()
-    
+
     def _mark_complete(self, student: User) -> None:
         Grade.objects.get_or_create(section=self, student=student)
 
@@ -234,11 +232,12 @@ class Lesson(Page):
                 self.get_children(),
             )
         )
-    
+
     def time_remaining(self, student: User) -> int:
         return sum(
-                section.specific.time_to_complete for section in self.get_children() 
-                if not section.specific.completed(student)
+            section.specific.time_to_complete
+            for section in self.get_children()
+            if not section.specific.completed(student)
         )
 
     def _mark_complete(self, student: User) -> None:
@@ -338,13 +337,15 @@ class Textbook(Page):
         """
 
         return all(lesson.specific.completed(student) for lesson in self.get_children())
-    
+
     def time_remaining(self, student: User) -> int:
         """
         Return the time remaining for the entire course. This needs to be rewritten to have
         a more effecient query.
         """
-        return sum(lesson.specific.time_remaining(student) for lesson in self.get_children())
+        return sum(
+            lesson.specific.time_remaining(student) for lesson in self.get_children()
+        )
 
     def next_section(self, student: User) -> Optional[Section]:
         """
@@ -354,8 +355,9 @@ class Textbook(Page):
             filter(
                 lambda lesson: lesson.specific.next_section(student) is not None,
                 self.get_children(),
-            ), 
-        None)
+            ),
+            None,
+        )
         if lesson is None:
             return None
         return lesson.specific.next_section(student)

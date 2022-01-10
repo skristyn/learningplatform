@@ -12,6 +12,7 @@ class Announcement(models.Model):
     """
     A short message broadcast to students on the homepage.
     """
+
     date = models.DateField(auto_now_add=True)
     text = models.TextField()
 
@@ -25,5 +26,4 @@ class HomePage(Page):
 
     def get_context(self, request):
         context: dict = super().get_context(request)
-        context['announcement'] = Announcement.objects.get_latest('date')
-
+        context["announcement"] = Announcement.objects.get_latest("date")

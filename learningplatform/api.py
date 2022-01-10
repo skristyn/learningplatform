@@ -28,13 +28,14 @@ class RootableRouter(WagtailAPIRouter):
         if name:
             return f"{name}/"
         return ""
-    
+
     def get_urlpatterns(self):
         urlpatterns = [
-                re_path(
+            re_path(
                 self.name_subdir(name),
-                include((class_.get_urlpatterns(), name), namespace=name)
-                ) for name, class_ in self._endpoints.items()
+                include((class_.get_urlpatterns(), name), namespace=name),
+            )
+            for name, class_ in self._endpoints.items()
         ]
 
         decorate_urlpatterns(urlpatterns, self.wrap_view)
@@ -52,4 +53,3 @@ api_router.register_endpoint("sections", SectionViewSet)
 api_router.register_endpoint("slides", SlideViewSet)
 api_router.register_endpoint("grades", GradeViewSet)
 api_router.register_endpoint("", RootViewSet)
-
