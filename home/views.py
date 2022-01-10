@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from wagtail.api.v2.views import BaseAPIViewSet
 from wagtail.api.v2.utils import get_object_detail_url
 from materials.models import Textbook, Section
-from .models import HomePage
+from .models import HomePage, Announcement
 
 
 class RootViewSet(BaseAPIViewSet):
@@ -45,6 +45,7 @@ class RootViewSet(BaseAPIViewSet):
 
         @api_view(["GET"])
         def inner_view(request, *args, **kwargs):
+
             return Response(
                 {
                     "current_course": {
@@ -59,6 +60,7 @@ class RootViewSet(BaseAPIViewSet):
                             router, request, Section, next_section.pk
                         ),
                     },
+                "announcement": Announcement.objects.latest('date').text,
                 }
             )
 

@@ -48,7 +48,8 @@ All api endpoints are found at `<...localhost...>/api/v1` and they include the f
 - `/sections/` fields: `title, completed, slides, time_to_complete`
 - `/slides/` fields: `title, body`
 - `/grades/` [only accepts POST]
-- `/` _Root endpoint returns the authenticated user's current course and next section._
+- `/` _Root endpoint returns the authenticated user's current course, next section_ 
+      _(or first if the user has completed the course) and announcements._
 
 Each endpoint has a field that provides some data about child pages including links to 
 their respective detail views to make it easy to move through the tree.
@@ -57,6 +58,8 @@ Most fields are accessed by adding a query ie `.../?fields=...`. You can provide
 comma-separated list of field names to select the data you need.
 
 A detailed list of available fields for each endpoint is provided above.
+
+For the root endpoint--
 
 ### Base Wagtail page fields
 For the most part, the content models subclass the Wagtail CMS's `Page` model. The full

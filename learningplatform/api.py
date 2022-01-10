@@ -1,6 +1,7 @@
 from django.urls import re_path, include
 from wagtail.utils.urlpatterns import decorate_urlpatterns
 from wagtail.api.v2.router import WagtailAPIRouter
+from wagtail.images.api.v2.views import ImagesAPIViewSet
 from home.views import RootViewSet
 from materials.views import (
     LessonViewSet,
@@ -52,4 +53,5 @@ api_router.register_endpoint("lessons", LessonViewSet)
 api_router.register_endpoint("sections", SectionViewSet)
 api_router.register_endpoint("slides", SlideViewSet)
 api_router.register_endpoint("grades", GradeViewSet)
+api_router.register_endpoint("images", ImagesAPIViewSet)
 api_router.register_endpoint("", RootViewSet)

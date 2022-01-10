@@ -1,15 +1,12 @@
 from typing import Callable, List, Optional
-from itertools import chain
 from django.db import models
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpRequest
 from django.shortcuts import redirect
 from rest_framework.serializers import Field
 from wagtail.core.models import Page
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel
-from wagtail.contrib.redirects.models import Redirect
 from wagtail.api import APIField
 from wagtail.api.v2.utils import get_object_detail_url
 from wagtail.core.query import PageQuerySet
@@ -53,7 +50,7 @@ class SlideSerializer(Field):
                 ),
             }
             for slide in slides
-        ]
+       ]
 
 
 class Resource(Page):
@@ -319,6 +316,14 @@ class Textbook(Page):
         """
         return self.get_children().public().live()
 
+    @property
+    def first_section(self):
+        """
+        Return the first section of the course.
+        """
+        first_lesson: Lesson = self.get_children().first()
+        return first_lesson.get_children().first()
+
     def get_context(self, request) -> dict:
         """
         Append the lesson pages to the context provided to the template.
@@ -359,5 +364,5 @@ class Textbook(Page):
             None,
         )
         if lesson is None:
-            return None
+            return self.first_section
         return lesson.specific.next_section(student)

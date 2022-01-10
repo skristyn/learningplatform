@@ -16,6 +16,10 @@ class Announcement(models.Model):
     date = models.DateField(auto_now_add=True)
     text = models.TextField()
 
+    def __str__(self):
+        if len(self.text) > 28:
+            return self.text[:25] + "..."
+        return self.text
 
 class HomePage(Page):
     """
@@ -26,4 +30,4 @@ class HomePage(Page):
 
     def get_context(self, request):
         context: dict = super().get_context(request)
-        context["announcement"] = Announcement.objects.get_latest("date")
+        context["announcement"] = Announcement.objects.latest("date")
