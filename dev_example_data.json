@@ -630,6 +630,72 @@
   }
 },
 {
+  "model": "wagtailcore.pagelogentry",
+  "pk": 21,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.view_restriction.create",
+    "data_json": "{\"restriction\": {\"type\": \"login\", \"title\": \"Private, accessible to logged-in users\"}}",
+    "timestamp": "2022-01-11T04:06:41.027Z",
+    "uuid": "f8d7357b-3a9f-4fdc-a66a-42600556d2c8",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": false,
+    "deleted": false,
+    "page": 6,
+    "revision": null
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 22,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.edit",
+    "data_json": "\"\"",
+    "timestamp": "2022-01-11T04:06:44.943Z",
+    "uuid": "55edece1-a79d-4e13-bf64-e5fc15e33a50",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 6,
+    "revision": 20
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 23,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.publish",
+    "data_json": "null",
+    "timestamp": "2022-01-11T04:06:44.971Z",
+    "uuid": "55edece1-a79d-4e13-bf64-e5fc15e33a50",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": false,
+    "deleted": false,
+    "page": 6,
+    "revision": 20
+  }
+},
+{
   "model": "wagtailcore.groupapprovaltask",
   "pk": 1,
   "fields": {
@@ -638,6 +704,16 @@
         "Moderators"
       ]
     ]
+  }
+},
+{
+  "model": "wagtailcore.pageviewrestriction",
+  "pk": 1,
+  "fields": {
+    "restriction_type": "login",
+    "password": "",
+    "page": 6,
+    "groups": []
   }
 },
 {
@@ -907,6 +983,20 @@
   }
 },
 {
+  "model": "wagtailcore.pagerevision",
+  "pk": 20,
+  "fields": {
+    "page": 6,
+    "submitted_for_moderation": false,
+    "created_at": "2022-01-11T04:06:44.931Z",
+    "user": [
+      "user_one"
+    ],
+    "content_json": "{\"pk\": 6, \"path\": \"00010001000100010001\", \"depth\": 5, \"numchild\": 4, \"translation_key\": \"ae5914b5-d657-4620-890f-77c2d2ccc94d\", \"locale\": 1, \"title\": \"Welcome to the Digital Stewards training!\", \"draft_title\": \"Welcome to the Digital Stewards training!\", \"slug\": \"welcome-to-the-digital-stewards-training\", \"content_type\": 13, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/digital-stewards-training/welcome-and-orientation/welcome-to-the-digital-stewards-training/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2022-01-11T01:18:24.375Z\", \"last_published_at\": \"2022-01-11T01:18:50.135Z\", \"latest_revision_created_at\": \"2022-01-11T01:18:50.115Z\", \"live_revision\": 19, \"alias_of\": null, \"time_to_complete\": 15, \"wagtail_admin_comments\": []}",
+    "approved_go_live_at": null
+  }
+},
+{
   "model": "wagtailcore.page",
   "pk": 1,
   "fields": {
@@ -1086,9 +1176,9 @@
     "locked_at": null,
     "locked_by": null,
     "first_published_at": "2022-01-11T01:18:24.375Z",
-    "last_published_at": "2022-01-11T01:18:50.135Z",
-    "latest_revision_created_at": "2022-01-11T01:18:50.115Z",
-    "live_revision": 19,
+    "last_published_at": "2022-01-11T04:06:44.953Z",
+    "latest_revision_created_at": "2022-01-11T04:06:44.931Z",
+    "live_revision": 20,
     "alias_of": null
   }
 },
