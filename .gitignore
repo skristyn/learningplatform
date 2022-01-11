@@ -7,3 +7,5 @@ htmlcov/*
 todo.txt
 materials_outline.txt
 media/*
+.venv/*
+env/*
