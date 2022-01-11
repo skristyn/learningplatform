@@ -1,5 +1,13 @@
 [
 {
+  "model": "home.announcement",
+  "pk": 1,
+  "fields": {
+    "date": "2022-01-11",
+    "text": "Here is the initial announcement"
+  }
+},
+{
   "model": "wagtailcore.site",
   "pk": 2,
   "fields": {
@@ -187,6 +195,42 @@
     "date_joined": "2022-01-11T00:28:33.248Z",
     "groups": [],
     "user_permissions": []
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2022-01-11T04:34:31.623Z",
+    "user": [
+      "user_one"
+    ],
+    "content_type": [
+      "home",
+      "announcement"
+    ],
+    "object_id": "1",
+    "object_repr": "Here is the initial annou...",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2022-01-11T04:34:53.301Z",
+    "user": [
+      "user_one"
+    ],
+    "content_type": [
+      "users",
+      "enrollment"
+    ],
+    "object_id": "1",
+    "object_repr": "Enrollment for user_one",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
   }
 },
 {
@@ -1400,6 +1444,17 @@
     "pronouns": "",
     "team": null,
     "buddy": []
+  }
+},
+{
+  "model": "users.enrollment",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "user_one"
+    ],
+    "active_course": 4,
+    "history": []
   }
 }
 ]
