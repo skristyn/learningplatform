@@ -21,18 +21,21 @@ Install all dependencies with `pip install -r requirements.txt`
 The repo includes some sample data. First, however you have to run migrations. This can 
 be done with the command `python manage.py migrate`
 
-Once the migrations are run you can load the data with `python manage.py loaddata <fixture-name>`
+Once the migrations are run you can load the data with `python manage.py loaddata dev_example_data.json`
 
+_Currently there are no images with the data, but we will add some later this week_
 
 ## Accessing Site
 
 ### Creating superuser
 
-To create a superuser that will give you access to the wagtail CMS and Django admin pages, you can run
-the command `python manage.py createsuperuser` which will prompt you to create a username and password.
+In the database loaded with loaddata above, there is already a superuser created:
 
-TO DO This is currently throwing an error, due to a missing file, *but do not fear, the user is created anyway*.
+username: "user\_one"
+password: "bad\_password"
 
+For convinence the user is already enrolled in the course so after signin the data is available
+from a student's point of view.
 
 ## API
 
@@ -48,6 +51,7 @@ All api endpoints are found at `<...localhost...>/api/v1` and they include the f
 - `/sections/` fields: `title, completed, slides, time_to_complete`
 - `/slides/` fields: `title, body`
 - `/grades/` [only accepts POST]
+- `/images/` _currently empty_
 - `/` _Root endpoint returns the authenticated user's current course, next section_ 
       _(or first if the user has completed the course) and announcements._
 

@@ -18,7 +18,7 @@
 			<!-- change from pk to slugs to make pointing to resources more readable -->
 			<!-- these links should use 'get_absolute_url' instead of this junk-->
 			<a href= '{{ next_section.get_absolute_url }}'/>
-				{{ next_section.index_label }}{{ next_section.name }}</a>
+				{{ next_section.specific.title }}</a>
 		</button>
 
 			{% endif %}

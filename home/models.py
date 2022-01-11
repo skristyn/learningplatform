@@ -1,6 +1,6 @@
 from typing import Callable
 from django.db import models
-from django.urls import reverse
+from django.shortcuts import reverse, redirect
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
 from rest_framework.serializers import Field
@@ -30,4 +30,14 @@ class HomePage(Page):
 
     def get_context(self, request):
         context: dict = super().get_context(request)
+        course = request.user.enrollment.active_course
+        context['course'] = course 
         context["announcement"] = Announcement.objects.latest("date")
+        context["next_section"] = course.specific.next_section(request.user)
+        return context
+
+    def serve(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return super().serve(request, *args, **kwargs)
+        return redirect(reverse('users:login'))
+

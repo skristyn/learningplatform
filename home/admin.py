@@ -5,5 +5,5 @@ from .models import Announcement
 @admin.register(Announcement)
 class AnnouncementAdmin(admin.ModelAdmin):
     """
-    Registers the grade model so it's available for editing on django admin.
+    Registers the Announcement model so it's available for editing on django admin.
     """

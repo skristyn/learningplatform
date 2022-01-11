@@ -331,6 +331,7 @@ class Textbook(Page):
 
         context = super().get_context(request)
         context["lessons"] = self.lessons
+        context["home_page"] = HomePage.objects.first()
         context["next_section"] = self.next_section(request.user)
         context["time_remaining"] = self.time_remaining(request.user)
         return context

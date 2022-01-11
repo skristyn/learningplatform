@@ -84,7 +84,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "learningplatform.wsgi.application"
 
-LOGIN_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "users:login"
 
 # Database
@@ -168,6 +168,9 @@ WAGTAILSEARCH_BACKENDS = {
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+WAGTAIL_FRONTEND_LOGIN_TEMPLATE = 'users/login.html'
+WAGTAIL_FRONTEND_LOGIN_URL = '/accounts/login/'
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
