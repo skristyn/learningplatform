@@ -1,7 +1,7 @@
 from typing import List, Callable
 from django.http.response import JsonResponse
 from django.http import HttpRequest
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.urls import path
 from django.contrib.auth.models import User
 from wagtail.api.v2.views import BaseAPIViewSet
