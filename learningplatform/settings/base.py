@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "wagtail.admin",
     "wagtail.core",
     "modelcluster",
+    "pinax.messages",
     "taggit",
     "rest_framework",
     "django.contrib.admin",

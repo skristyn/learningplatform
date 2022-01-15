@@ -24,7 +24,8 @@ urlpatterns = [
     path("users/", include(users_urls)),
     path("search/", search_views.search, name="search"),
     path("api/v1/", api_router.urls),
-    path("course", vue_test, name="course"),
+    path("course/", vue_test, name="course"),
+    url(r"^messages/" include("pinax.messages.urls", namespace="pinax_messages")),
 ]
 
 
