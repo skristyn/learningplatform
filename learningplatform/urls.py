@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.contrib import admin
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -25,7 +25,7 @@ urlpatterns = [
     path("search/", search_views.search, name="search"),
     path("api/v1/", api_router.urls),
     path("course/", vue_test, name="course"),
-    url(r"^messages/" include("pinax.messages.urls", namespace="pinax_messages")),
+    re_path(r"^messages/", include("pinax.messages.urls", namespace="pinax_messages")),
 ]
 
 

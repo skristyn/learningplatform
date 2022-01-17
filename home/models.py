@@ -1,6 +1,7 @@
 from django.db import models
 from django.shortcuts import reverse, redirect
 from wagtail.core.models import Page
+from wagtail.admin.edit_handlers import FieldPanel
 
 
 class Announcement(models.Model):
@@ -15,6 +16,7 @@ class Announcement(models.Model):
         if len(self.text) > 28:
             return self.text[:25] + "..."
         return self.text
+
 
 class HomePage(Page):
     """
@@ -35,4 +37,17 @@ class HomePage(Page):
         if request.user.is_authenticated:
             return super().serve(request, *args, **kwargs)
         return redirect(reverse('users:login'))
+
+
+class NotEnrolled(Page):
+    """
+    Page redirected to when homepage is accessed, but student is not enrolled.
+    """
+    message = models.TextField()
+    
+    max_count = 1
+
+    content_panels = Page.content_panels + [
+        FieldPanel('message'),
+    ]
 

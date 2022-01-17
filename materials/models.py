@@ -5,12 +5,46 @@ from django.shortcuts import redirect
 from rest_framework.serializers import Field
 from wagtail.core.models import Page
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.core.fields import RichTextField
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core import blocks
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.api import APIField
 from wagtail.api.v2.utils import get_object_detail_url
 from wagtail.core.query import PageQuerySet
 from home.models import HomePage
+
+
+class ResourceBlock(blocks.StructBlock):
+    """
+    For inserting a resource into the slides.
+    """
+    resource = ImageChooserBlock()
+
+
+class HeadlineLeftImageBlock(blocks.StructBlock):
+    """
+    Headline across slide, image to the left, text to the right.
+    """
+    heading = blocks.CharBlock()
+    image = ImageChooserBlock(required=True)
+    body = blocks.RichTextBlock()
+
+
+class ImageTopBlock(blocks.StructBlock):
+    """
+    Image across the top, text across the bottom.        
+    """
+    image = ImageChooserBlock(required=True)
+    body = blocks.RichTextBlock()
+
+
+class ImageRightBlock(blocks.StructBlock):
+    """
+    Image on the right, text on the left.
+    """
+    image = ImageChooserBlock(required=True)
+    body = blocks.RichTextBlock()
 
 
 class Slide(Page):
@@ -89,8 +123,16 @@ class Section(RoutablePageMixin, Page):
     parent_page_types = ["materials.Lesson"]
     subpage_types = ["materials.Slide", "materials.Resource"]
 
+    stream = StreamField([
+        ('resource', ResourceBlock()),
+        ('headlineleftimage', HeadlineLeftImageBlock()),
+        ('imagetopblock', ImageTopBlock()),
+        ('imagerightblock', ImageRightBlock()),
+    ])
+
     content_panels = Page.content_panels + [
         FieldPanel("time_to_complete"),
+        StreamFieldPanel("stream"),
     ]
 
     api_fields = [
@@ -98,6 +140,7 @@ class Section(RoutablePageMixin, Page):
         APIField("time_to_complete"),
         APIField("completed", serializer=CompletedSerializer()),
         APIField("slides", serializer=SlideSerializer()),
+        APIField("stream"),
     ]
 
     def get_context(self, request) -> dict:

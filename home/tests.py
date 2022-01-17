@@ -4,9 +4,10 @@ from django.test.client import RequestFactory
 from django.contrib.auth.models import AnonymousUser, User
 from django.db.models import signals
 from .models import HomePage
+from users.models import Enrollment
 
 
-class TestLoginRequiredDecorator(TestCase):
+class TestLoginRequired(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
 
@@ -36,8 +37,9 @@ class TestLoginRequiredDecorator(TestCase):
         signals.post_save.disconnect(sender=User, dispatch_uid="irrelevant")
         request = self.factory.get("/")
         request.user = User.objects.create(username="Harvey")
-        page = HomePage.objects.first()
 
+        page = HomePage.objects.first()
+        enrollment = Enrollment.objects.create(student=request.user, course=
         response = page.serve(request)
 
         self.assertEqual(response.status_code, 200)

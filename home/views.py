@@ -7,6 +7,20 @@ from materials.models import Textbook, Section
 from .models import HomePage, Announcement
 
 
+def api_login_required(view_func):
+    """
+    Wraps a view function to return an error message if a user accessing the API
+    is not logged in.
+    """
+    def private_view_func(instance, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return Response(
+                {"message": "Please log in to view any learning platform content"}
+            )
+        return view_func(instance, request, *args, **kwargs)
+    return private_view_func
+
+
 class RootViewSet(BaseAPIViewSet):
     """
     These links aid in reaching the users current course and their next section.
@@ -20,6 +34,7 @@ class RootViewSet(BaseAPIViewSet):
             path("", cls.as_view({"get": "root_view"}), name="detail"),
         ]
 
+    @api_login_required
     def root_view(self, request):
         """
         : / Doing this so we're not returning a raw JsonResponse, but a drf one.
@@ -28,18 +43,13 @@ class RootViewSet(BaseAPIViewSet):
 
         # if the user is not logged in, they'll have all kinds of errors.
 
-        if not request.user.is_authenticated:
-            return Response(
-                {"message": "Please log in to view any learning platform content"}
-            )
-
         router = self.get_serializer_context()["router"]
         course = request.user.enrollment.active_course
         next_section = course.specific.next_section(request.user)
         print(next_section)
 
         # The api_view decorator expects to wrap a simple function-based django views
-        # not a wagtail APIViewset method. So wrapping an inner function. All knees
+        # not a wagtail APIViewset method...so wrapping an inner function. All knees
         # and elbows.
 
         @api_view(["GET"])
