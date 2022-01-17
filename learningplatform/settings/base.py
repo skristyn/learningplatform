@@ -24,7 +24,6 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
-    "course",
     "users",
     "home",
     "search",
@@ -41,7 +40,9 @@ INSTALLED_APPS = [
     "wagtail.admin",
     "wagtail.core",
     "modelcluster",
+    "bootstrapform",
     "pinax.messages",
+    "pinax.templates",
     "taggit",
     "rest_framework",
     "django.contrib.admin",
@@ -78,6 +79,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "pinax.messages.context_processors.user_messages",
             ],
         },
     },

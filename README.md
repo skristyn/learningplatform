@@ -6,7 +6,7 @@ a basic python virtual env. Those are the steps that I've laid out here. This wi
 along with automating some of these set up steps.
 
 Install Python on your machine. I have been building with python 3.8.10 though I don't think the 
-dependencies require that. Anything between 3.7 and 3.9 should be fine.
+dependencies require that. Anything more recent than 3.7 should be fine.
 
 Within the root folder of the project run the following:
 `python -m venv env`
@@ -26,9 +26,11 @@ Once the migrations are run you can load the data with `python manage.py loaddat
 _Currently there are no images with the data, but we will add some later this week_
 
 ## Accessing Site
+### Running the server
+Starting the development server can be done with `python manage.py runserver`. This will start a development server
+at localhost:8000.
 
-### Creating superuser
-
+### Logging in as superuser
 In the database loaded with loaddata above, there is already a superuser created:
 
 username: "user\_one"
@@ -38,6 +40,12 @@ For convinence the user is already enrolled in the course so after signin the da
 from a student's point of view.
 
 ## API
+### IMPORTANT: Change the wagtail site settings to the correct port
+Once you have the server running you can sign into the wagtail backend at localhost:8000/admin. For the API to
+serve the detail links correctly, you have to change the port setting. This can be done by clicking the settings
+link at the bottom of the menu on the left of the admin page, then clicking 'sites'. If you click on localhost, you
+will be taken to the site options page where you can set the port to 8000. _You will need to repeat this step when
+starting the development server if you plan to browse the links with the drf explorer._ 
 
 ### Exploring the API with the Django Rest Framework GUI
 Django Rest Framework provides a simple interface that should make it fairly straight forward to explore the data 
@@ -63,7 +71,6 @@ comma-separated list of field names to select the data you need.
 
 A detailed list of available fields for each endpoint is provided above.
 
-For the root endpoint--
 
 ### Base Wagtail page fields
 For the most part, the content models subclass the Wagtail CMS's `Page` model. The full

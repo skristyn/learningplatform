@@ -8,6 +8,7 @@ authors = ["mvickers <vickers.mike@gmail.com>"]
 python = "^3.8"
 wagtail = "^2.15.1"
 pinax-messages = "^3.0.0"
+pinax-templates = "^2.0.6"
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.910"

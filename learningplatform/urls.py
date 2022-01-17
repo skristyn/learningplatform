@@ -8,7 +8,6 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 from search import views as search_views
 from users import urls as users_urls
-from course.views import vue_test
 from .api import api_router
 
 
@@ -24,8 +23,7 @@ urlpatterns = [
     path("users/", include(users_urls)),
     path("search/", search_views.search, name="search"),
     path("api/v1/", api_router.urls),
-    path("course/", vue_test, name="course"),
-    re_path(r"^messages/", include("pinax.messages.urls", namespace="pinax_messages")),
+    path("messages/", include("pinax.messages.urls", namespace="pinax_messages")),
 ]
 
 
