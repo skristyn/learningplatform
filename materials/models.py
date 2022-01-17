@@ -14,6 +14,12 @@ from wagtail.api.v2.utils import get_object_detail_url
 from wagtail.core.query import PageQuerySet
 from home.models import HomePage
 
+"""
+The first several block classes represent slide types.
+
+These types should be developed with help from the fe folks to
+best choose layout and design.
+"""
 
 class ResourceBlock(blocks.StructBlock):
     """
@@ -45,46 +51,6 @@ class ImageRightBlock(blocks.StructBlock):
     """
     image = ImageChooserBlock(required=True)
     body = blocks.RichTextBlock()
-
-
-class Slide(Page):
-    """
-    A section comprises several slides. They're where the information is
-    added and displayed.
-    """
-
-    parent_page_types = ["materials.Section"]
-    body = RichTextField(blank=True)
-
-    content_panels = Page.content_panels + [
-        FieldPanel("body"),
-    ]
-
-    api_fields = [
-        APIField("title"),
-        APIField("body"),
-    ]
-
-
-class SlideSerializer(Field):
-    """
-    Packages the slide data, most importantly the detail_url, to be displayed
-    on the section views.
-    """
-
-    def to_representation(self, slides: List[Slide]) -> List[dict]:
-        request = self.context["request"]
-
-        return [
-            {
-                "id": slide.id,
-                "title": slide.title,
-                "detail_url": get_object_detail_url(
-                    self.context["router"], request, Slide, slide.pk
-                ),
-            }
-            for slide in slides
-       ]
 
 
 class Resource(Page):
@@ -121,9 +87,8 @@ class Section(RoutablePageMixin, Page):
 
     time_to_complete = models.IntegerField(blank=True, null=True)
     parent_page_types = ["materials.Lesson"]
-    subpage_types = ["materials.Slide", "materials.Resource"]
 
-    stream = StreamField([
+    slides = StreamField([
         ('resource', ResourceBlock()),
         ('headlineleftimage', HeadlineLeftImageBlock()),
         ('imagetopblock', ImageTopBlock()),
@@ -139,8 +104,7 @@ class Section(RoutablePageMixin, Page):
         APIField("title"),
         APIField("time_to_complete"),
         APIField("completed", serializer=CompletedSerializer()),
-        APIField("slides", serializer=SlideSerializer()),
-        APIField("stream"),
+        APIField("slides"),
     ]
 
     def get_context(self, request) -> dict:

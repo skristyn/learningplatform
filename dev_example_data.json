@@ -8,11 +8,23 @@
   }
 },
 {
+  "model": "wagtailimages.rendition",
+  "pk": 1,
+  "fields": {
+    "filter_spec": "max-165x165",
+    "file": "images/IMG-0728_VnZgCQb.max-165x165.jpg",
+    "width": 118,
+    "height": 165,
+    "focal_point_key": "",
+    "image": 1
+  }
+},
+{
   "model": "wagtailcore.site",
   "pk": 2,
   "fields": {
     "hostname": "localhost",
-    "port": 80,
+    "port": 8000,
     "site_name": "",
     "root_page": 3,
     "is_default_site": true
@@ -184,7 +196,7 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$260000$saPn72La4990k1Z8RYuVO2$VU6TTtkOqwV6u7MxYg18G83GoVSVUqwMW9d1vIWojDE=",
-    "last_login": "2022-01-11T00:29:43.232Z",
+    "last_login": "2022-01-17T02:02:43.474Z",
     "is_superuser": true,
     "username": "user_one",
     "first_name": "",
@@ -740,6 +752,94 @@
   }
 },
 {
+  "model": "wagtailcore.pagelogentry",
+  "pk": 24,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.edit",
+    "data_json": "\"\"",
+    "timestamp": "2022-01-16T22:10:17.128Z",
+    "uuid": "bf9dd22e-22a5-4f9f-a315-ffea1148ac56",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 6,
+    "revision": 21
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 25,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.publish",
+    "data_json": "null",
+    "timestamp": "2022-01-16T22:10:17.162Z",
+    "uuid": "bf9dd22e-22a5-4f9f-a315-ffea1148ac56",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 6,
+    "revision": 21
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 26,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.view_restriction.delete",
+    "data_json": "{\"restriction\": {\"type\": \"none\", \"title\": \"Public\"}}",
+    "timestamp": "2022-01-17T01:11:55.763Z",
+    "uuid": "6e92a747-374f-4713-9a4c-c58c74b19801",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": false,
+    "deleted": false,
+    "page": 6,
+    "revision": null
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 27,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.edit",
+    "data_json": "\"\"",
+    "timestamp": "2022-01-17T01:12:00.319Z",
+    "uuid": "54f22411-cdc5-4d04-946c-b1c3748871a8",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 6,
+    "revision": 22
+  }
+},
+{
   "model": "wagtailcore.groupapprovaltask",
   "pk": 1,
   "fields": {
@@ -748,16 +848,6 @@
         "Moderators"
       ]
     ]
-  }
-},
-{
-  "model": "wagtailcore.pageviewrestriction",
-  "pk": 1,
-  "fields": {
-    "restriction_type": "login",
-    "password": "",
-    "page": 6,
-    "groups": []
   }
 },
 {
@@ -1041,6 +1131,34 @@
   }
 },
 {
+  "model": "wagtailcore.pagerevision",
+  "pk": 21,
+  "fields": {
+    "page": 6,
+    "submitted_for_moderation": false,
+    "created_at": "2022-01-16T22:10:17.115Z",
+    "user": [
+      "user_one"
+    ],
+    "content_json": "{\"pk\": 6, \"path\": \"00010001000100010001\", \"depth\": 5, \"numchild\": 4, \"translation_key\": \"ae5914b5-d657-4620-890f-77c2d2ccc94d\", \"locale\": 1, \"title\": \"Welcome to the Digital Stewards training!\", \"draft_title\": \"Welcome to the Digital Stewards training!\", \"slug\": \"welcome-to-the-digital-stewards-training\", \"content_type\": 13, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/digital-stewards-training/welcome-and-orientation/welcome-to-the-digital-stewards-training/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2022-01-11T01:18:24.375Z\", \"last_published_at\": \"2022-01-11T04:06:44.953Z\", \"latest_revision_created_at\": \"2022-01-11T04:06:44.931Z\", \"live_revision\": 20, \"alias_of\": null, \"time_to_complete\": 15, \"stream\": \"[{\\\"type\\\": \\\"headlineleftimage\\\", \\\"value\\\": {\\\"heading\\\": \\\"Here is the title to the slice that will run accross the whole page.\\\", \\\"image\\\": 1, \\\"body\\\": \\\"<p data-block-key=\\\\\\\"ndb1o\\\\\\\">Here is a short paragraph that we can include in the body. It is an important paragraph that&#x27;s why it isn&#x27;t very long. It&#x27;s very to the point.</p>\\\"}, \\\"id\\\": \\\"c2c6e683-1b51-49d5-9a5a-232181e93359\\\"}]\", \"wagtail_admin_comments\": []}",
+    "approved_go_live_at": null
+  }
+},
+{
+  "model": "wagtailcore.pagerevision",
+  "pk": 22,
+  "fields": {
+    "page": 6,
+    "submitted_for_moderation": false,
+    "created_at": "2022-01-17T01:12:00.304Z",
+    "user": [
+      "user_one"
+    ],
+    "content_json": "{\"pk\": 6, \"path\": \"00010001000100010001\", \"depth\": 5, \"numchild\": 4, \"translation_key\": \"ae5914b5-d657-4620-890f-77c2d2ccc94d\", \"locale\": 1, \"title\": \"Welcome to the Digital Stewards training!\", \"draft_title\": \"Welcome to the Digital Stewards training!\", \"slug\": \"welcome-to-the-digital-stewards-training\", \"content_type\": 13, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/digital-stewards-training/welcome-and-orientation/welcome-to-the-digital-stewards-training/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2022-01-11T01:18:24.375Z\", \"last_published_at\": \"2022-01-16T22:10:17.141Z\", \"latest_revision_created_at\": \"2022-01-16T22:10:17.115Z\", \"live_revision\": 21, \"alias_of\": null, \"time_to_complete\": 15, \"stream\": \"[{\\\"type\\\": \\\"headlineleftimage\\\", \\\"value\\\": {\\\"heading\\\": \\\"Here is the title to the slice that will run accross the whole page.\\\", \\\"image\\\": 1, \\\"body\\\": \\\"<p data-block-key=\\\\\\\"ndb1o\\\\\\\">Here is a short paragraph that we can include in the body. It is an important paragraph that&#x27;s why it isn&#x27;t very long. It&#x27;s very to the point.</p>\\\"}, \\\"id\\\": \\\"c2c6e683-1b51-49d5-9a5a-232181e93359\\\"}]\", \"wagtail_admin_comments\": []}",
+    "approved_go_live_at": null
+  }
+},
+{
   "model": "wagtailcore.page",
   "pk": 1,
   "fields": {
@@ -1205,7 +1323,7 @@
       "section"
     ],
     "live": true,
-    "has_unpublished_changes": false,
+    "has_unpublished_changes": true,
     "url_path": "/home/digital-stewards-training/welcome-and-orientation/welcome-to-the-digital-stewards-training/",
     "owner": [
       "user_one"
@@ -1220,9 +1338,9 @@
     "locked_at": null,
     "locked_by": null,
     "first_published_at": "2022-01-11T01:18:24.375Z",
-    "last_published_at": "2022-01-11T04:06:44.953Z",
-    "latest_revision_created_at": "2022-01-11T04:06:44.931Z",
-    "live_revision": 20,
+    "last_published_at": "2022-01-16T22:10:17.141Z",
+    "latest_revision_created_at": "2022-01-17T01:12:00.304Z",
+    "live_revision": 21,
     "alias_of": null
   }
 },
@@ -1379,6 +1497,64 @@
   }
 },
 {
+  "model": "wagtailcore.modellogentry",
+  "pk": 1,
+  "fields": {
+    "content_type": [
+      "wagtailcore",
+      "site"
+    ],
+    "label": "localhost:8000 [default]",
+    "action": "wagtail.edit",
+    "data_json": "\"\"",
+    "timestamp": "2022-01-16T22:10:48.801Z",
+    "uuid": "a2746148-147e-4747-a34f-f711ed685b45",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": false,
+    "deleted": false,
+    "object_id": "2"
+  }
+},
+{
+  "model": "wagtailimages.image",
+  "pk": 1,
+  "fields": {
+    "collection": 1,
+    "title": "IMG-0728",
+    "file": "original_images/IMG-0728_VnZgCQb.JPG",
+    "width": 1181,
+    "height": 1643,
+    "created_at": "2022-01-16T22:09:44.570Z",
+    "uploaded_by_user": [
+      "user_one"
+    ],
+    "focal_point_x": null,
+    "focal_point_y": null,
+    "focal_point_width": null,
+    "focal_point_height": null,
+    "file_size": 220395,
+    "file_hash": "3273d93f50bdbbf9a54302d251072b3622ba7a09"
+  }
+},
+{
+  "model": "wagtailusers.userprofile",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "user_one"
+    ],
+    "submitted_notifications": true,
+    "approved_notifications": true,
+    "rejected_notifications": true,
+    "updated_comments_notifications": true,
+    "preferred_language": "",
+    "current_time_zone": "",
+    "avatar": ""
+  }
+},
+{
   "model": "materials.textbook",
   "pk": 4,
   "fields": {}
@@ -1394,7 +1570,8 @@
   "model": "materials.section",
   "pk": 6,
   "fields": {
-    "time_to_complete": 15
+    "time_to_complete": 15,
+    "stream": "[{\"type\": \"headlineleftimage\", \"value\": {\"heading\": \"Here is the title to the slice that will run accross the whole page.\", \"image\": 1, \"body\": \"<p data-block-key=\\\"ndb1o\\\">Here is a short paragraph that we can include in the body. It is an important paragraph that&#x27;s why it isn&#x27;t very long. It&#x27;s very to the point.</p>\"}, \"id\": \"c2c6e683-1b51-49d5-9a5a-232181e93359\"}]"
   }
 },
 {
