@@ -19,6 +19,9 @@ _All other commands within this README must be run with this environment activat
 Install all dependencies with `pip install -r requirements.txt`
 
 ## Running migrations & Loading example data
+
+_These two commands will have to be run occasionally if there are db model changes_
+
 The repo includes some sample data. First, however you have to run migrations. This can 
 be done with the command `python manage.py migrate`
 
