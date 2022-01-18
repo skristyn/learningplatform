@@ -9,14 +9,62 @@
 },
 {
   "model": "wagtailimages.rendition",
-  "pk": 1,
+  "pk": 2,
   "fields": {
     "filter_spec": "max-165x165",
-    "file": "images/IMG-0728_VnZgCQb.max-165x165.jpg",
-    "width": 118,
+    "file": "images/castle.max-165x165.jpg",
+    "width": 165,
+    "height": 132,
+    "focal_point_key": "",
+    "image": 2
+  }
+},
+{
+  "model": "wagtailimages.rendition",
+  "pk": 3,
+  "fields": {
+    "filter_spec": "max-165x165",
+    "file": "images/biker.max-165x165.jpg",
+    "width": 109,
     "height": 165,
     "focal_point_key": "",
-    "image": 1
+    "image": 3
+  }
+},
+{
+  "model": "wagtailimages.rendition",
+  "pk": 4,
+  "fields": {
+    "filter_spec": "max-165x165",
+    "file": "images/cityvert.max-165x165.jpg",
+    "width": 82,
+    "height": 165,
+    "focal_point_key": "",
+    "image": 4
+  }
+},
+{
+  "model": "wagtailimages.rendition",
+  "pk": 7,
+  "fields": {
+    "filter_spec": "max-165x165",
+    "file": "images/bridgebelowhoriz.max-165x165.jpg",
+    "width": 165,
+    "height": 94,
+    "focal_point_key": "",
+    "image": 5
+  }
+},
+{
+  "model": "wagtailimages.rendition",
+  "pk": 8,
+  "fields": {
+    "filter_spec": "max-165x165",
+    "file": "images/ocean-vert.max-165x165.jpg",
+    "width": 99,
+    "height": 165,
+    "focal_point_key": "",
+    "image": 6
   }
 },
 {
@@ -840,6 +888,182 @@
   }
 },
 {
+  "model": "wagtailcore.pagelogentry",
+  "pk": 28,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.edit",
+    "data_json": "\"\"",
+    "timestamp": "2022-01-17T22:21:34.709Z",
+    "uuid": "20b682db-2bae-4353-aa2e-11c65fca1437",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 6,
+    "revision": 23
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 29,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.publish",
+    "data_json": "null",
+    "timestamp": "2022-01-17T22:21:34.737Z",
+    "uuid": "20b682db-2bae-4353-aa2e-11c65fca1437",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 6,
+    "revision": 23
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 30,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.edit",
+    "data_json": "\"\"",
+    "timestamp": "2022-01-17T22:45:31.294Z",
+    "uuid": "a65308e3-96fb-4895-91ba-52e18ce8791c",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 6,
+    "revision": 24
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 31,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.publish",
+    "data_json": "null",
+    "timestamp": "2022-01-17T22:45:31.340Z",
+    "uuid": "a65308e3-96fb-4895-91ba-52e18ce8791c",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 6,
+    "revision": 24
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 32,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.edit",
+    "data_json": "\"\"",
+    "timestamp": "2022-01-17T22:46:26.575Z",
+    "uuid": "ad086075-9000-4598-9a0e-b8f8da42a9bc",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 6,
+    "revision": 25
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 33,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.publish",
+    "data_json": "null",
+    "timestamp": "2022-01-17T22:46:26.624Z",
+    "uuid": "ad086075-9000-4598-9a0e-b8f8da42a9bc",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 6,
+    "revision": 25
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 34,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.edit",
+    "data_json": "\"\"",
+    "timestamp": "2022-01-17T22:55:20.305Z",
+    "uuid": "78f92907-00b3-4ef7-baf4-2ae86137a14e",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 6,
+    "revision": 26
+  }
+},
+{
+  "model": "wagtailcore.pagelogentry",
+  "pk": 35,
+  "fields": {
+    "content_type": [
+      "materials",
+      "section"
+    ],
+    "label": "Welcome to the Digital Stewards training!",
+    "action": "wagtail.publish",
+    "data_json": "null",
+    "timestamp": "2022-01-17T22:55:20.335Z",
+    "uuid": "78f92907-00b3-4ef7-baf4-2ae86137a14e",
+    "user": [
+      "user_one"
+    ],
+    "content_changed": true,
+    "deleted": false,
+    "page": 6,
+    "revision": 26
+  }
+},
+{
   "model": "wagtailcore.groupapprovaltask",
   "pk": 1,
   "fields": {
@@ -1159,6 +1383,62 @@
   }
 },
 {
+  "model": "wagtailcore.pagerevision",
+  "pk": 23,
+  "fields": {
+    "page": 6,
+    "submitted_for_moderation": false,
+    "created_at": "2022-01-17T22:21:34.695Z",
+    "user": [
+      "user_one"
+    ],
+    "content_json": "{\"pk\": 6, \"path\": \"00010001000100010001\", \"depth\": 5, \"numchild\": 4, \"translation_key\": \"ae5914b5-d657-4620-890f-77c2d2ccc94d\", \"locale\": 1, \"title\": \"Welcome to the Digital Stewards training!\", \"draft_title\": \"Welcome to the Digital Stewards training!\", \"slug\": \"welcome-to-the-digital-stewards-training\", \"content_type\": 13, \"live\": true, \"has_unpublished_changes\": true, \"url_path\": \"/home/digital-stewards-training/welcome-and-orientation/welcome-to-the-digital-stewards-training/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2022-01-11T01:18:24.375Z\", \"last_published_at\": \"2022-01-16T22:10:17.141Z\", \"latest_revision_created_at\": \"2022-01-17T01:12:00.304Z\", \"live_revision\": 21, \"alias_of\": null, \"time_to_complete\": 15, \"stream\": \"[{\\\"type\\\": \\\"headlineleftimage\\\", \\\"value\\\": {\\\"heading\\\": \\\"Here is the title to the slice that will run accross the whole page.\\\", \\\"image\\\": 2, \\\"body\\\": \\\"<p data-block-key=\\\\\\\"ndb1o\\\\\\\">Here is a short paragraph that we can include in the body. It is an important paragraph that&#x27;s why it isn&#x27;t very long. It&#x27;s very to the point.</p>\\\"}, \\\"id\\\": \\\"c2c6e683-1b51-49d5-9a5a-232181e93359\\\"}]\", \"wagtail_admin_comments\": []}",
+    "approved_go_live_at": null
+  }
+},
+{
+  "model": "wagtailcore.pagerevision",
+  "pk": 24,
+  "fields": {
+    "page": 6,
+    "submitted_for_moderation": false,
+    "created_at": "2022-01-17T22:45:31.275Z",
+    "user": [
+      "user_one"
+    ],
+    "content_json": "{\"pk\": 6, \"path\": \"00010001000100010001\", \"depth\": 5, \"numchild\": 4, \"translation_key\": \"ae5914b5-d657-4620-890f-77c2d2ccc94d\", \"locale\": 1, \"title\": \"Welcome to the Digital Stewards training!\", \"draft_title\": \"Welcome to the Digital Stewards training!\", \"slug\": \"welcome-to-the-digital-stewards-training\", \"content_type\": 13, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/digital-stewards-training/welcome-and-orientation/welcome-to-the-digital-stewards-training/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2022-01-11T01:18:24.375Z\", \"last_published_at\": \"2022-01-17T22:21:34.719Z\", \"latest_revision_created_at\": \"2022-01-17T22:21:34.695Z\", \"live_revision\": 23, \"alias_of\": null, \"time_to_complete\": 15, \"stream\": \"[{\\\"type\\\": \\\"headlineleftimage\\\", \\\"value\\\": {\\\"heading\\\": \\\"4 Square Activity\\\", \\\"image\\\": 3, \\\"body\\\": \\\"<p data-block-key=\\\\\\\"ndb1o\\\\\\\">Create a new post in the forum, and share your answers for this activity. You may download and fill out this PDF, or just list your answers in the forum directly.</p><ol><li data-block-key=\\\\\\\"2fkvb\\\\\\\">Write the principle of your choosing, then label the box accordingly.</li><li data-block-key=\\\\\\\"33vdk\\\\\\\">Write out how you can practice this principle in each of the context, self, class, neighborhood, and city.</li></ol>\\\"}, \\\"id\\\": \\\"c2c6e683-1b51-49d5-9a5a-232181e93359\\\"}]\", \"wagtail_admin_comments\": []}",
+    "approved_go_live_at": null
+  }
+},
+{
+  "model": "wagtailcore.pagerevision",
+  "pk": 25,
+  "fields": {
+    "page": 6,
+    "submitted_for_moderation": false,
+    "created_at": "2022-01-17T22:46:26.561Z",
+    "user": [
+      "user_one"
+    ],
+    "content_json": "{\"pk\": 6, \"path\": \"00010001000100010001\", \"depth\": 5, \"numchild\": 4, \"translation_key\": \"ae5914b5-d657-4620-890f-77c2d2ccc94d\", \"locale\": 1, \"title\": \"Welcome to the Digital Stewards training!\", \"draft_title\": \"Welcome to the Digital Stewards training!\", \"slug\": \"welcome-to-the-digital-stewards-training\", \"content_type\": 13, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/digital-stewards-training/welcome-and-orientation/welcome-to-the-digital-stewards-training/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2022-01-11T01:18:24.375Z\", \"last_published_at\": \"2022-01-17T22:45:31.312Z\", \"latest_revision_created_at\": \"2022-01-17T22:45:31.275Z\", \"live_revision\": 24, \"alias_of\": null, \"time_to_complete\": 15, \"stream\": \"[{\\\"type\\\": \\\"headlineleftimage\\\", \\\"value\\\": {\\\"heading\\\": \\\"4 Square Activity\\\", \\\"image\\\": 3, \\\"body\\\": \\\"<p data-block-key=\\\\\\\"ndb1o\\\\\\\">Create a new post in the forum, and share your answers for this activity. You may download and fill out this PDF, or just list your answers in the forum directly.</p><ol><li data-block-key=\\\\\\\"2fkvb\\\\\\\">Write the principle of your choosing, then label the box accordingly.</li><li data-block-key=\\\\\\\"33vdk\\\\\\\">Write out how you can practice this principle in each of the context, self, class, neighborhood, and city.</li></ol>\\\"}, \\\"id\\\": \\\"c2c6e683-1b51-49d5-9a5a-232181e93359\\\"}, {\\\"type\\\": \\\"imagerightblock\\\", \\\"value\\\": {\\\"image\\\": 4, \\\"body\\\": \\\"<p data-block-key=\\\\\\\"r6kvq\\\\\\\">This is a set of questions about your current skills in wireless engineering and technology. We will answer these questions again at the end of the class to see how much we\\\\u2019ve learned. There are no right or wrong answers, and your answers won\\\\u2019t be shared with other students.</p><p data-block-key=\\\\\\\"7a1g7\\\\\\\"></p><p data-block-key=\\\\\\\"2sk9q\\\\\\\">Take the survey!</p><p data-block-key=\\\\\\\"940c9\\\\\\\"><a href=\\\\\\\"https://forms.gle/dD2geDjydLosgBdM9\\\\\\\">https://forms.gle/dD2geDjydLosgBdM9</a></p>\\\"}, \\\"id\\\": \\\"807af598-8f5f-4548-adc0-a7610ee4d50a\\\"}]\", \"wagtail_admin_comments\": []}",
+    "approved_go_live_at": null
+  }
+},
+{
+  "model": "wagtailcore.pagerevision",
+  "pk": 26,
+  "fields": {
+    "page": 6,
+    "submitted_for_moderation": false,
+    "created_at": "2022-01-17T22:55:20.296Z",
+    "user": [
+      "user_one"
+    ],
+    "content_json": "{\"pk\": 6, \"path\": \"00010001000100010001\", \"depth\": 5, \"numchild\": 4, \"translation_key\": \"ae5914b5-d657-4620-890f-77c2d2ccc94d\", \"locale\": 1, \"title\": \"Welcome to the Digital Stewards training!\", \"draft_title\": \"Welcome to the Digital Stewards training!\", \"slug\": \"welcome-to-the-digital-stewards-training\", \"content_type\": 13, \"live\": true, \"has_unpublished_changes\": false, \"url_path\": \"/home/digital-stewards-training/welcome-and-orientation/welcome-to-the-digital-stewards-training/\", \"owner\": 1, \"seo_title\": \"\", \"show_in_menus\": false, \"search_description\": \"\", \"go_live_at\": null, \"expire_at\": null, \"expired\": false, \"locked\": false, \"locked_at\": null, \"locked_by\": null, \"first_published_at\": \"2022-01-11T01:18:24.375Z\", \"last_published_at\": \"2022-01-17T22:46:26.596Z\", \"latest_revision_created_at\": \"2022-01-17T22:46:26.561Z\", \"live_revision\": 25, \"alias_of\": null, \"time_to_complete\": 15, \"stream\": \"[{\\\"type\\\": \\\"headlineleftimage\\\", \\\"value\\\": {\\\"heading\\\": \\\"4 Square Activity\\\", \\\"image\\\": 3, \\\"body\\\": \\\"<p data-block-key=\\\\\\\"ndb1o\\\\\\\">Create a new post in the forum, and share your answers for this activity. You may download and fill out this PDF, or just list your answers in the forum directly.</p><ol><li data-block-key=\\\\\\\"2fkvb\\\\\\\">Write the principle of your choosing, then label the box accordingly.</li><li data-block-key=\\\\\\\"33vdk\\\\\\\">Write out how you can practice this principle in each of the context, self, class, neighborhood, and city.</li></ol>\\\"}, \\\"id\\\": \\\"c2c6e683-1b51-49d5-9a5a-232181e93359\\\"}, {\\\"type\\\": \\\"imagerightblock\\\", \\\"value\\\": {\\\"image\\\": 4, \\\"body\\\": \\\"<p data-block-key=\\\\\\\"r6kvq\\\\\\\">This is a set of questions about your current skills in wireless engineering and technology. We will answer these questions again at the end of the class to see how much we\\\\u2019ve learned. There are no right or wrong answers, and your answers won\\\\u2019t be shared with other students.</p><p data-block-key=\\\\\\\"7a1g7\\\\\\\"></p><p data-block-key=\\\\\\\"2sk9q\\\\\\\">Take the survey!</p><p data-block-key=\\\\\\\"940c9\\\\\\\"><a href=\\\\\\\"https://forms.gle/dD2geDjydLosgBdM9\\\\\\\">https://forms.gle/dD2geDjydLosgBdM9</a></p>\\\"}, \\\"id\\\": \\\"807af598-8f5f-4548-adc0-a7610ee4d50a\\\"}, {\\\"type\\\": \\\"imagetopblock\\\", \\\"value\\\": {\\\"image\\\": 5, \\\"body\\\": \\\"<p data-block-key=\\\\\\\"lyb95\\\\\\\">There will be a video on this slide, and a description of it.</p>\\\"}, \\\"id\\\": \\\"23bc49dc-f684-4128-96a7-1e840aed613d\\\"}, {\\\"type\\\": \\\"imagerightblock\\\", \\\"value\\\": {\\\"image\\\": 6, \\\"body\\\": \\\"<h2 data-block-key=\\\\\\\"yrjis\\\\\\\">What you&#x27;ll learn in this lesson:</h2><ol><li data-block-key=\\\\\\\"d1kfv\\\\\\\">What the Equitable Internet Initiative is</li><li data-block-key=\\\\\\\"5tdbp\\\\\\\">Who are the digital stewards and what is community technology</li><li data-block-key=\\\\\\\"2uona\\\\\\\">The principles we work under</li></ol><p data-block-key=\\\\\\\"56ekl\\\\\\\"></p><h2 data-block-key=\\\\\\\"5mh4v\\\\\\\">Skills you&#x27;ll gain:</h2><ol><li data-block-key=\\\\\\\"ceet8\\\\\\\">The language to articulate what a community wireless network</li><li data-block-key=\\\\\\\"22e9n\\\\\\\">Learners will be able to share their vision of community technology when promoting wireless networks.</li></ol>\\\"}, \\\"id\\\": \\\"d76a92b5-3f19-4fc5-9465-7e40e3ed55b7\\\"}]\", \"wagtail_admin_comments\": []}",
+    "approved_go_live_at": null
+  }
+},
+{
   "model": "wagtailcore.page",
   "pk": 1,
   "fields": {
@@ -1323,7 +1603,7 @@
       "section"
     ],
     "live": true,
-    "has_unpublished_changes": true,
+    "has_unpublished_changes": false,
     "url_path": "/home/digital-stewards-training/welcome-and-orientation/welcome-to-the-digital-stewards-training/",
     "owner": [
       "user_one"
@@ -1338,9 +1618,9 @@
     "locked_at": null,
     "locked_by": null,
     "first_published_at": "2022-01-11T01:18:24.375Z",
-    "last_published_at": "2022-01-16T22:10:17.141Z",
-    "latest_revision_created_at": "2022-01-17T01:12:00.304Z",
-    "live_revision": 21,
+    "last_published_at": "2022-01-17T22:55:20.316Z",
+    "latest_revision_created_at": "2022-01-17T22:55:20.296Z",
+    "live_revision": 26,
     "alias_of": null
   }
 },
@@ -1519,14 +1799,14 @@
 },
 {
   "model": "wagtailimages.image",
-  "pk": 1,
+  "pk": 2,
   "fields": {
     "collection": 1,
-    "title": "IMG-0728",
-    "file": "original_images/IMG-0728_VnZgCQb.JPG",
-    "width": 1181,
-    "height": 1643,
-    "created_at": "2022-01-16T22:09:44.570Z",
+    "title": "castle",
+    "file": "original_images/castle.jpg",
+    "width": 500,
+    "height": 400,
+    "created_at": "2022-01-17T22:21:23.306Z",
     "uploaded_by_user": [
       "user_one"
     ],
@@ -1534,8 +1814,92 @@
     "focal_point_y": null,
     "focal_point_width": null,
     "focal_point_height": null,
-    "file_size": 220395,
-    "file_hash": "3273d93f50bdbbf9a54302d251072b3622ba7a09"
+    "file_size": 26922,
+    "file_hash": "f467f64acef0f3c0f9ac96cf43a6fb78b3991547"
+  }
+},
+{
+  "model": "wagtailimages.image",
+  "pk": 3,
+  "fields": {
+    "collection": 1,
+    "title": "biker",
+    "file": "original_images/biker.jpg",
+    "width": 300,
+    "height": 450,
+    "created_at": "2022-01-17T22:45:25.932Z",
+    "uploaded_by_user": [
+      "user_one"
+    ],
+    "focal_point_x": null,
+    "focal_point_y": null,
+    "focal_point_width": null,
+    "focal_point_height": null,
+    "file_size": 17501,
+    "file_hash": "92ec81360cc26a9489bcc8a51725c33deecf3576"
+  }
+},
+{
+  "model": "wagtailimages.image",
+  "pk": 4,
+  "fields": {
+    "collection": 1,
+    "title": "cityvert",
+    "file": "original_images/cityvert.jpg",
+    "width": 300,
+    "height": 600,
+    "created_at": "2022-01-17T22:46:03.399Z",
+    "uploaded_by_user": [
+      "user_one"
+    ],
+    "focal_point_x": null,
+    "focal_point_y": null,
+    "focal_point_width": null,
+    "focal_point_height": null,
+    "file_size": 20634,
+    "file_hash": "d717c477da7a2f40add9b310368e9bd59e1dc6bb"
+  }
+},
+{
+  "model": "wagtailimages.image",
+  "pk": 5,
+  "fields": {
+    "collection": 1,
+    "title": "bridgebelowhoriz",
+    "file": "original_images/bridgebelowhoriz.jpg",
+    "width": 700,
+    "height": 400,
+    "created_at": "2022-01-17T22:51:37.463Z",
+    "uploaded_by_user": [
+      "user_one"
+    ],
+    "focal_point_x": null,
+    "focal_point_y": null,
+    "focal_point_width": null,
+    "focal_point_height": null,
+    "file_size": 62675,
+    "file_hash": "d93671bde89dcb9011c8247624483cd0c0154a26"
+  }
+},
+{
+  "model": "wagtailimages.image",
+  "pk": 6,
+  "fields": {
+    "collection": 1,
+    "title": "ocean-vert",
+    "file": "original_images/ocean-vert.jpg",
+    "width": 300,
+    "height": 500,
+    "created_at": "2022-01-17T22:55:01.901Z",
+    "uploaded_by_user": [
+      "user_one"
+    ],
+    "focal_point_x": null,
+    "focal_point_y": null,
+    "focal_point_width": null,
+    "focal_point_height": null,
+    "file_size": 17114,
+    "file_hash": "168864af11fcd63c8e6f2819993e5f804f8ee73f"
   }
 },
 {
@@ -1571,35 +1935,7 @@
   "pk": 6,
   "fields": {
     "time_to_complete": 15,
-    "stream": "[{\"type\": \"headlineleftimage\", \"value\": {\"heading\": \"Here is the title to the slice that will run accross the whole page.\", \"image\": 1, \"body\": \"<p data-block-key=\\\"ndb1o\\\">Here is a short paragraph that we can include in the body. It is an important paragraph that&#x27;s why it isn&#x27;t very long. It&#x27;s very to the point.</p>\"}, \"id\": \"c2c6e683-1b51-49d5-9a5a-232181e93359\"}]"
-  }
-},
-{
-  "model": "materials.slide",
-  "pk": 7,
-  "fields": {
-    "body": "<h2 data-block-key=\"upfh0\">What you&#x27;ll learn in this lesson:</h2><ol><li data-block-key=\"5l1m1\">What the Equitable Internet Initiative is</li><li data-block-key=\"7n1ej\">Who are the digital stewards and what is community technology</li><li data-block-key=\"3bdj2\">The principles we work under</li></ol><p data-block-key=\"6v5mb\"></p><h2 data-block-key=\"5ubns\">Skills you&#x27;ll gain:</h2><ol><li data-block-key=\"17ooc\">The language to articulate what a community wireless network </li><li data-block-key=\"1lo2e\">Learners will be able to share their vision of community technology when promoting wireless networks. </li></ol>"
-  }
-},
-{
-  "model": "materials.slide",
-  "pk": 8,
-  "fields": {
-    "body": "<p data-block-key=\"omiw8\">There will be a video on this slide, and a description of it.</p>"
-  }
-},
-{
-  "model": "materials.slide",
-  "pk": 9,
-  "fields": {
-    "body": "<p data-block-key=\"nxagb\">This is a set of questions about your current skills in wireless engineering and technology. We will answer these questions again at the end of the class to see how much we’ve learned. There are no right or wrong answers, and your answers won’t be shared with other students.</p><p data-block-key=\"3mhdc\"></p><p data-block-key=\"eirhq\">Take the survey! </p><p data-block-key=\"7p63q\"><a href=\"https://forms.gle/dD2geDjydLosgBdM9\">https://forms.gle/dD2geDjydLosgBdM9 </a></p>"
-  }
-},
-{
-  "model": "materials.slide",
-  "pk": 10,
-  "fields": {
-    "body": "<p data-block-key=\"dbeg0\">(description of the activity here)</p><p data-block-key=\"5716n\"></p><p data-block-key=\"dn0fi\">Create a new post in the forum, and share your answers for this activity. You may download and fill out this PDF, or just list your answers in the forum directly.</p><ol><li data-block-key=\"9pb8d\">Write the principle of your choosing, then label the box accordingly. </li><li data-block-key=\"9eb2i\">Write out how you can practice this principle in each of the context, self, class, neighborhood, and city. </li></ol>"
+    "slides": "[{\"type\": \"headlineleftimage\", \"value\": {\"heading\": \"4 Square Activity\", \"image\": 3, \"body\": \"<p data-block-key=\\\"ndb1o\\\">Create a new post in the forum, and share your answers for this activity. You may download and fill out this PDF, or just list your answers in the forum directly.</p><ol><li data-block-key=\\\"2fkvb\\\">Write the principle of your choosing, then label the box accordingly.</li><li data-block-key=\\\"33vdk\\\">Write out how you can practice this principle in each of the context, self, class, neighborhood, and city.</li></ol>\"}, \"id\": \"c2c6e683-1b51-49d5-9a5a-232181e93359\"}, {\"type\": \"imagerightblock\", \"value\": {\"image\": 4, \"body\": \"<p data-block-key=\\\"r6kvq\\\">This is a set of questions about your current skills in wireless engineering and technology. We will answer these questions again at the end of the class to see how much we\\u2019ve learned. There are no right or wrong answers, and your answers won\\u2019t be shared with other students.</p><p data-block-key=\\\"7a1g7\\\"></p><p data-block-key=\\\"2sk9q\\\">Take the survey!</p><p data-block-key=\\\"940c9\\\"><a href=\\\"https://forms.gle/dD2geDjydLosgBdM9\\\">https://forms.gle/dD2geDjydLosgBdM9</a></p>\"}, \"id\": \"807af598-8f5f-4548-adc0-a7610ee4d50a\"}, {\"type\": \"imagetopblock\", \"value\": {\"image\": 5, \"body\": \"<p data-block-key=\\\"lyb95\\\">There will be a video on this slide, and a description of it.</p>\"}, \"id\": \"23bc49dc-f684-4128-96a7-1e840aed613d\"}, {\"type\": \"imagerightblock\", \"value\": {\"image\": 6, \"body\": \"<h2 data-block-key=\\\"yrjis\\\">What you&#x27;ll learn in this lesson:</h2><ol><li data-block-key=\\\"d1kfv\\\">What the Equitable Internet Initiative is</li><li data-block-key=\\\"5tdbp\\\">Who are the digital stewards and what is community technology</li><li data-block-key=\\\"2uona\\\">The principles we work under</li></ol><p data-block-key=\\\"56ekl\\\"></p><h2 data-block-key=\\\"5mh4v\\\">Skills you&#x27;ll gain:</h2><ol><li data-block-key=\\\"ceet8\\\">The language to articulate what a community wireless network</li><li data-block-key=\\\"22e9n\\\">Learners will be able to share their vision of community technology when promoting wireless networks.</li></ol>\"}, \"id\": \"d76a92b5-3f19-4fc5-9465-7e40e3ed55b7\"}]"
   }
 },
 {
