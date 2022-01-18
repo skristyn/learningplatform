@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import path
 from django.contrib.auth.models import User
 from wagtail.api.v2.views import BaseAPIViewSet
-from .models import Textbook, Lesson, Section, Slide, Grade
+from .models import Textbook, Lesson, Slide, Grade
 from home.views import api_login_required
 
 
@@ -96,11 +96,3 @@ class SectionViewSet(PrivateAPIViewSet):
 
     model = Section
 
-
-class SlideViewSet(BaseAPIViewSet):
-    """
-    Slides are where the bulk of the content is grouped. The course author will spend
-    most of the time developing on the slides.
-    """
-
-    model = Slide

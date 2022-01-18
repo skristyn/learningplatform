@@ -97,7 +97,7 @@ class Section(RoutablePageMixin, Page):
 
     content_panels = Page.content_panels + [
         FieldPanel("time_to_complete"),
-        StreamFieldPanel("stream"),
+        StreamFieldPanel("slides"),
     ]
 
     api_fields = [
