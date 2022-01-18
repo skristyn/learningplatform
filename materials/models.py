@@ -146,10 +146,6 @@ class Section(RoutablePageMixin, Page):
     def course(self) -> Page:
         return self.get_parent().get_parent()
 
-    @property
-    def slides(self):
-        return self.get_children().public().live()
-
     def _mark_complete(self, student: User) -> None:
         Grade.objects.get_or_create(section=self, student=student)
 

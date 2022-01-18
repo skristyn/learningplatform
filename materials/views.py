@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import path
 from django.contrib.auth.models import User
 from wagtail.api.v2.views import BaseAPIViewSet
-from .models import Textbook, Lesson, Slide, Grade
+from .models import Textbook, Lesson, Grade, Section
 from home.views import api_login_required
 
 

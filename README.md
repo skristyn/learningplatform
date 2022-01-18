@@ -12,8 +12,9 @@ Within the root folder of the project run the following:
 `python -m venv env`
 
 This will create a virtual environment in a new ./env directory. Then you can run
-`source env/bin/activate` to activate the environment. All other commands within this
-README must be run with this environment activated.
+`source env/bin/activate` to activate the environment. 
+
+_All other commands within this README must be run with this environment activated!_
 
 Install all dependencies with `pip install -r requirements.txt`
 
@@ -22,8 +23,6 @@ The repo includes some sample data. First, however you have to run migrations. T
 be done with the command `python manage.py migrate`
 
 Once the migrations are run you can load the data with `python manage.py loaddata dev_example_data.json`
-
-_Currently there are no images with the data, but we will add some later this week_
 
 ## Accessing Site
 ### Running the server
@@ -70,7 +69,6 @@ Most fields are accessed by adding a query ie `.../?fields=...`. You can provide
 comma-separated list of field names to select the data you need.
 
 A detailed list of available fields for each endpoint is provided above.
-
 
 ### Base Wagtail page fields
 For the most part, the content models subclass the Wagtail CMS's `Page` model. The full
