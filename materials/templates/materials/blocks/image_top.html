@@ -1,0 +1,8 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+<div class="person">
+    <h2>{{ value.heading }}</h2>
+    {% image value.image width-700 %}
+    <div><p>{{ value.body }}</p></div>
+</div>

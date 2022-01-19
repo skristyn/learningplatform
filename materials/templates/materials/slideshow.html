@@ -1,34 +1,14 @@
 {% block slideshow %}
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+
 <div class="section-body" id="slideshow">
-	{% for slide in self.get_children.specific %}
+	{% for slide in self.specific.slides %}
         <div class="slide">
             <div class="slide-content">
-                {{ slide.body|safe }}
+                {% include_block slide %}
             </div>
-            <p class="slide-counter">{{ forloop.counter }}/{{ self.get_children.count }}</p> 
         </div>
-        {% if forloop.counter == self.get_children.count %}                                     
-            <div id="final-slide">                                                       
-                {% if is_complete %}                                                     
-                    <p>section has been marked as complete!</p>                          
-                    <p><a href = "{{ self.specific.get_course }}">return home</a></p>          
-                    {% if self.get_next_sibling is None %}                                     
-                        <p>this is the final section of this lesson</p>                      
-                    {% else %}                                                           
-                    <p><a href="{{ self.get_next_sibling }}">Continue to next section</a></p>                    
-                    {% endif %}                                                          
-                {% else %}                                                               
-                    <p style="text-align: center;">                                      
-                        <form method="POST">                                             
-                        {% csrf_token %}                                                 
-                        <button type="submit">mark section as complete</button>          
-                    </p>                                                                 
-                {% endif %}                                                              
-                </div>                                                                       
-            {% else %}
-                </div>                                                                       
-            {% endif %}                                                                  
-        </form>
     {% endfor %}
 
     <button id="prev" style="float: left;" onclick="plusSlides(-1)">&#10094;</button>

@@ -36,6 +36,9 @@ class HeadlineLeftImageBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     body = blocks.RichTextBlock()
 
+    class Meta:
+        template = "materials/blocks/headline_left_image.html"
+
 
 class ImageTopBlock(blocks.StructBlock):
     """
@@ -44,6 +47,9 @@ class ImageTopBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     body = blocks.RichTextBlock()
 
+    class Meta:
+        template = "materials/blocks/image_top.html"
+
 
 class ImageRightBlock(blocks.StructBlock):
     """
@@ -51,6 +57,9 @@ class ImageRightBlock(blocks.StructBlock):
     """
     image = ImageChooserBlock(required=True)
     body = blocks.RichTextBlock()
+
+    class Meta:
+        template = "materials/blocks/image_right.html"
 
 
 class Resource(Page):
