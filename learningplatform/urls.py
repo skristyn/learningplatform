@@ -23,7 +23,6 @@ urlpatterns = [
     path("users/", include(users_urls)),
     path("search/", search_views.search, name="search"),
     path("api/v1/", api_router.urls),
-    path("messages/", include("pinax.messages.urls", namespace="pinax_messages")),
 ]
 
 
