@@ -1,1 +1,1 @@
-python manage.py dumpdata --natural-foreign --indent 2 -e contenttypes -e auth.permission -e wagtailcore.groupcollectionpermission -e wagtailcore.grouppagepermission -e sessions -e wagtailcore.pagesubscription -e wagtailsearch --output dev_example_data.json
+python manage.py dumpdata --natural-foreign --indent 2 -e contenttypes -e auth.permission -e wagtailcore.groupcollectionpermission -e wagtailcore.grouppagepermission -e wagtailcore.pagerevision -e sessions -e wagtailcore.pagesubscription -e wagtailsearch -e wagtailimages.rendition --output dev_example_data.json
