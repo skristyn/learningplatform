@@ -164,6 +164,7 @@ class TestAPI(APITestCase):
     def test_lesson_endpoint_is_not_empty(self):
         lesson = build_lesson()
         student = build_student()
+        self.client.force_login(student)
         response = self.client.get("/api/v1/lessons/")
         content = json.loads(response.content)
         self.assertEqual(lesson.id, content["items"][0]["id"])
@@ -171,6 +172,7 @@ class TestAPI(APITestCase):
     def test_section_endpoint_is_not_empty(self):
         lesson = build_lesson()
         student = build_student()
+        self.client.force_login(student)
         response = self.client.get("/api/v1/sections/")
         content = json.loads(response.content)
 

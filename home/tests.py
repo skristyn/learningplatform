@@ -3,8 +3,10 @@ from django.urls import reverse
 from django.test.client import RequestFactory
 from django.contrib.auth.models import AnonymousUser, User
 from django.db.models import signals
-from .models import HomePage
+from .models import HomePage, Announcement
 from users.models import Enrollment
+from materials.models import Textbook
+from materials.tests import build_lesson
 
 
 class TestLoginRequired(TestCase):
@@ -37,9 +39,12 @@ class TestLoginRequired(TestCase):
         signals.post_save.disconnect(sender=User, dispatch_uid="irrelevant")
         request = self.factory.get("/")
         request.user = User.objects.create(username="Harvey")
-
+        announcement = Announcement.objects.create(text="Test announcement")
         page = HomePage.objects.first()
-        enrollment = Enrollment.objects.create(student=request.user, course=
+        textbook = Textbook.add_root(title="Big book")
+        build_lesson(parent=textbook)
+
+        enrollment = Enrollment.objects.create(user=request.user, active_course=textbook)
         response = page.serve(request)
 
         self.assertEqual(response.status_code, 200)
