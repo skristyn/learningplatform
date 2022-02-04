@@ -18,3 +18,5 @@ jobs:
         run: python manage.py migrate
       - name: Run tests
         run: python manage.py test
+      - name: Load fixtures
+        run: python manage.py loaddata dev_example_data.json
