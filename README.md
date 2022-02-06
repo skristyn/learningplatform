@@ -77,5 +77,23 @@ A detailed list of available fields for each endpoint is provided above.
 For the most part, the content models subclass the Wagtail CMS's `Page` model. The full
 guide to the API usage can be found [here](https://docs.wagtail.io/en/stable/advanced_topics/api/v2/usage.html#default-endpoint-fields)
 
-## Example calls
-More to come.
+## Example call using fetch with auth information
+For development providing the username and password to the fetch call will work.
+
+```
+<script>
+    let url = 'http://localhost:8000/api/v1/';
+    let username = 'user_one';
+    let password = 'bad_password';
+
+    let headers = new Headers({
+                'Authorization': `Basic  ${btoa(`${username}:${password}`)}`
+            });
+    fetch(url, {
+                method:'GET',
+                headers: headers
+            })
+      .then(response => response.json())
+      .then(data => console.log(data));
+</script>
+```
