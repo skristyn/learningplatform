@@ -116,6 +116,14 @@ class Section(RoutablePageMixin, Page):
         APIField("slides"),
     ]
 
+    @property
+    def number(self) -> int:
+        """
+        This computes the lesson number based on position in the tree vs hard code.
+        Requiring a db look up on a property is gauche though maybe...
+        """
+        return len(self.get_prev_siblings()) + 1
+    
     def get_context(self, request) -> dict:
         """
         Append the slide pages to the context provided to the template.
@@ -207,6 +215,14 @@ class Lesson(Page):
     @property
     def sections(self) -> PageQuerySet:
         return self.get_children().public().live()
+
+    @property
+    def number(self) -> int:
+        """
+        This computes the lesson number based on position in the tree vs hard code.
+        Requiring a db look up on a property is gauche though maybe...
+        """
+        return len(self.get_prev_siblings()) + 1
 
     def completed(self, student: User) -> bool:
         """

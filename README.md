@@ -1,4 +1,4 @@
-# EII Learning Platform
+ EII Learning Platform
 
 ## Creating a virtual environment
 TO DO I've been using python poetry to do dependency management, but it may be easier to start to use
@@ -59,7 +59,6 @@ All api endpoints are found at `<...localhost...>/api/v1` and they include the f
 - `/textbooks/` fields: `title, completed, lessons`
 - `/lessons/` fields: `title, completed, sections, time_remaining`
 - `/sections/` fields: `title, completed, slides, time_to_complete`
-- `/slides/` fields: `title, body`
 - `/grades/` [only accepts POST]
 - `/images/` _currently empty_
 - `/` _Root endpoint returns the authenticated user's current course, next section_ 

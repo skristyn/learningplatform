@@ -2,7 +2,7 @@ from django.urls import re_path, include
 from wagtail.utils.urlpatterns import decorate_urlpatterns
 from wagtail.api.v2.router import WagtailAPIRouter
 from wagtail.images.api.v2.views import ImagesAPIViewSet
-from home.views import RootViewSet
+from home.views import RootViewSet, HomeViewSet
 from materials.views import (
     LessonViewSet,
     GradeViewSet,
@@ -47,6 +47,7 @@ class RootableRouter(WagtailAPIRouter):
 api_router = RootableRouter("learningplatformapi")
 
 # register the endpoints.
+api_router.register_endpoint("home", HomeViewSet)
 api_router.register_endpoint("textbooks", TextbookViewSet)
 api_router.register_endpoint("lessons", LessonViewSet)
 api_router.register_endpoint("sections", SectionViewSet)
