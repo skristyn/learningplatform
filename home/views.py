@@ -31,7 +31,18 @@ class RootViewSet(BaseAPIViewSet):
     
     @api_login_required
     def root_view(self, request):
-        return Response("Nothing")
+        return Response(
+            {
+                "home": "http://localhost:8000/api/v1/home/",
+                "courses": "http://localhost:8000/api/v1/textbooks/",
+                "lessons": "http://localhost:8000/api/v1/lessons/",
+                "sections": "http://localhost:8000/api/v1/sections/",
+                "projects": "http://localhost:8000/api/v1/projects/",
+                "resources": "http://localhost:8000/api/v1/resources/",
+                "images": "http://localhost:8000/api/v1/images/",
+                "url": "http://localhost:8000/api/v1/",
+            }
+        )
 
 class HomeViewSet(BaseAPIViewSet):
     """
