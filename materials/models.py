@@ -94,6 +94,7 @@ class Section(RoutablePageMixin, Page):
     begins a section they are brought into the learning Vue application.
     """
 
+    description = models.TextField(null=True, blank=True)
     time_to_complete = models.IntegerField(blank=True, null=True)
     parent_page_types = ["materials.Lesson"]
 
@@ -105,6 +106,7 @@ class Section(RoutablePageMixin, Page):
     ])
 
     content_panels = Page.content_panels + [
+        FieldPanel("description"),
         FieldPanel("time_to_complete"),
         StreamFieldPanel("slides"),
     ]
@@ -328,7 +330,7 @@ class Textbook(Page):
     The container for the all course materials.
     """
 
-    description = models.TextField(null=True)
+    description = models.TextField(null=True, blank=True)
     subpage_types = ["materials.Lesson"]
     max_count = 1
 
