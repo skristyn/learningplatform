@@ -328,11 +328,17 @@ class Textbook(Page):
     The container for the all course materials.
     """
 
+    description = models.TextField(null=True)
     subpage_types = ["materials.Lesson"]
     max_count = 1
 
+    content_panels = Page.content_panels + [
+        FieldPanel("description"),
+    ]
+
     api_fields = [
         APIField("title"),
+        APIField("description"),
         APIField("lessons", serializer=LessonsSerializer()),
         APIField("completed", serializer=CompletedSerializer()),
     ]
