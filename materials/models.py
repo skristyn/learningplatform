@@ -71,6 +71,12 @@ class UrlSerializer(Field):
                 )
 
 
+class ResourceAccess(models.Model):
+    access_time = models.DateTimeField(auto_now=True)
+    resource = models.ForeignKey("Resource", on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
 class Resource(Page):
     """
     A resource is a special slide that can be linked to from the
@@ -87,10 +93,26 @@ class Resource(Page):
         FieldPanel("description"),
     ]
 
+    def last_access(self, student):
+        return (ResourceAccess.objects.get(resource=self, student=student)
+                              .orderby('access_time')
+                              .first()).access_time
+
+    api_fields = [
+        APIField("title"),
+        APIField("description"),
+        APIField("lesson_id"),
+        APIField("lesson_url", serializer=UrlSerializer()),
+        APIField("number"),
+        APIField("time_to_complete"),
+        APIField("completed", serializer=CompletedSerializer()),
+        APIField("slides"),
+    ]
+
 
 class CompletedSerializer(Field):
     """
-    Originally written to suply the request's user object to the completed method from
+    Originally written to supply the request's user object to the completed method from
     both the lesson and section classes. Should rename because it can be used to supply
     the user to any model method.
     """

@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import path
 from django.contrib.auth.models import User
 from wagtail.api.v2.views import BaseAPIViewSet
-from .models import Textbook, Lesson, Grade, Section, Resource
+from .models import Textbook, Lesson, Grade, Section, Resource, ResourceAccess
 from home.views import api_login_required
 
 
@@ -15,7 +15,7 @@ class PrivateAPIViewSet(BaseAPIViewSet):
     returning a standard error response if not. There is probably a dryer way
     to do this.
     """
-    
+
     @api_login_required
     def listing_view(self, *args, **kwargs):
         return super().listing_view(*args, **kwargs)
@@ -54,7 +54,7 @@ class GradeViewSet(BaseAPIViewSet):
             path("<int:pk>/", cls.as_view({"get": "detail_view"}), name="detail"),
             path("find/", cls.as_view({"get": "find_view"}), name="find"),
         ]
-    
+
     @api_login_required
     def create_grade(self, request: HttpRequest) -> JsonResponse:
         student = get_object_or_404(User, pk=request.POST["student"])
@@ -96,5 +96,10 @@ class SectionViewSet(PrivateAPIViewSet):
 
     model = Section
 
+
 class ResourceViewSet(PrivateAPIViewSet):
     model = Resource
+
+    def detail_view(self, *args, **kwargs):
+        print(self.get_object().title)
+        return super().detail_view(*args, **kwargs)
