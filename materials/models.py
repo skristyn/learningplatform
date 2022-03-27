@@ -62,6 +62,15 @@ class ImageRightBlock(blocks.StructBlock):
         template = "materials/blocks/image_right.html"
 
 
+class UrlSerializer(Field):
+    def to_representation(self, parent: Page) -> List[dict]:
+        request = self.context["request"]
+
+        return get_object_detail_url(
+                    self.context["router"], request, Lesson, parent.pk
+                )
+
+
 class Resource(Page):
     """
     A resource is a special slide that can be linked to from the
@@ -113,6 +122,10 @@ class Section(RoutablePageMixin, Page):
 
     api_fields = [
         APIField("title"),
+        APIField("description"),
+        APIField("lesson_id"),
+        APIField("lesson_url", serializer=UrlSerializer()),
+        APIField("number"),
         APIField("time_to_complete"),
         APIField("completed", serializer=CompletedSerializer()),
         APIField("slides"),
@@ -125,6 +138,14 @@ class Section(RoutablePageMixin, Page):
         Requiring a db look up on a property is gauche though maybe...
         """
         return len(self.get_prev_siblings()) + 1
+
+    @property
+    def lesson_url(self) -> int:
+        return self.get_parent()
+
+    @property
+    def lesson_id(self) -> int:
+        return self.get_parent().id
     
     def get_context(self, request) -> dict:
         """
@@ -182,7 +203,9 @@ class SectionsSerializer(Field):
             {
                 "id": section.id,
                 "title": section.title,
+                "description": section.specific.description,
                 "completed": section.specific.completed(request.user),
+                "section_num": section.specific.number,
                 "time_to_complete": section.specific.time_to_complete,
                 "detail_url": get_object_detail_url(
                     self.context["router"], request, Section, section.pk
@@ -190,6 +213,7 @@ class SectionsSerializer(Field):
             }
             for section in sections
         ]
+
 
 
 class Lesson(Page):
@@ -209,6 +233,8 @@ class Lesson(Page):
 
     api_fields = [
         APIField("title"),
+        APIField("description"),
+        APIField("number"),
         APIField("completed", serializer=CompletedSerializer()),
         APIField("sections", serializer=SectionsSerializer()),
         APIField("time_remaining", serializer=CompletedSerializer()),
@@ -295,6 +321,7 @@ class LessonsSerializer(Field):
         return [
             {
                 "id": lesson.id,
+                "lesson_num": lesson.specific.number,
                 "title": lesson.title,
                 "completed": lesson.specific.completed(request.user),
                 "time_remaining": lesson.specific.time_remaining(request.user),
