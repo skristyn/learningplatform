@@ -76,12 +76,15 @@ class Resource(Page):
     A resource is a special slide that can be linked to from the
     resource kit.
     """
-
+    
+    description = models.TextField(blank=True, null=True)
+    topic = models.TextField(blank=True, null=True)
     parent_page_types = ["materials.Section"]
     body = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("body"),
+        FieldPanel("description"),
     ]
 
 
@@ -430,3 +433,5 @@ class Textbook(Page):
         if lesson is None:
             return self.first_section
         return lesson.specific.next_section(student)
+
+

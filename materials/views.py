@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import path
 from django.contrib.auth.models import User
 from wagtail.api.v2.views import BaseAPIViewSet
-from .models import Textbook, Lesson, Grade, Section
+from .models import Textbook, Lesson, Grade, Section, Resource
 from home.views import api_login_required
 
 
@@ -96,3 +96,5 @@ class SectionViewSet(PrivateAPIViewSet):
 
     model = Section
 
+class ResourceViewSet(PrivateAPIViewSet):
+    model = Resource
