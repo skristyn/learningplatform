@@ -1,4 +1,5 @@
 from typing import Callable, List, Optional
+from django import forms
 from django.db import models
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
@@ -21,10 +22,12 @@ These types should be developed with help from the fe folks to
 best choose layout and design.
 """
 
+
 class ResourceBlock(blocks.StructBlock):
     """
     For inserting a resource into the slides.
     """
+
     resource = ImageChooserBlock()
 
 
@@ -32,6 +35,7 @@ class HeadlineLeftImageBlock(blocks.StructBlock):
     """
     Headline across slide, image to the left, text to the right.
     """
+
     heading = blocks.CharBlock()
     image = ImageChooserBlock(required=True)
     body = blocks.RichTextBlock()
@@ -42,8 +46,9 @@ class HeadlineLeftImageBlock(blocks.StructBlock):
 
 class ImageTopBlock(blocks.StructBlock):
     """
-    Image across the top, text across the bottom.        
+    Image across the top, text across the bottom.
     """
+
     image = ImageChooserBlock(required=True)
     body = blocks.RichTextBlock()
 
@@ -55,6 +60,7 @@ class ImageRightBlock(blocks.StructBlock):
     """
     Image on the right, text on the left.
     """
+
     image = ImageChooserBlock(required=True)
     body = blocks.RichTextBlock()
 
@@ -66,9 +72,7 @@ class UrlSerializer(Field):
     def to_representation(self, parent: Page) -> List[dict]:
         request = self.context["request"]
 
-        return get_object_detail_url(
-                    self.context["router"], request, Lesson, parent.pk
-                )
+        return get_object_detail_url(self.context["router"], request, Lesson, parent.pk)
 
 
 class ResourceAccess(models.Model):
@@ -89,12 +93,29 @@ class CompletedSerializer(Field):
         return func(student)
 
 
+class Topic(models.Model):
+    name = models.CharField(max_length=200, blank=False, null=False)
+
+    def __str__(self):
+        return self.name
+
+
 class Resource(Page):
     """
     A resource is a special slide that can be linked to from the
     resource kit.
     """
+
+    class ContentType(models.TextChoices):
+        VIDEO = "video", "video"
+        IMAGE = "image", "image"
+        PDF = "pdf", "pdf"
+        GLOSSARY = "gloss", "glossary"
     
+    resource_type = models.CharField(
+        max_length=5, choices=ContentType.choices, default=ContentType.IMAGE
+    )
+    topic = models.ManyToManyField(Topic, blank=False, null=False)
     description = models.TextField(blank=True, null=True)
     topic = models.TextField(blank=True, null=True)
     parent_page_types = ["materials.Section"]
@@ -103,17 +124,20 @@ class Resource(Page):
     content_panels = Page.content_panels + [
         FieldPanel("body"),
         FieldPanel("description"),
+        FieldPanel("resource_type", widget=forms.Select),
     ]
 
     api_fields = [
         APIField("title"),
+        APIField("description"),
+        APIField("resource_type"),
         APIField("last_access_time", serializer=CompletedSerializer()),
     ]
 
     def last_access_time(self, student):
         previous_views = ResourceAccess.objects.filter(resource=self, student=student)
         if previous_views:
-            return previous_views.order_by('-access_time').first().access_time
+            return previous_views.order_by("-access_time").first().access_time
         return None
 
 
@@ -127,12 +151,14 @@ class Section(RoutablePageMixin, Page):
     time_to_complete = models.IntegerField(blank=True, null=True)
     parent_page_types = ["materials.Lesson"]
 
-    slides = StreamField([
-        ('resource', ResourceBlock()),
-        ('headlineleftimage', HeadlineLeftImageBlock()),
-        ('imagetopblock', ImageTopBlock()),
-        ('imagerightblock', ImageRightBlock()),
-    ])
+    slides = StreamField(
+        [
+            ("resource", ResourceBlock()),
+            ("headlineleftimage", HeadlineLeftImageBlock()),
+            ("imagetopblock", ImageTopBlock()),
+            ("imagerightblock", ImageRightBlock()),
+        ]
+    )
 
     content_panels = Page.content_panels + [
         FieldPanel("description"),
@@ -166,7 +192,7 @@ class Section(RoutablePageMixin, Page):
     @property
     def lesson_id(self) -> int:
         return self.get_parent().id
-    
+
     def get_context(self, request) -> dict:
         """
         Append the slide pages to the context provided to the template.
@@ -233,7 +259,6 @@ class SectionsSerializer(Field):
             }
             for section in sections
         ]
-
 
 
 class Lesson(Page):
@@ -450,5 +475,3 @@ class Textbook(Page):
         if lesson is None:
             return self.first_section
         return lesson.specific.next_section(student)
-
-
