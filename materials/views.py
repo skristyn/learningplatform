@@ -100,6 +100,7 @@ class SectionViewSet(PrivateAPIViewSet):
 class ResourceViewSet(PrivateAPIViewSet):
     model = Resource
 
-    def detail_view(self, *args, **kwargs):
-        print(self.get_object().title)
-        return super().detail_view(*args, **kwargs)
+    def detail_view(self, request, *args, **kwargs):
+        resource = self.get_object()
+        ResourceAccess.objects.create(resource=resource, student=request.user)
+        return super().detail_view(request, *args, **kwargs)

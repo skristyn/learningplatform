@@ -77,6 +77,18 @@ class ResourceAccess(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
+class CompletedSerializer(Field):
+    """
+    Originally written to supply the request's user object to the completed method from
+    both the lesson and section classes. Should rename because it can be used to supply
+    the user to any model method.
+    """
+
+    def to_representation(self, func: Callable[[User], bool]) -> bool:
+        student = self.context["request"].user
+        return func(student)
+
+
 class Resource(Page):
     """
     A resource is a special slide that can be linked to from the
@@ -93,33 +105,16 @@ class Resource(Page):
         FieldPanel("description"),
     ]
 
-    def last_access(self, student):
-        return (ResourceAccess.objects.get(resource=self, student=student)
-                              .orderby('access_time')
-                              .first()).access_time
-
     api_fields = [
         APIField("title"),
-        APIField("description"),
-        APIField("lesson_id"),
-        APIField("lesson_url", serializer=UrlSerializer()),
-        APIField("number"),
-        APIField("time_to_complete"),
-        APIField("completed", serializer=CompletedSerializer()),
-        APIField("slides"),
+        APIField("last_access_time", serializer=CompletedSerializer()),
     ]
 
-
-class CompletedSerializer(Field):
-    """
-    Originally written to supply the request's user object to the completed method from
-    both the lesson and section classes. Should rename because it can be used to supply
-    the user to any model method.
-    """
-
-    def to_representation(self, func: Callable[[User], bool]) -> bool:
-        student = self.context["request"].user
-        return func(student)
+    def last_access_time(self, student):
+        previous_views = ResourceAccess.objects.filter(resource=self, student=student)
+        if previous_views:
+            return previous_views.order_by('-access_time').first().access_time
+        return None
 
 
 class Section(RoutablePageMixin, Page):
