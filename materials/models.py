@@ -100,6 +100,11 @@ class Topic(models.Model):
         return self.name
 
 
+class TopicsSerializer(Field):
+    def to_representation(self, topics: Topic):
+        return [topic.name for topic in topics.all()]
+
+
 class Resource(Page):
     """
     A resource is a special slide that can be linked to from the
@@ -115,9 +120,8 @@ class Resource(Page):
     resource_type = models.CharField(
         max_length=5, choices=ContentType.choices, default=ContentType.IMAGE
     )
-    topic = models.ManyToManyField(Topic, blank=False, null=False)
+    topics = models.ManyToManyField(Topic, blank=False, null=False)
     description = models.TextField(blank=True, null=True)
-    topic = models.TextField(blank=True, null=True)
     parent_page_types = ["materials.Section"]
     body = RichTextField(blank=True)
 
@@ -125,12 +129,14 @@ class Resource(Page):
         FieldPanel("body"),
         FieldPanel("description"),
         FieldPanel("resource_type", widget=forms.Select),
+        FieldPanel("topics", widget=forms.CheckboxSelectMultiple),
     ]
 
     api_fields = [
         APIField("title"),
         APIField("description"),
         APIField("resource_type"),
+        APIField("topics", serializer=TopicsSerializer()),
         APIField("last_access_time", serializer=CompletedSerializer()),
     ]
 
