@@ -31,16 +31,17 @@ class RootViewSet(BaseAPIViewSet):
     
     @api_login_required
     def root_view(self, request):
+        hostname = request.get_hostname()
         return Response(
             {
-                "home": "http://localhost:8000/api/v1/home/",
-                "courses": "http://localhost:8000/api/v1/textbooks/",
-                "lessons": "http://localhost:8000/api/v1/lessons/",
-                "sections": "http://localhost:8000/api/v1/sections/",
-                "projects": "http://localhost:8000/api/v1/projects/",
-                "resources": "http://localhost:8000/api/v1/resources/",
-                "images": "http://localhost:8000/api/v1/images/",
-                "url": "http://localhost:8000/api/v1/",
+                "home": f"{hostname}/api/v1/home/",
+                "courses": f"{hostname}/api/v1/textbooks/",
+                "lessons": f"{hostname}/api/v1/lessons/",
+                "sections": f"{hostname}/api/v1/sections/",
+                "projects": f"{hostname}/api/v1/projects/",
+                "resources": f"{hostname}/api/v1/resources/",
+                "images": f"{hostname}/api/v1/images/",
+                "url": f"{hostname}/api/v1/",
             }
         )
 
