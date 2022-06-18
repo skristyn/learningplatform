@@ -1,9 +1,9 @@
  EII Learning Platform
 
 ## Creating a virtual environment
-TO DO I've been using python poetry to do dependency management, but it may be easier to start to use
+I've been using python poetry to do dependency management, but it may be easier to start to use
 a basic python virtual env. Those are the steps that I've laid out here. This will be updated in the future,
-along with automating some of these set up steps.
+along with automating some of these set-up steps.
 
 Install Python on your machine. I have been building with python 3.8.10 though I don't think the 
 dependencies require that. Anything more recent than 3.7 should be fine.
