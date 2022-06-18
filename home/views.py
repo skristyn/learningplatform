@@ -31,7 +31,7 @@ class RootViewSet(BaseAPIViewSet):
     
     @api_login_required
     def root_view(self, request):
-        hostname = request.get_hostname()
+        hostname = request.get_host()
         return Response(
             {
                 "home": f"{hostname}/api/v1/home/",
