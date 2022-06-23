@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
+import Login from "../views/Login.vue";
 import MainLayout from "@/layouts/MainLayout.vue";
 import LessonLayout from "@/layouts/LessonLayout.vue";
 import { IBreadcrumbTrail } from "@/types/BreadcrumbTrail";
@@ -7,6 +8,14 @@ import { IBreadcrumbTrail } from "@/types/BreadcrumbTrail";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
+    // TODO: show signin page if logged out, otherwise show home page
+    name: "Login",
+    component: Login,
+    meta: { layout: MainLayout },
+  },
+  {
+    path: "/home",
+    // TODO: show signin page if logged out, otherwise show home page
     name: "Home",
     component: Home,
     meta: { layout: MainLayout },

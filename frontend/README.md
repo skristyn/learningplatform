@@ -5,8 +5,10 @@
 ```
 |--src
     |--components <--- plug and play components
+    |--layouts <--- standard layouts for different pages
     |--router <--- lists URL paths for pages
     |--store <--- global shared state
+    |--types <--- available, custom TypeScript types
     |--views <--- site pages
     |--App.vue <--- put global styles here, otherwise put scoped styles in the views/components
 ```

@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Header from "@/components/Header.vue"; // @ is an alias to /src
 
 export default {
