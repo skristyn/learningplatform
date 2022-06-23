@@ -1,11 +1,15 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
+import MainLayout from "@/layouts/MainLayout.vue";
+import LessonLayout from "@/layouts/LessonLayout.vue";
+import { IBreadcrumbTrail } from "@/types/BreadcrumbTrail";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home",
     component: Home,
+    meta: { layout: MainLayout },
   },
   {
     path: "/about",
@@ -15,7 +19,61 @@ const routes: Array<RouteRecordRaw> = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    meta: { layout: MainLayout },
   },
+  {
+    path: "/lesson/", // TODO should this be training/lesson?.... at least needs `/:id` at end of route
+    name: "Lesson",
+    component: () =>
+      import(/* webpackChunkName: "lesson" */ "../views/Lesson.vue"),
+    meta: { layout: LessonLayout },
+  },
+  {
+    path: "/sandbox",
+    name: "Sandbox",
+    component: () =>
+      import(/* webpackChunkName: "sandbox" */ "../views/Sandbox.vue"),
+    meta: {
+      layout: MainLayout,
+    },
+  },
+  {
+    path: "/sandbox/sub",
+    name: "SandboxSub",
+    component: () =>
+      import(/* webpackChunkName: "sandbox" */ "../views/SandboxSub.vue"),
+    meta: {
+      layout: MainLayout,
+      breadcrumbTrail: {
+        routeName: "Sandbox",
+        crumbTitle: "Sandbox testing page",
+      } as IBreadcrumbTrail,
+    },
+  },
+  // {
+  //   path: "/LessonIntro",
+  //   name: "LessonIntro",
+  //   component: () =>
+  //     import(/* webpackChunkName: "sandbox" */ "../views/LessonIntro.vue"),
+  // },
+
+  // {
+  //   path: "/coursedashboard",
+  //   name: "CourseDashboard",
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "coursedashboard" */ "../views/CourseDashboard.vue"
+  //     ),
+  //   meta: { layout: MainLayout },
+  // },
+
+  // {
+  //   path: "/lessons",
+  //   name: "lessons",
+  //   component: () =>
+  //     import(/* webpackChunkName: "sandbox" */ "../views/CourseDashboard.vue"),
+  //   meta: { layout: MainLayout },
+  // },
 ];
 
 const router = createRouter({
