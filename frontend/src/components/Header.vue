@@ -1,18 +1,54 @@
 <template>
   <header>
-    <router-link to="/" class="title">
+    <router-link :to="{ name: isLoggedIn ? 'Home' : 'Login' }" class="title">
       <h2 alt="Learning Platform">learning<br />platform</h2>
     </router-link>
-    <div class="buttons">
+    <div class="buttons" v-if="isLoggedIn">
       <button aria-label="Community" alt="Community" title="Community">
         <ion-icon name="people-outline"></ion-icon>
       </button>
-      <button aria-label="Profile" alt="Profile" title="Profile">
-        <ion-icon name="person-circle-outline"></ion-icon>
-      </button>
+
+      <!-- Use Floating Vue library to create the dropdown menu with log out & other options -->
+      <VDropdown :distance="6">
+        <!-- This is the popover reference (for the events and position) -->
+        <button aria-label="Profile" alt="Profile" title="Profile">
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </button>
+
+        <!-- This will be the content of the popover -->
+        <template #popper>
+          <div class="dropdownMenu">
+            <p @click="logOut">Log out</p>
+          </div>
+        </template>
+      </VDropdown>
     </div>
   </header>
 </template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "Header",
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.isAuthenticated;
+    },
+  },
+  methods: {
+    async logOut() {
+      if (this.$store.state.isAuthenticated) {
+        await this.$store.commit("logOut");
+
+        if (!this.$store.state.isAuthenticated) {
+          this.$router.push({ name: "Login" });
+        }
+      }
+    },
+  },
+});
+</script>
 
 <style scoped>
 /* TODO: make background conditional - should be different if on login or main dashboard */
@@ -51,5 +87,26 @@ header {
   margin: 0 4px;
   cursor: pointer;
   pointer-events: none;
+}
+
+/* Profile dropdown menu */
+.dropdownMenu {
+  padding: 10px;
+}
+
+.dropdownMenu p {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: italic;
+  color: #2c3e50;
+  margin: 0;
+  padding: 6px;
+  transition: 0.15s;
+}
+
+.dropdownMenu p:hover {
+  cursor: pointer;
+  background-color: rgb(236, 240, 245);
 }
 </style>

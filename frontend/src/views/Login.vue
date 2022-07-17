@@ -2,9 +2,9 @@
   <PageTitle pageTitle="Hi! We’re glad you’re here." />
   <h2>Here for class?</h2>
   <!-- <form action=""> -->
-  <form>
-    <input type="text" required /><br />
-    <input type="password" required /><br />
+  <form @submit="logIn">
+    <input type="text" /><br />
+    <input type="password" /><br />
     <button>Sign In</button>
   </form>
   <!-- TODO: sign in should actually authenticate user and not just redirect to /home -->
@@ -25,6 +25,17 @@ export default defineComponent({
   name: "Login",
   components: {
     PageTitle,
+  },
+  methods: {
+    async logIn() {
+      if (!this.$store.state.isAuthenticated) {
+        await this.$store.commit("logIn");
+
+        if (this.$store.state.isAuthenticated) {
+          this.$router.push({ name: "Home" });
+        }
+      }
+    },
   },
 });
 </script>

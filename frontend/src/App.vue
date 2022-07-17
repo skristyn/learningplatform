@@ -56,4 +56,8 @@ main {
 ion-icon {
   color: gray;
 }
+
+.v-popper--theme-dropdown .v-popper__inner {
+  background-color: pink;
+}
 </style>
