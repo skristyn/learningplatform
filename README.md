@@ -9,7 +9,7 @@ Install Python on your machine. I have been building with python 3.8.10 though I
 dependencies require that. Anything more recent than 3.7 should be fine.
 
 Within the root folder of the project run the following:
-`python -m venv env`
+`python3 -m venv env`
 
 This will create a virtual environment in a new ./env directory. Then you can run
 `source env/bin/activate` to activate the environment. 
