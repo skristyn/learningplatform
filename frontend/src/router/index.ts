@@ -22,13 +22,15 @@ const routes: Array<RouteRecordRaw> = [
     meta: { layout: MainLayout, requiresAuth: true },
   },
   {
-    path: "/about",
-    name: "About",
+    path: "/course-dashboard",
+    name: "CourseDashboard",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+      import(
+        /* webpackChunkName: "coursedashboard" */ "../views/CourseDashboard.vue"
+      ),
     meta: { layout: MainLayout, requiresAuth: true },
   },
   {
@@ -37,6 +39,13 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "lesson" */ "../views/Lesson.vue"),
     meta: { layout: LessonLayout, requiresAuth: true },
+  },
+  {
+    path: "/about",
+    name: "About",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    meta: { layout: MainLayout, requiresAuth: true },
   },
   {
     path: "/sandbox",
@@ -64,16 +73,6 @@ const routes: Array<RouteRecordRaw> = [
   //   name: "LessonIntro",
   //   component: () =>
   //     import(/* webpackChunkName: "sandbox" */ "../views/LessonIntro.vue"),
-  // },
-
-  // {
-  //   path: "/coursedashboard",
-  //   name: "CourseDashboard",
-  //   component: () =>
-  //     import(
-  //       /* webpackChunkName: "coursedashboard" */ "../views/CourseDashboard.vue"
-  //     ),
-  //   meta: { layout: MainLayout },
   // },
 
   // {
