@@ -120,7 +120,7 @@ class Resource(Page):
     resource_type = models.CharField(
         max_length=5, choices=ContentType.choices, default=ContentType.IMAGE
     )
-    topics = models.ManyToManyField(Topic, blank=False, null=False)
+    topics = models.ManyToManyField(Topic)
     description = models.TextField(blank=True, null=True)
     parent_page_types = ["materials.Section"]
     body = RichTextField(blank=True)
