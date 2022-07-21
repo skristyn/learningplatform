@@ -22,6 +22,10 @@ These types should be developed with help from the fe folks to
 best choose layout and design.
 """
 
+class BaseBlock(blocks.StructBlock):
+    heading = blocks.CharBlock()
+    body = blocks.RichTextBlock()
+
 
 class ResourceBlock(blocks.StructBlock):
     """
@@ -40,9 +44,6 @@ class HeadlineLeftImageBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     body = blocks.RichTextBlock()
 
-    class Meta:
-        template = "materials/blocks/headline_left_image.html"
-
 
 class ImageTopBlock(blocks.StructBlock):
     """
@@ -51,9 +52,6 @@ class ImageTopBlock(blocks.StructBlock):
 
     image = ImageChooserBlock(required=True)
     body = blocks.RichTextBlock()
-
-    class Meta:
-        template = "materials/blocks/image_top.html"
 
 
 class ImageRightBlock(blocks.StructBlock):
@@ -64,8 +62,23 @@ class ImageRightBlock(blocks.StructBlock):
     image = ImageChooserBlock(required=True)
     body = blocks.RichTextBlock()
 
-    class Meta:
-        template = "materials/blocks/image_right.html"
+
+class QuestionBlock(blocks.StructBlock):
+    """
+    A slide that provides a multiple choice question and answer.
+    """
+    question = blocks.TextBlock()
+    choice_1 = blocks.TextBlock()
+    choice_2 = blocks.TextBlock()
+    choice_3 = blocks.TextBlock()
+    choice_4 = blocks.TextBlock()
+    choices = (
+            ('1', '1'),
+            ('2', '2'),
+            ('3', '3'),
+            ('4', '4'),
+    )
+    correct = blocks.ChoiceBlock(choices=choices)
 
 
 class UrlSerializer(Field):
@@ -123,6 +136,19 @@ class Resource(Page):
     topics = models.ManyToManyField(Topic)
     description = models.TextField(blank=True, null=True)
     parent_page_types = ["materials.Section"]
+
+    class ContentType(models.TextChoices):
+        VIDEO = "video", "video"
+        IMAGE = "image", "image"
+        PDF = "pdf", "pdf"
+        GLOSSARY = "gloss", "glossary"
+    
+    resource_type = models.CharField(
+        max_length=5, choices=ContentType.choices, default=ContentType.IMAGE
+    )
+    topics = models.ManyToManyField(Topic)
+    description = models.TextField(blank=True, null=True)
+    parent_page_types = ["materials.Section"]
     body = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [
@@ -160,6 +186,8 @@ class Section(RoutablePageMixin, Page):
     slides = StreamField(
         [
             ("resource", ResourceBlock()),
+            ("baseblock", BaseBlock()),
+            ("questionblock", QuestionBlock()),
             ("headlineleftimage", HeadlineLeftImageBlock()),
             ("imagetopblock", ImageTopBlock()),
             ("imagerightblock", ImageRightBlock()),
@@ -448,12 +476,13 @@ class Textbook(Page):
         context["home_page"] = HomePage.objects.first()
         context["next_section"] = self.next_section(request.user)
         context["time_remaining"] = self.time_remaining(request.user)
+
         return context
 
     def completed(self, student: User) -> bool:
         """
-        For now we have to 1+n it, because going to deep in the treebeard hierarchy with
-        prefetch_related is confusing.
+        For now we have to 1+n it, because going too deep in the treebeard hierarchy
+        with prefectch_related is confusing.
         """
 
         return all(lesson.specific.completed(student) for lesson in self.get_children())
