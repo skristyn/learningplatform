@@ -115,14 +115,14 @@ export default defineComponent({
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
-  border-right: 3px solid gray;
-  color: gray;
+  border-right: 3px solid var(--var-color-gray);
+  color: var(--var-color-gray);
   margin: 0;
   width: 400px;
 }
 
 .header > * {
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid var(--var-color-gray);
   margin: 0;
 }
 

@@ -21,6 +21,6 @@ h1 {
   font-family: "Tourney", cursive;
   font-weight: 700;
   font-size: 40px;
-  color: rgb(29, 148, 163);
+  color: var(--var-color-teal);
 }
 </style>

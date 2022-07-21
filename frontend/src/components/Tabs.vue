@@ -45,9 +45,9 @@ export default defineComponent({
   display: flex;
   flex-flow: row wrap;
   padding: 0 65px;
-  background-color: #d0e7d0;
+  background-color: var(--var-color-green-lighter);
   border-radius: 12px;
-  color: gray;
+  color: var(--var-color-gray);
   font-weight: bold;
   font-size: 26px;
 }
@@ -66,7 +66,7 @@ export default defineComponent({
 }
 
 .tab:hover:not(.selectedTab) {
-  background-color: #badcbb;
+  background-color: var(--var-color-green-light);
 }
 
 .tab:last-child {
@@ -82,7 +82,7 @@ ion-icon {
 }
 
 .selectedTab {
-  background-color: #8ac38c;
+  background-color: var(--var-color-green);
   color: white;
 }
 

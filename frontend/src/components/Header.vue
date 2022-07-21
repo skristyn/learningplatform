@@ -108,7 +108,7 @@ header {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-style: italic;
-  color: #2c3e50;
+  color: var(--var-color-almost-black);
   margin: 0;
   padding: 6px;
   transition: 0.15s;
@@ -116,6 +116,6 @@ header {
 
 .dropdownMenu p:hover {
   cursor: pointer;
-  background-color: rgb(236, 240, 245);
+  background-color: var(--var-color-gray-lighter);
 }
 </style>
