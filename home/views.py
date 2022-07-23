@@ -12,13 +12,16 @@ def api_login_required(view_func):
     Wraps a view function to return an error message if a user accessing the API
     is not logged in.
     """
+
     def private_view_func(instance, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return Response(
                 {"message": "Please log in to view any learning platform content"}
             )
         return view_func(instance, request, *args, **kwargs)
+
     return private_view_func
+
 
 class RootViewSet(BaseAPIViewSet):
     model = HomePage
@@ -28,7 +31,7 @@ class RootViewSet(BaseAPIViewSet):
         return [
             path("", cls.as_view({"get": "root_view"}), name="detail"),
         ]
-    
+
     @api_login_required
     def root_view(self, request):
         hostname = request.build_absolute_uri()
@@ -44,6 +47,7 @@ class RootViewSet(BaseAPIViewSet):
                 "url": f"{hostname}",
             }
         )
+
 
 class HomeViewSet(BaseAPIViewSet):
     """
@@ -101,7 +105,7 @@ class HomeViewSet(BaseAPIViewSet):
                             router, request, Section, next_section.pk
                         ),
                     },
-                "announcement": Announcement.objects.latest('date').text,
+                    "announcement": Announcement.objects.latest("date").text,
                 }
             )
 

@@ -44,7 +44,9 @@ class TestLoginRequired(TestCase):
         textbook = Textbook.add_root(title="Big book")
         build_lesson(parent=textbook)
 
-        enrollment = Enrollment.objects.create(user=request.user, active_course=textbook)
+        enrollment = Enrollment.objects.create(
+            user=request.user, active_course=textbook
+        )
         response = page.serve(request)
 
         self.assertEqual(response.status_code, 200)
