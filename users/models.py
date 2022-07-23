@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 from PIL import Image
 from materials.models import Textbook
 
@@ -109,3 +110,4 @@ def create_student_records(sender, instance, created, **kwargs) -> None:
     if created:
         Profile.objects.create(user=instance)
         Enrollment.objects.create(user=instance)
+        Token.objects.create(user=instance)

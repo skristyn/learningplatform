@@ -16,7 +16,6 @@ import os
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -43,6 +42,7 @@ INSTALLED_APPS = [
     "bootstrapform",
     "taggit",
     "rest_framework",
+    "rest_framework.authtoken",
     "corsheaders",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -51,6 +51,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSIONS_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ]
+}
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
