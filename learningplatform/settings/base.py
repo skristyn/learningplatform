@@ -52,11 +52,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
+"""
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSIONS_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ]
 }
+"""
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
