@@ -17,6 +17,17 @@ export default defineComponent({
 <style>
 /* Global styles go here */
 
+/* CSS variables that can be used in other places */
+:root {
+  --var-color-almost-black: #2c3e50;
+  --var-color-gray: gray;
+  --var-color-gray-lighter: rgb(236, 240, 245);
+  --var-color-green: #8ac38c;
+  --var-color-green-light: #badcbb;
+  --var-color-green-lighter: #d0e7d0;
+  --var-color-teal: rgb(29, 148, 163);
+}
+
 html,
 body {
   overflow: auto;
@@ -33,7 +44,7 @@ body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: var(--var-color-almost-black);
 }
 
 main {
@@ -46,7 +57,7 @@ main {
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--var-color-almost-black);
 }
 
 #nav a.router-link-exact-active {
@@ -54,10 +65,6 @@ main {
 }
 
 ion-icon {
-  color: gray;
-}
-
-.v-popper--theme-dropdown .v-popper__inner {
-  background-color: pink;
+  color: var(--var-color-gray);
 }
 </style>

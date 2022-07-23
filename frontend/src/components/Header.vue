@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header :class="{ headerBackground: needsBackground }">
     <router-link :to="{ name: isLoggedIn ? 'Home' : 'Login' }" class="title">
       <h2 alt="Learning Platform">learning<br />platform</h2>
     </router-link>
@@ -35,6 +35,12 @@ export default defineComponent({
     isLoggedIn() {
       return this.$store.state.isAuthenticated;
     },
+    needsBackground() {
+      const needsBackground = !(
+        this.$route.name == "Login" || this.$route.name == "Home"
+      );
+      return needsBackground;
+    },
   },
   methods: {
     async logOut() {
@@ -57,8 +63,11 @@ header {
   flex-flow: row nowrap;
   justify-content: space-between;
   padding: 30px;
+}
+
+.headerBackground {
   /* TODO: make this background conditional */
-  /* background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='100%25' width='100%25'%3E%3Cdefs%3E%3Cpattern id='doodad' width='75' height='75' viewBox='0 0 40 40' patternUnits='userSpaceOnUse' patternTransform='rotate(90)'%3E%3Crect width='100%25' height='100%25' fill='rgba(255, 255, 255, 1)'/%3E%3Cpath d='M-0.5 20v20h1v-20zM19.5 20v20h1v-20zM39.5 20v20h1v-20z' fill='rgba(226, 232, 240, 1)' filter='url(%23filter-doodad-1)'/%3E%3Cpath d='M-10 29.5 h60 v1 h-60z' fill='rgba(226, 232, 240, 1)'/%3E%3Cpath d='M9.5 0v40h1v-40zM29.5 0v40h1v-40z' fill='rgba(226, 232, 240, 1)' filter='url(%23filter-doodad-1)'/%3E%3Cpath d='M-10 9.5h60v1h-60z' fill='rgba(226, 232, 240, 1)'/%3E%3Cpath d='M-0.5 0v20h1v-20zM19.5 0v20h1v-20zM39.5 0v20h1v-20z' fill='rgba(226, 232, 240, 1)' filter='url(%23filter-doodad-1)'/%3E%3C/pattern%3E%3Cfilter id='filter-doodad-1'%3E%3CfeTurbulence baseFrequency='0.01 0' numOctaves='2' result='result1'/%3E%3CfeDisplacementMap in2='result1' scale='0' result='result2' xChannelSelector='R' yChannelSelector='G' in='SourceGraphic'/%3E%3CfeComposite in2='result2' in='SourceGraphic' operator='atop' result='compositeGraphic'/%3E%3CfeOffset in='compositeGraphic' result='fbSourceGraphic' dx='0'/%3E%3C/filter%3E%3C/defs%3E%3Crect fill='url(%23doodad)' height='200%25' width='200%25'/%3E%3C/svg%3E "); */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='100%25' width='100%25'%3E%3Cdefs%3E%3Cpattern id='doodad' width='75' height='75' viewBox='0 0 40 40' patternUnits='userSpaceOnUse' patternTransform='rotate(90)'%3E%3Crect width='100%25' height='100%25' fill='rgba(255, 255, 255, 1)'/%3E%3Cpath d='M-0.5 20v20h1v-20zM19.5 20v20h1v-20zM39.5 20v20h1v-20z' fill='rgba(226, 232, 240, 1)' filter='url(%23filter-doodad-1)'/%3E%3Cpath d='M-10 29.5 h60 v1 h-60z' fill='rgba(226, 232, 240, 1)'/%3E%3Cpath d='M9.5 0v40h1v-40zM29.5 0v40h1v-40z' fill='rgba(226, 232, 240, 1)' filter='url(%23filter-doodad-1)'/%3E%3Cpath d='M-10 9.5h60v1h-60z' fill='rgba(226, 232, 240, 1)'/%3E%3Cpath d='M-0.5 0v20h1v-20zM19.5 0v20h1v-20zM39.5 0v20h1v-20z' fill='rgba(226, 232, 240, 1)' filter='url(%23filter-doodad-1)'/%3E%3C/pattern%3E%3Cfilter id='filter-doodad-1'%3E%3CfeTurbulence baseFrequency='0.01 0' numOctaves='2' result='result1'/%3E%3CfeDisplacementMap in2='result1' scale='0' result='result2' xChannelSelector='R' yChannelSelector='G' in='SourceGraphic'/%3E%3CfeComposite in2='result2' in='SourceGraphic' operator='atop' result='compositeGraphic'/%3E%3CfeOffset in='compositeGraphic' result='fbSourceGraphic' dx='0'/%3E%3C/filter%3E%3C/defs%3E%3Crect fill='url(%23doodad)' height='200%25' width='200%25'/%3E%3C/svg%3E ");
 }
 
 .title {
@@ -99,7 +108,7 @@ header {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-style: italic;
-  color: #2c3e50;
+  color: var(--var-color-almost-black);
   margin: 0;
   padding: 6px;
   transition: 0.15s;
@@ -107,6 +116,6 @@ header {
 
 .dropdownMenu p:hover {
   cursor: pointer;
-  background-color: rgb(236, 240, 245);
+  background-color: var(--var-color-gray-lighter);
 }
 </style>
