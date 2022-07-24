@@ -16,7 +16,7 @@ def api_login_required(view_func):
 
     def private_view_func(instance, request, *args, **kwargs):
         # First try to auth with token in header
-        auth_header = request.META.get('HTTP_AUTHORIZATION')
+        auth_header = request.META.get("HTTP_AUTHORIZATION")
         if auth_header:
             key = auth_header[11:]
             token = Token.objects.get(key=key)
@@ -117,6 +117,5 @@ class HomeViewSet(BaseAPIViewSet):
                 }
             )
 
-        # The view cannot be called with a drf request object, but the underlying
-        # django request object accessed by the _request attribute.
         return inner_view(request._request)
+
