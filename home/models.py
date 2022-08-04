@@ -28,7 +28,7 @@ class HomePage(Page):
     def get_context(self, request):
         context: dict = super().get_context(request)
         course = request.user.enrollment.active_course
-        context['course'] = course 
+        context["course"] = course
         context["announcement"] = Announcement.objects.latest("date")
         context["next_section"] = course.specific.next_section(request.user)
         return context
@@ -36,18 +36,18 @@ class HomePage(Page):
     def serve(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return super().serve(request, *args, **kwargs)
-        return redirect(reverse('users:login'))
+        return redirect(reverse("users:login"))
 
 
 class NotEnrolled(Page):
     """
     Page redirected to when homepage is accessed, but student is not enrolled.
     """
+
     message = models.TextField()
-    
+
     max_count = 1
 
     content_panels = Page.content_panels + [
-        FieldPanel('message'),
+        FieldPanel("message"),
     ]
-

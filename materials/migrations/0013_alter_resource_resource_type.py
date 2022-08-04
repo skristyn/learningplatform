@@ -6,13 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('materials', '0012_resource_resource_type'),
+        ("materials", "0012_resource_resource_type"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='resource',
-            name='resource_type',
-            field=models.CharField(choices=[('video', 'video'), ('image', 'image'), ('pdf', 'pdf'), ('gloss', 'glossary')], default='image', max_length=5),
+            model_name="resource",
+            name="resource_type",
+            field=models.CharField(
+                choices=[
+                    ("video", "video"),
+                    ("image", "image"),
+                    ("pdf", "pdf"),
+                    ("gloss", "glossary"),
+                ],
+                default="image",
+                max_length=5,
+            ),
         ),
     ]

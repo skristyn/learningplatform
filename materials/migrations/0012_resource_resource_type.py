@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('materials', '0011_resourceaccess_access_time'),
+        ("materials", "0011_resourceaccess_access_time"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='resource',
-            name='resource_type',
-            field=models.CharField(default='I', max_length=1),
+            model_name="resource",
+            name="resource_type",
+            field=models.CharField(default="I", max_length=1),
         ),
     ]

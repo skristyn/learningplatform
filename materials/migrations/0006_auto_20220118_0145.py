@@ -6,19 +6,19 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailredirects', '0006_redirect_increase_max_length'),
-        ('wagtailforms', '0004_add_verbose_name_plural'),
-        ('wagtailcore', '0066_collection_management_permissions'),
-        ('materials', '0005_section_stream'),
+        ("wagtailredirects", "0006_redirect_increase_max_length"),
+        ("wagtailforms", "0004_add_verbose_name_plural"),
+        ("wagtailcore", "0066_collection_management_permissions"),
+        ("materials", "0005_section_stream"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='section',
-            old_name='stream',
-            new_name='slides',
+            model_name="section",
+            old_name="stream",
+            new_name="slides",
         ),
         migrations.DeleteModel(
-            name='Slide',
+            name="Slide",
         ),
     ]

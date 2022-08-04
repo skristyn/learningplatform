@@ -1,5 +1,6 @@
 from django.urls import path
 from rest_framework.decorators import api_view
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from wagtail.api.v2.views import BaseAPIViewSet
 from wagtail.api.v2.utils import get_object_detail_url
@@ -12,13 +13,23 @@ def api_login_required(view_func):
     Wraps a view function to return an error message if a user accessing the API
     is not logged in.
     """
+
     def private_view_func(instance, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return Response(
-                {"message": "Please log in to view any learning platform content"}
-            )
-        return view_func(instance, request, *args, **kwargs)
+        # First try to auth with token in header
+        auth_header = request.META.get("HTTP_AUTHORIZATION")
+        if auth_header:
+            key = auth_header[11:]
+            token = Token.objects.get(key=key)
+            request.user = token.user
+            return view_func(instance, request, *args, **kwargs)
+        if request.user.is_authenticated:
+            return view_func(instance, request, *args, **kwargs)
+        return Response(
+            {"message": "Please log in to view any learning platform content"}
+        )
+
     return private_view_func
+
 
 class RootViewSet(BaseAPIViewSet):
     model = HomePage
@@ -28,7 +39,7 @@ class RootViewSet(BaseAPIViewSet):
         return [
             path("", cls.as_view({"get": "root_view"}), name="detail"),
         ]
-    
+
     @api_login_required
     def root_view(self, request):
         hostname = request.build_absolute_uri()
@@ -44,6 +55,7 @@ class RootViewSet(BaseAPIViewSet):
                 "url": f"{hostname}",
             }
         )
+
 
 class HomeViewSet(BaseAPIViewSet):
     """
@@ -101,10 +113,9 @@ class HomeViewSet(BaseAPIViewSet):
                             router, request, Section, next_section.pk
                         ),
                     },
-                "announcement": Announcement.objects.latest('date').text,
+                    "announcement": Announcement.objects.latest("date").text,
                 }
             )
 
-        # The view cannot be called with a drf request object, but the underlying
-        # django request object accessed by the _request attribute.
         return inner_view(request._request)
+

@@ -22,6 +22,7 @@ These types should be developed with help from the fe folks to
 best choose layout and design.
 """
 
+
 class BaseBlock(blocks.StructBlock):
     heading = blocks.CharBlock()
     body = blocks.RichTextBlock()
@@ -67,16 +68,17 @@ class QuestionBlock(blocks.StructBlock):
     """
     A slide that provides a multiple choice question and answer.
     """
+
     question = blocks.TextBlock()
     choice_1 = blocks.TextBlock()
     choice_2 = blocks.TextBlock()
     choice_3 = blocks.TextBlock()
     choice_4 = blocks.TextBlock()
     choices = (
-            ('1', '1'),
-            ('2', '2'),
-            ('3', '3'),
-            ('4', '4'),
+        ("1", "1"),
+        ("2", "2"),
+        ("3", "3"),
+        ("4", "4"),
     )
     correct = blocks.ChoiceBlock(choices=choices)
 
@@ -129,7 +131,7 @@ class Resource(Page):
         IMAGE = "image", "image"
         PDF = "pdf", "pdf"
         GLOSSARY = "gloss", "glossary"
-    
+
     resource_type = models.CharField(
         max_length=5, choices=ContentType.choices, default=ContentType.IMAGE
     )
@@ -142,7 +144,7 @@ class Resource(Page):
         IMAGE = "image", "image"
         PDF = "pdf", "pdf"
         GLOSSARY = "gloss", "glossary"
-    
+
     resource_type = models.CharField(
         max_length=5, choices=ContentType.choices, default=ContentType.IMAGE
     )
@@ -215,7 +217,6 @@ class Section(RoutablePageMixin, Page):
     def number(self) -> int:
         """
         This computes the lesson number based on position in the tree vs hard code.
-        Requiring a db look up on a property is gauche though maybe...
         """
         return len(self.get_prev_siblings()) + 1
 

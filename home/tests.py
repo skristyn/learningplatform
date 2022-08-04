@@ -1,12 +1,32 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.test.client import RequestFactory
+from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import AnonymousUser, User
 from django.db.models import signals
 from .models import HomePage, Announcement
 from users.models import Enrollment
 from materials.models import Textbook
 from materials.tests import build_lesson
+
+
+class TestAPIToken(TestCase):
+    def setUp(self):
+        User.objects.create(
+                username="easy",
+                password="easy"
+        )
+    
+    def test_token_available(self):
+        self.assertTrue(Token.objects.all())
+
+    def test_get_token(self):
+        response = self.client.post(
+            "/api/v1/token-auth",
+            {"username": "easy", "password": "easy"}
+        )
+
+        print(response.content)
 
 
 class TestLoginRequired(TestCase):
@@ -44,7 +64,9 @@ class TestLoginRequired(TestCase):
         textbook = Textbook.add_root(title="Big book")
         build_lesson(parent=textbook)
 
-        enrollment = Enrollment.objects.create(user=request.user, active_course=textbook)
+        enrollment = Enrollment.objects.create(
+            user=request.user, active_course=textbook
+        )
         response = page.serve(request)
 
         self.assertEqual(response.status_code, 200)

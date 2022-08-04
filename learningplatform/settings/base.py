@@ -16,7 +16,6 @@ import os
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -43,6 +42,7 @@ INSTALLED_APPS = [
     "bootstrapform",
     "taggit",
     "rest_framework",
+    "rest_framework.authtoken",
     "corsheaders",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -51,6 +51,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication", 
+        "rest_framework.authentication.SessionAuthentication", 
+        "rest_framework.authentication.TokenAuthentication", 
+    ]
+}
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -172,8 +180,8 @@ WAGTAILSEARCH_BACKENDS = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
-WAGTAIL_FRONTEND_LOGIN_TEMPLATE = 'users/login.html'
-WAGTAIL_FRONTEND_LOGIN_URL = '/accounts/login/'
+WAGTAIL_FRONTEND_LOGIN_TEMPLATE = "users/login.html"
+WAGTAIL_FRONTEND_LOGIN_URL = "/accounts/login/"
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
