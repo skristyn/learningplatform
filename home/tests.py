@@ -13,6 +13,7 @@ from materials.tests import build_lesson
 
 class TestAPIToken(TestCase):
     def setUp(self):
+        lesson = build_lesson()
         user = User.objects.create(
                 username="easy",
         )
@@ -35,4 +36,25 @@ class TestAPIToken(TestCase):
             json.loads(response.content)["token"],
             Token.objects.first().key,
         )
+
+    def test_use_token(self):
+        token_response = self.client.post(
+            "/api/v1/token-auth",
+            data={"username": "easy", "password": "easy"},
+        )
+
+        token = json.loads(token_response.content)["token"]
+        response = self.client.get(
+            "/api/v1/lessons/",
+            {"Authorization": f"Token {token}"},
+        )
+        
+        self.assertEqual(response.status_code, 200)
+        content = json.loads(response.content)
+
+        print(content)
+
+        self.assertEqual(content["items"][0]["type"], "materials.Lesson")
+
+
 

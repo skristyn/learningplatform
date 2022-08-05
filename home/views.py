@@ -18,8 +18,14 @@ def api_login_required(view_func):
         # First try to auth with token in header
         auth_header = request.META.get("HTTP_AUTHORIZATION")
         if auth_header:
-            key = auth_header[11:]
-            token = Token.objects.get(key=key)
+            key = auth_header[6:]
+            try:
+                print(key)
+                token = Token.objects.get(key=key)
+            except Token.DoesNotExist:
+                return Response(
+                    {"message": "The token provided isn't valid"}
+                )
             request.user = token.user
             return view_func(instance, request, *args, **kwargs)
         if request.user.is_authenticated:
