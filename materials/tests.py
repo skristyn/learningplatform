@@ -33,9 +33,6 @@ def build_student():
 
 
 class TestGrade(TestCase):
-    def setUp(self):
-        signals.post_save.disconnect(sender=User, dispatch_uid="irrelevant")
-
     def test_create_grade(self):
         section: Section = Section.add_root(title="First title")
         student: User = User.objects.create(username="harvey")
@@ -118,9 +115,6 @@ class TestGrade(TestCase):
 
 
 class TestTimeToComplete(TestCase):
-    def setUp(self):
-        signals.post_save.disconnect(sender=User, dispatch_uid="irrelevant")
-
     def test_lesson_time_remaining_full(self):
         lesson = build_lesson()
         student = build_student()
@@ -157,9 +151,6 @@ class TestTimeToComplete(TestCase):
 
 class TestAPI(APITestCase):
     logger = logging.getLogger("tests.api")
-
-    def setUp(self):
-        signals.post_save.disconnect(sender=User, dispatch_uid="irrelevant")
 
     def test_lesson_endpoint_is_not_empty(self):
         lesson = build_lesson()
