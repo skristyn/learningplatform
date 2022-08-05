@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.test.client import RequestFactory
 from rest_framework.authtoken.models import Token
+from rest_framework.test import APIClient
 from django.contrib.auth.models import AnonymousUser, User
 from django.db.models import signals
 from .models import HomePage, Announcement
@@ -42,19 +43,16 @@ class TestAPIToken(TestCase):
             "/api/v1/token-auth",
             data={"username": "easy", "password": "easy"},
         )
-
         token = json.loads(token_response.content)["token"]
         response = self.client.get(
             "/api/v1/lessons/",
-            {"Authorization": f"Token {token}"},
+            HTTP_AUTHORIZATION = f"Token {token}",
         )
         
-        self.assertEqual(response.status_code, 200)
         content = json.loads(response.content)
 
-        print(content)
-
-        self.assertEqual(content["items"][0]["type"], "materials.Lesson")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(content["items"][0]["meta"]["type"], "materials.Lesson")
 
 
 
