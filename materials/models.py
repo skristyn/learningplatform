@@ -133,7 +133,6 @@ class SlidesSerializer(Field):
     def to_representation(self, slides, *args, **kwargs):
         section = self.parent.instance
         tips = Tip.objects.filter(section=section)
-        print(dir(self.context["router"]))
         print(self.context["router"].get_model_endpoint(Tip))
         return [represent(slide) for slide in slides]
 

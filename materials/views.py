@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import path
 from django.contrib.auth.models import User
 from wagtail.api.v2.views import BaseAPIViewSet
-from .models import Textbook, Lesson, Grade, Section, Resource, ResourceAccess
+from .models import Textbook, Lesson, Grade, Section, Resource, ResourceAccess, Tip
 from home.views import api_login_required
 
 
@@ -60,6 +60,59 @@ class GradeViewSet(BaseAPIViewSet):
         student = get_object_or_404(User, pk=request.POST["student"])
         section = get_object_or_404(Section, pk=request.POST["section"])
         Grade.objects.create(student=student, section=section)
+
+        return JsonResponse(
+            {"message": f"{section.title} was marked completed for {student.username}"}
+        )
+
+
+class TipViewSet(PrivateAPIViewSet):
+    """
+    Similar to the GradeViewSet a horrible hack that we all hate.
+    """
+    model = Tip
+    
+    @classmethod
+    def get_urlpatterns(cls) -> List[Callable]:
+        """
+        This can be empty for now.
+        """
+        return [
+            path(
+                "",
+                cls.as_view({"get": "listing_view", "post": "create_tip"}),
+                name="listing",
+            ),
+            path("<int:pk>/", cls.as_view({"get": "detail_view"}), name="detail"),
+            path("find/", cls.as_view({"get": "find_view"}), name="find"),
+        ]
+
+    @api_login_required
+    def listing_view(self, request) -> str:
+        tips = Tip.objects.all()
+        items = [
+            {
+                "user": tip.user.username,
+                "body": tip.tip_body,
+                "slide": tip.slide_id,
+            } for tip in tips
+        ]
+
+        return JsonResponse(
+            {
+                "meta": {
+                    "total_count": len(items)
+                },
+                "items": items
+            }
+        )
+
+    @api_login_required
+    def create_tip(self, request: HttpRequest) -> JsonResponse:
+        student = get_object_or_404(User, pk=request.POST["student"])
+        section = get_object_or_404(Section, pk=request.POST["section"])
+        slide = request.POST["slide"]
+        Tip.objects.create(user=student, section=section)
 
         return JsonResponse(
             {"message": f"{section.title} was marked completed for {student.username}"}
