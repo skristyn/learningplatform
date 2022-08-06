@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.db.models import signals
 from rest_framework.test import APITestCase
-from .models import Section, Grade, Lesson, Textbook
+from .models import Section, Grade, Lesson, Textbook, Tip
 
 
 logging.basicConfig(filename="testing.log", filemode="w", level=logging.DEBUG)
@@ -256,3 +256,32 @@ class TestAPI(APITestCase):
         )
 
         self.assertTrue(Grade.objects.filter(section=section, student=student))
+
+
+class TestTips(TestCase):
+    def setUp(self):
+        self.lesson = build_lesson()
+        self.student = build_student()
+
+    def test_create_tip(self):
+        section = self.lesson.sections.first().specific
+        Tip.objects.create(
+            section=section, 
+            user=self.student, 
+            slide_id="1234", 
+            tip_body="Pizza requirements"
+        )
+
+        self.assertTrue(Tip.objects.all())
+
+    def test_find_tip(self):
+        Tip.objects.create(
+            section=section, 
+            user=self.student, 
+            slide_id="142534", 
+            tip_body="Pizza requirements"
+        )
+
+        response = self.client.get("api/v1/tips/?slide_id=142534")
+        
+        print(response.content)

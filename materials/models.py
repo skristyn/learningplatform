@@ -304,6 +304,7 @@ class Tip(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     tip_body = models.CharField(max_length=560, blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         summary = self.tip_body
