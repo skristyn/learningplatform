@@ -97,7 +97,7 @@ class TipViewSet(PrivateAPIViewSet):
                 "slide": tip.slide_id,
             } for tip in tips
         ]
-
+        # would like to use drf Response object here, but getting an error.
         return JsonResponse(
             {
                 "meta": {
@@ -115,7 +115,7 @@ class TipViewSet(PrivateAPIViewSet):
         Tip.objects.create(user=student, section=section)
 
         return JsonResponse(
-            {"message": f"{section.title} was marked completed for {student.username}"}
+            {"message": f"{student.username} added tip successfully."}
         )
 
 

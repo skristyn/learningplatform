@@ -11,7 +11,7 @@ from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.api import APIField
-from wagtail.api.v2.utils import get_object_detail_url
+from wagtail.api.v2.utils import get_object_detail_url, get_base_url
 from wagtail.core.query import PageQuerySet
 from home.models import HomePage
 
@@ -121,20 +121,22 @@ class Topic(models.Model):
         return self.name
 
 
-def represent(slide):
+def represent(slide, tip_url):
     slide_dict = slide.get_prep_value()
     return {
         **slide_dict,
-        "tips": "tip url"
+        "tips": tip_url + f"?slide={slide_dict['id']}"
     }
 
+# The endpoint we want is .../tips/?slide=<slide_id>
 
 class SlidesSerializer(Field):
     def to_representation(self, slides, *args, **kwargs):
-        section = self.parent.instance
-        tips = Tip.objects.filter(section=section)
-        print(self.context["router"].get_model_endpoint(Tip))
-        return [represent(slide) for slide in slides]
+        base_url = get_base_url(self.context["request"])
+        tip_listing_endpoint = self.context["router"].get_model_listing_urlpath(Tip)
+        tip_listing_full_url = base_url + tip_listing_endpoint
+
+        return [represent(slide, tip_listing_full_url) for slide in slides]
 
 
 class TopicsSerializer(Field):
