@@ -89,7 +89,11 @@ class TipViewSet(PrivateAPIViewSet):
 
     @api_login_required
     def listing_view(self, request) -> str:
-        tips = Tip.objects.all()
+        if (id := request.query_params.get('slide_id')) is not None:
+            tips = Tip.objects.filter(slide_id=id)
+        else:
+            tips = Tip.objects.all()
+        # tips -- will probably need to add paginations later.
         items = [
             {
                 "user": tip.user.username,
