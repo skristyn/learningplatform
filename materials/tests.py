@@ -258,7 +258,7 @@ class TestAPI(APITestCase):
         self.assertTrue(Grade.objects.filter(section=section, student=student))
 
 
-class TestTips(TestCase):
+class TestTips(APITestCase):
     def setUp(self):
         self.lesson = build_lesson()
         self.student = build_student()
@@ -275,13 +275,30 @@ class TestTips(TestCase):
         self.assertTrue(Tip.objects.all())
 
     def test_find_tip(self):
+        section = self.lesson.sections.first().specific
         Tip.objects.create(
             section=section, 
             user=self.student, 
             slide_id="142534", 
             tip_body="Pizza requirements"
         )
+        self.client.force_login(self.student)
+        response = self.client.get("/api/v1/tips/?slide_id=142534")
 
-        response = self.client.get("api/v1/tips/?slide_id=142534")
+        unpacked_body = json.loads(response.content)["items"][0]
+
+        self.assertEqual(unpacked_body["body"], "Pizza requirements")
         
-        print(response.content)
+    def test_not_find_tip(self):
+        section = self.lesson.sections.first().specific
+        Tip.objects.create(
+            section=section, 
+            user=self.student, 
+            slide_id="1425349", 
+            tip_body="Pizza requirements"
+        )
+        self.client.force_login(self.student)
+        response = self.client.get("/api/v1/tips/?slide_id=142534000")
+
+        unpacked_body = json.loads(response.content)["items"]
+        self.assertFalse(unpacked_body)
