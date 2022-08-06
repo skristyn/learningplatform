@@ -125,7 +125,7 @@ def represent(slide, tip_url):
     slide_dict = slide.get_prep_value()
     return {
         **slide_dict,
-        "tips": tip_url + f"?slide={slide_dict['id']}"
+        "tips_url": tip_url + f"?slide={slide_dict['id']}"
     }
 
 # The endpoint we want is .../tips/?slide=<slide_id>
