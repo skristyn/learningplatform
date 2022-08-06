@@ -90,15 +90,16 @@ class TipViewSet(PrivateAPIViewSet):
     @api_login_required
     def listing_view(self, request) -> str:
         if (id := request.query_params.get('slide_id')) is not None:
-            tips = Tip.objects.filter(slide_id=id)
+            tips = Tip.objects.filter(slide_id=id).order_by("-created_at")
         else:
-            tips = Tip.objects.all()
+            tips = Tip.objects.all().order_by("-created_at")
         # tips -- will probably need to add paginations later.
         items = [
             {
                 "user": tip.user.username,
                 "body": tip.tip_body,
                 "slide": tip.slide_id,
+                "created_at": tip.created_at,
             } for tip in tips
         ]
         # would like to use drf Response object here, but getting an error.
