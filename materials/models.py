@@ -18,25 +18,28 @@ from home.models import HomePage
 """
 The first several block classes represent slide types.
 
-These types should be developed with help from the fe folks to
-best choose layout and design.
+These types should be developed with help from the fe folks to best choose 
+layout and design.
 """
-
-
-class BaseBlock(blocks.StructBlock):
-    heading = blocks.CharBlock()
-    body = blocks.RichTextBlock()
 
 
 class ResourceBlock(blocks.StructBlock):
     """
     For inserting a resource into the slides.
     """
-
     resource = ImageChooserBlock()
 
 
-class HeadlineLeftImageBlock(blocks.StructBlock):
+class SlideBlock(blocks.StructBlock):
+    """
+    This slide block overwrites the 'get_prep_value' method to allow wrapping 
+    a tips endpoint within the block.
+    """
+    heading = blocks.CharBlock()
+    body = blocks.RichTextBlock()
+
+
+class HeadlineLeftImageBlock(SlideBlock):
     """
     Headline across slide, image to the left, text to the right.
     """
@@ -46,7 +49,7 @@ class HeadlineLeftImageBlock(blocks.StructBlock):
     body = blocks.RichTextBlock()
 
 
-class ImageTopBlock(blocks.StructBlock):
+class ImageTopBlock(SlideBlock):
     """
     Image across the top, text across the bottom.
     """
@@ -55,7 +58,7 @@ class ImageTopBlock(blocks.StructBlock):
     body = blocks.RichTextBlock()
 
 
-class ImageRightBlock(blocks.StructBlock):
+class ImageRightBlock(SlideBlock):
     """
     Image on the right, text on the left.
     """
@@ -64,7 +67,7 @@ class ImageRightBlock(blocks.StructBlock):
     body = blocks.RichTextBlock()
 
 
-class QuestionBlock(blocks.StructBlock):
+class QuestionBlock(SlideBlock):
     """
     A slide that provides a multiple choice question and answer.
     """
@@ -85,9 +88,12 @@ class QuestionBlock(blocks.StructBlock):
 
 class UrlSerializer(Field):
     def to_representation(self, parent: Page) -> List[dict]:
-        request = self.context["request"]
-
-        return get_object_detail_url(self.context["router"], request, Lesson, parent.pk)
+        return get_object_detail_url(
+            self.context["router"], 
+            self.context["request"], 
+            Lesson, 
+            parent.pk
+        )
 
 
 class ResourceAccess(models.Model):
@@ -113,6 +119,23 @@ class Topic(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def represent(slide):
+    slide_dict = slide.get_prep_value()
+    return {
+        **slide_dict,
+        "tips": "tip url"
+    }
+
+
+class SlidesSerializer(Field):
+    def to_representation(self, slides, *args, **kwargs):
+        section = self.parent.instance
+        tips = Tip.objects.filter(section=section)
+        print(dir(self.context["router"]))
+        print(self.context["router"].get_model_endpoint(Tip))
+        return [represent(slide) for slide in slides]
 
 
 class TopicsSerializer(Field):
@@ -188,7 +211,7 @@ class Section(RoutablePageMixin, Page):
     slides = StreamField(
         [
             ("resource", ResourceBlock()),
-            ("baseblock", BaseBlock()),
+            ("baseblock", SlideBlock()),
             ("questionblock", QuestionBlock()),
             ("headlineleftimage", HeadlineLeftImageBlock()),
             ("imagetopblock", ImageTopBlock()),
@@ -210,7 +233,7 @@ class Section(RoutablePageMixin, Page):
         APIField("number"),
         APIField("time_to_complete"),
         APIField("completed", serializer=CompletedSerializer()),
-        APIField("slides"),
+        APIField("slides", serializer=SlidesSerializer()),
     ]
 
     @property
@@ -269,6 +292,24 @@ class Section(RoutablePageMixin, Page):
 
     def _mark_complete(self, student: User) -> None:
         Grade.objects.get_or_create(section=self, student=student)
+
+
+class Tip(models.Model):
+    """
+    Users can leave tips along with each slide. Basically a short blurb
+    that helps out other users.
+    """
+    slide_id = models.CharField(max_length=36, blank=False, null=False)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    tip_body = models.CharField(max_length=560, blank=False, null=False)
+
+    def __str__(self):
+        summary = self.tip_body
+        if len(summary) > 25:
+            summary = self.tip_body[:25] + "..."
+
+        return self.user.username + ": " + summary
 
 
 class SectionsSerializer(Field):

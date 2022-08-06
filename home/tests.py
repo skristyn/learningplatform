@@ -54,5 +54,3 @@ class TestAPIToken(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(content["items"][0]["meta"]["type"], "materials.Lesson")
 
-
-
