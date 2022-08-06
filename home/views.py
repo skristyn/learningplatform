@@ -18,9 +18,8 @@ def api_login_required(view_func):
         # First try to auth with token in header
         auth_header = request.META.get("HTTP_AUTHORIZATION")
         if auth_header:
-            key = auth_header[6:]
+            _, key = auth_header.split()
             try:
-                print(key)
                 token = Token.objects.get(key=key)
             except Token.DoesNotExist:
                 return Response(
