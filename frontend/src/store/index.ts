@@ -1,18 +1,52 @@
+import router from "@/router";
+import { IUser } from "@/types/User";
+import { getToken, makeRequest } from "@/utils/api";
 import { createStore } from "vuex";
+
+type State = {
+  authToken: string | null;
+  isAuthenticated: boolean;
+  user: IUser | null;
+};
 
 export default createStore({
   state: {
-    isAuthenticated: false, // TODO: this state and its mutations should hook up to auth system
-  },
+    authToken: null,
+    isAuthenticated: false,
+    user: null,
+  } as State,
   mutations: {
+    setToken(state, token) {
+      state.authToken = token;
+      state.isAuthenticated = true;
+    },
+
     logOut(state) {
       state.isAuthenticated = false;
     },
 
-    logIn(state) {
-      state.isAuthenticated = true;
+    setUser(state, user) {
+      state.user = user;
     },
   },
-  actions: {},
+  actions: {
+    async logIn(context) {
+      const response = await getToken();
+
+      if (response.token) {
+        context.commit("setToken", response.token);
+        router.push({ name: "Home" });
+      } else {
+        throw new Error("bad login"); // TODO should replace this with something else to tell user login failed
+      }
+    },
+
+    async getUserData(context) {
+      if (context.state.authToken) {
+        const result = await makeRequest("home", context.state.authToken);
+        context.commit("setUser", result);
+      }
+    },
+  },
   modules: {},
 });

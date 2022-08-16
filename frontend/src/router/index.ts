@@ -9,14 +9,13 @@ import store from "../store";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/login",
-    // TODO: show signin page if logged out, otherwise show home page
     name: "Login",
     component: Login,
+    // TODO: show signin page if logged out, otherwise show home page
     meta: { layout: MainLayout, guest: true },
   },
   {
     path: "/",
-    // TODO: show signin page if logged out, otherwise show home page
     name: "Home",
     component: Home,
     meta: { layout: MainLayout, requiresAuth: true },
@@ -89,6 +88,9 @@ const router = createRouter({
   routes,
 });
 
+// if the path's requiresAuth is true,
+// and the user is not authenticated, and the path isn't the Login page,
+// redirect to the Login page
 router.beforeEach((to, from) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!store.state.isAuthenticated && to.name !== "Login") {
@@ -97,6 +99,9 @@ router.beforeEach((to, from) => {
   }
 });
 
+// if the path is the login guest page,
+// and the user is already authenticated,
+// redirect to the Home page
 router.beforeEach((to, from) => {
   if (to.matched.some((record) => record.meta.guest)) {
     if (store.state.isAuthenticated && to.name !== "Home") {

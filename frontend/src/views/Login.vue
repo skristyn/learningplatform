@@ -28,13 +28,7 @@ export default defineComponent({
   },
   methods: {
     async logIn() {
-      if (!this.$store.state.isAuthenticated) {
-        await this.$store.commit("logIn");
-
-        if (this.$store.state.isAuthenticated) {
-          this.$router.push({ name: "Home" });
-        }
-      }
+      this.$store.dispatch("logIn");
     },
   },
 });
