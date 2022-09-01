@@ -1,12 +1,12 @@
 import router from "@/router";
-import { IUser } from "@/types/User";
+import { User } from "@/types/User";
 import { getToken, makeRequest } from "@/utils/api";
 import { createStore } from "vuex";
 
 type State = {
   authToken: string | null;
   isAuthenticated: boolean;
-  user: IUser | null;
+  user: User | null;
 };
 
 export default createStore({
@@ -21,6 +21,7 @@ export default createStore({
       state.isAuthenticated = true;
     },
 
+    // TODO make this into an action instead of a mutation
     logOut(state) {
       state.isAuthenticated = false;
     },

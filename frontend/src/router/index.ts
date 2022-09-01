@@ -3,7 +3,7 @@ import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import MainLayout from "@/layouts/MainLayout.vue";
 import LessonLayout from "@/layouts/LessonLayout.vue";
-import { IBreadcrumbTrail } from "@/types/BreadcrumbTrail";
+import { BreadcrumbTrail } from "@/types/BreadcrumbTrail";
 import store from "../store";
 
 const routes: Array<RouteRecordRaw> = [
@@ -11,8 +11,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "Login",
     component: Login,
-    // TODO: show signin page if logged out, otherwise show home page
-    meta: { layout: MainLayout, guest: true },
+    meta: { layout: MainLayout, guest: true }, // show signin page if logged out, otherwise show home page
   },
   {
     path: "/",
@@ -64,7 +63,7 @@ const routes: Array<RouteRecordRaw> = [
       breadcrumbTrail: {
         routeName: "Sandbox",
         crumbTitle: "Sandbox testing page",
-      } as IBreadcrumbTrail,
+      } as BreadcrumbTrail,
     },
   },
   // {

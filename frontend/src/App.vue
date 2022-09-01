@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <!-- TODO: possibly get rid of appInner -->
+  <div id="appInner" class="test">
     <component :is="this.$route.meta.layout || 'div'">
       <router-view />
     </component>
@@ -26,6 +27,7 @@ export default defineComponent({
   --var-color-green-light: #badcbb;
   --var-color-green-lighter: #d0e7d0;
   --var-color-teal: rgb(29, 148, 163);
+  --var-color-blue-dark: #3f679c;
 }
 
 html,
@@ -45,10 +47,29 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--var-color-almost-black);
+  width: 100%;
+  height: 100%;
+}
+
+#appInner {
+  width: 100%;
+  height: 100%;
 }
 
 main {
   padding: 40px;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+h2 {
+  font-size: 26px;
+}
+
+h3 {
+  font-size: 24px;
 }
 
 #nav {

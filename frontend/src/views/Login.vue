@@ -1,13 +1,14 @@
 <template>
   <PageTitle pageTitle="Hi! We’re glad you’re here." />
-  <h2>Here for class?</h2>
-  <!-- <form action=""> -->
-  <form @submit="logIn">
-    <input type="text" /><br />
-    <input type="password" /><br />
-    <button>Sign In</button>
-  </form>
-  <!-- TODO: sign in should actually authenticate user and not just redirect to /home -->
+
+  <div class="loginForm">
+    <h2>Here for class?</h2>
+    <form @submit="logIn">
+      <input type="text" /><br />
+      <input type="password" /><br />
+      <button>Sign In</button>
+    </form>
+  </div>
 
   <h2>Want to know more?</h2>
   <p>
@@ -36,4 +37,7 @@ export default defineComponent({
 
 <style scoped>
 /* Scoped styles go here --- These only apply to ids and classes in this file*/
+.loginForm {
+  text-align: center;
+}
 </style>

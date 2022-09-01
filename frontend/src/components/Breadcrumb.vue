@@ -24,7 +24,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
-import { IBreadcrumbTrail } from "@/types/BreadcrumbTrail";
+import { BreadcrumbTrail } from "@/types/BreadcrumbTrail";
 
 export default defineComponent({
   props: {
@@ -38,7 +38,7 @@ export default defineComponent({
 
     // get the parent breadcrumb trail if available (if defined in router/index.ts)
     const breadcrumbTrail = route.matched[0].meta
-      .breadcrumbTrail as IBreadcrumbTrail;
+      .breadcrumbTrail as BreadcrumbTrail;
     return { breadcrumbTrail };
   },
 });

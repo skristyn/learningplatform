@@ -1,4 +1,4 @@
-export interface IUser {
+export interface User {
   current_course: {
     title: string;
     detail_url: string;

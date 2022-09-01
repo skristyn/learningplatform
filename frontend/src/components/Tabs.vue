@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { ITab } from "@/types/Tab";
+import { Tab } from "@/types/Tab";
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
@@ -22,7 +22,7 @@ export default defineComponent({
   props: {
     tabs: {
       required: true,
-      type: Array as PropType<ITab[]>,
+      type: Array as PropType<Tab[]>,
     },
     selectedTab: {
       type: String,

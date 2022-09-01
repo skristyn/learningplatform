@@ -1,4 +1,4 @@
-export interface IBreadcrumbTrail {
+export interface BreadcrumbTrail {
   routeName: string;
   crumbTitle: string;
 }
