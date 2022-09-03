@@ -21,7 +21,7 @@ export default defineComponent({
 /* CSS variables that can be used in other places */
 :root {
   --var-color-almost-black: #2c3e50;
-  --var-color-gray: gray;
+  --var-color-gray: #878787;
   --var-color-gray-lighter: rgb(236, 240, 245);
   --var-color-green: #8ac38c;
   --var-color-green-light: #badcbb;
