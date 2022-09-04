@@ -22,6 +22,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/course-dashboard",
     name: "CourseDashboard",
+    // TODO decide if these should continue to be lazy loaded
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -31,20 +32,19 @@ const routes: Array<RouteRecordRaw> = [
       ),
     meta: { layout: MainLayout, requiresAuth: true },
   },
-  {
-    path: "/lesson/", // TODO should this be training/lesson?.... at least needs `/:id` at end of route
-    name: "Lesson",
-    component: () =>
-      import(/* webpackChunkName: "lesson" */ "../views/Lesson.vue"),
-    meta: { layout: LessonLayout, requiresAuth: true },
-  },
-  {
-    path: "/about",
-    name: "About",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-    meta: { layout: MainLayout, requiresAuth: true },
-  },
+  // {
+  //   path: "/lesson-intro/:id",
+  //   name: "LessonIntro",
+  //   component: () =>
+  //     import(/* webpackChunkName: "sandbox" */ "../views/LessonIntro.vue"),
+  // },
+  // {
+  //   path: "/lesson/", // TODO should this be training/lesson?.... at least needs `/:id` at end of route
+  //   name: "Lesson",
+  //   component: () =>
+  //     import(/* webpackChunkName: "lesson" */ "../views/Lesson.vue"),
+  //   meta: { layout: LessonLayout, requiresAuth: true },
+  // },
   {
     path: "/sandbox",
     name: "Sandbox",
@@ -65,21 +65,14 @@ const routes: Array<RouteRecordRaw> = [
         crumbTitle: "Sandbox testing page",
       } as BreadcrumbTrail,
     },
+    // {
+    //   path: "/about",
+    //   name: "About",
+    //   component: () =>
+    //     import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    //   meta: { layout: MainLayout, requiresAuth: true },
+    // },
   },
-  // {
-  //   path: "/LessonIntro",
-  //   name: "LessonIntro",
-  //   component: () =>
-  //     import(/* webpackChunkName: "sandbox" */ "../views/LessonIntro.vue"),
-  // },
-
-  // {
-  //   path: "/lessons",
-  //   name: "lessons",
-  //   component: () =>
-  //     import(/* webpackChunkName: "sandbox" */ "../views/CourseDashboard.vue"),
-  //   meta: { layout: MainLayout },
-  // },
 ];
 
 const router = createRouter({

@@ -4,37 +4,18 @@
   <div v-else>
     <PageHeader :pageTitle="textbook.title" />
 
+    <!-- TODO add progress bar -->
+    <!-- TODO add button to continue latest lesson -->
+
     <!-- when Tabs emits the onSelectedTab event, take its tabTitle and set selectedTab state to this string value -->
     <Tabs
       :tabs="tabs"
       :selectedTab="selectedTab"
       @onSelectTab="selectedTab = $event"
     />
-    <!-- TODO make this lessons listing into its own component -->
-    <div class="lessons" v-if="selectedTab === 'Lessons'">
-      <div
-        class="row"
-        v-for="lesson in textbook.lessons"
-        :key="lesson.id"
-        v-once
-      >
-        <!-- TODO is subtitle calc too much? should this be a map?-->
-        <Expandable
-          :title="`Lesson ${lesson.lesson_num}: ${lesson.title}`"
-          :subtitle="
-            lesson.completed
-              ? 'Complete!'
-              : lesson.time_remaining < 60
-              ? `${lesson.time_remaining} minutes`
-              : `${lesson.time_remaining / 60} hours`
-          "
-          :subtitleIcon="lesson.completed ? '' : 'time'"
-          :isExpanded="lesson.id == defaultExpandedId"
-        >
-          <p>text</p>
-        </Expandable>
-      </div>
-    </div>
+
+    <!-- One of the following three will display based on tab selection -->
+    <LessonList v-if="selectedTab === 'Lessons'" :lessons="textbook.lessons" />
     <div v-if="selectedTab === 'Resources'">
       <p>resources placeholder</p>
     </div>
@@ -48,15 +29,15 @@
 import { computed, defineComponent, reactive, toRefs } from "vue";
 import PageHeader from "@/components/PageHeader.vue"; // @ is an alias to /src
 import Tabs from "@/components/Tabs.vue";
-import Expandable from "@/components/Expandable.vue";
 import store from "@/store";
+import LessonList from "@/components/LessonList.vue";
 
 export default defineComponent({
   name: "CourseDashboard",
   components: {
     PageHeader,
     Tabs,
-    Expandable,
+    LessonList,
   },
   setup() {
     const tabs = [

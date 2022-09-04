@@ -1,4 +1,4 @@
-interface Section {
+export interface Section {
   id: number;
   title: string;
   description: string | null;
@@ -8,7 +8,7 @@ interface Section {
   detail_url: string;
 }
 
-interface Lesson {
+export interface Lesson {
   id: number;
   lesson_num: number;
   title: string;

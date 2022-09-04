@@ -1,18 +1,24 @@
 <template>
-  <div class="header" @click="onClickHeader">
-    <h3>{{ title }}</h3>
-    <div class="subtitle">
-      <ion-icon v-if="subtitleIcon" :name="subtitleIcon"></ion-icon>
-      <p v-if="subtitle">{{ subtitle }}</p>
+  <div class="expandable">
+    <div
+      class="header"
+      :class="{ expandedHeader: isExpanded }"
+      @click="onClickHeader"
+    >
+      <h3>{{ title }}</h3>
+      <div class="subtitle">
+        <ion-icon v-if="subtitleIcon" :name="subtitleIcon"></ion-icon>
+        <p v-if="subtitle">{{ subtitle }}</p>
+      </div>
+      <span class="expandStatusIcon">
+        <ion-icon
+          :name="isExpanded ? 'remove-outline' : 'add-outline'"
+        ></ion-icon>
+      </span>
     </div>
-    <span class="expandStatusIcon">
-      <ion-icon
-        :name="isExpanded ? 'remove-outline' : 'add-outline'"
-      ></ion-icon>
-    </span>
-  </div>
-  <div class="contents" v-show="isExpanded">
-    <slot />
+    <div class="contents" v-show="isExpanded">
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -59,12 +65,17 @@ export default defineComponent({
   align-items: center;
   border-bottom: 2px solid var(--var-color-gray);
   margin-top: 26px;
+  padding: 0 14px;
   cursor: pointer;
 }
 
 .header h3,
 .header p {
   margin: 0;
+}
+
+.expandedHeader {
+  border-bottom-color: var(--var-color-green);
 }
 
 .subtitle {
