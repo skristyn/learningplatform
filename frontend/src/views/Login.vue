@@ -1,5 +1,5 @@
 <template>
-  <PageTitle pageTitle="Hi! We’re glad you’re here." />
+  <PageTitle title="Hi! We’re glad you’re here." />
 
   <div class="loginForm">
     <h2>Here for class?</h2>

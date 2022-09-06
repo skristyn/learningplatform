@@ -1,4 +1,4 @@
-export interface Section {
+export interface TextbookSection {
   id: number;
   title: string;
   description: string | null;
@@ -8,24 +8,24 @@ export interface Section {
   detail_url: string;
 }
 
-export interface Lesson {
+export interface TextbookLesson {
   id: number;
   lesson_num: number;
   title: string;
   completed: boolean;
   time_remaining: number;
   detail_url: string;
-  sections: Section[];
+  sections: TextbookSection[];
 }
 
 export default interface Textbook {
-  id: 4;
+  id: number;
   meta: {
     type: string;
     detail_url: string;
   };
   title: string;
   description: string | null;
-  lessons: Lesson[];
+  lessons: TextbookLesson[];
   completed: boolean;
 }

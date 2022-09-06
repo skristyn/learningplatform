@@ -1,8 +1,15 @@
 <template>
-  <ul class="sectionList">
-    <li class="row" v-for="section in sections" :key="section.id" v-once>
-      <!-- <router-link :to="{ name: 'LessonIntro', params: { id: section.id } }">
-      </router-link> -->
+  <div class="sectionList">
+    <router-link
+      :to="{
+        name: 'LessonIntro',
+        params: { sectionId: section.id, lessonId: lessonId },
+      }"
+      class="row"
+      v-for="section in sections"
+      :key="section.id"
+      v-once
+    >
       <ion-icon
         :name="
           section.completed ? 'checkmark-circle-outline' : 'ellipse-outline'
@@ -22,20 +29,25 @@
           "
         ></p>
       </div>
-    </li>
-  </ul>
+    </router-link>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { Section } from "@/types/Textbook";
+import { TextbookSection } from "@/types/Textbook";
 
 export default defineComponent({
   name: "SectionList",
   components: {},
   props: {
     sections: {
-      type: Array as PropType<Section[]>,
+      type: Array as PropType<TextbookSection[]>,
+      required: true,
+    },
+    lessonId: {
+      type: Number,
+      required: true,
     },
   },
 });
@@ -56,6 +68,14 @@ p {
   display: flex;
   align-items: center;
   cursor: pointer;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+  color: var(--var-color-gray);
 }
 
 .title {

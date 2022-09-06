@@ -1,4 +1,4 @@
-export interface User {
+export default interface User {
   current_course: {
     title: string;
     detail_url: string;

@@ -1,6 +1,8 @@
 import router from "@/router";
 import Textbook from "@/types/Textbook";
-import { User } from "@/types/User";
+import Lesson from "@/types/Lesson";
+import Section from "@/types/Section";
+import User from "@/types/User";
 import { getToken, makeRequest } from "@/utils/api";
 import { createStore } from "vuex";
 
@@ -9,6 +11,8 @@ type State = {
   isAuthenticated: boolean;
   user: User | null;
   textbook: Textbook | null;
+  currentLesson: Lesson | null;
+  currentSection: Section | null;
 };
 
 export default createStore({
@@ -17,6 +21,8 @@ export default createStore({
     isAuthenticated: false,
     user: null,
     textbook: null,
+    currentLesson: null,
+    currentSection: null,
   } as State,
   mutations: {
     setToken(state, token) {
@@ -35,6 +41,14 @@ export default createStore({
 
     setTextbook(state, textbook) {
       state.textbook = textbook;
+    },
+
+    setCurrentLesson(state, lesson) {
+      state.currentLesson = lesson;
+    },
+
+    setCurrentSection(state, section) {
+      state.currentSection = section;
     },
   },
   actions: {
@@ -64,6 +78,26 @@ export default createStore({
           context.state.authToken
         );
         context.commit("setTextbook", result);
+      }
+    },
+
+    async getCurrentLesson(context, id) {
+      if (context.state.authToken) {
+        const result = await makeRequest(
+          `lessons/${id}/`,
+          context.state.authToken
+        );
+        context.commit("setCurrentLesson", result);
+      }
+    },
+
+    async getCurrentSection(context, id) {
+      if (context.state.authToken) {
+        const result = await makeRequest(
+          `sections/${id}/`,
+          context.state.authToken
+        );
+        context.commit("setCurrentSection", result);
       }
     },
   },

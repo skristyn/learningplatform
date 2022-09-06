@@ -16,14 +16,14 @@
       :isExpanded="lesson.id == defaultExpandedId"
     >
       <!-- place the lesson's section list the expandable area -->
-      <SectionList :sections="lesson.sections" />
+      <SectionList :sections="lesson.sections" :lessonId="lesson.id" />
     </Expandable>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
-import { Lesson } from "@/types/Textbook";
+import { TextbookLesson } from "@/types/Textbook";
 import Expandable from "@/components/Expandable.vue";
 import SectionList from "./SectionList.vue";
 
@@ -35,7 +35,8 @@ export default defineComponent({
   },
   props: {
     lessons: {
-      type: Array as PropType<Lesson[]>,
+      type: Array as PropType<TextbookLesson[]>,
+      required: true,
     },
   },
   setup(props) {

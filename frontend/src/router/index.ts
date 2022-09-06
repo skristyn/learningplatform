@@ -32,12 +32,22 @@ const routes: Array<RouteRecordRaw> = [
       ),
     meta: { layout: MainLayout, requiresAuth: true },
   },
-  // {
-  //   path: "/lesson-intro/:id",
-  //   name: "LessonIntro",
-  //   component: () =>
-  //     import(/* webpackChunkName: "sandbox" */ "../views/LessonIntro.vue"),
-  // },
+  {
+    path: "/lesson-intro/:lessonId/:sectionId",
+    name: "LessonIntro",
+    component: () =>
+      import(/* webpackChunkName: "lessonintro" */ "../views/LessonIntro.vue"),
+    props: true,
+    // TODO consider refactoring how the previous breadcrumb is set
+    meta: {
+      layout: MainLayout,
+      requiresAuth: true,
+      breadcrumbTrail: {
+        routeName: "CourseDashboard",
+        crumbTitle: "Digital Stewards Training",
+      } as BreadcrumbTrail,
+    },
+  },
   // {
   //   path: "/lesson/", // TODO should this be training/lesson?.... at least needs `/:id` at end of route
   //   name: "Lesson",

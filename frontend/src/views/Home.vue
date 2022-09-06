@@ -1,7 +1,7 @@
 <template>
   <div class="welcome">
     <div class="welcomeLeft">
-      <PageTitle pageTitle="Welcome!" />
+      <PageTitle title="Welcome!" />
     </div>
     <div class="welcomeRight">
       <h3>Want to continue where you left off?</h3>

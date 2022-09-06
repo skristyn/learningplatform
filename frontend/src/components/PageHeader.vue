@@ -1,6 +1,6 @@
 <template>
-  <Breadcrumb :pageTitle="pageTitle" />
-  <PageTitle :pageTitle="pageTitle" />
+  <Breadcrumb :title="breadcrumbTitle ? breadcrumbTitle : title" />
+  <PageTitle :title="title" :subtitle="subtitle ? subtitle : undefined" />
 </template>
 
 <script lang="ts">
@@ -11,8 +11,14 @@ import PageTitle from "@/components/PageTitle.vue"; // @ is an alias to /src
 export default defineComponent({
   name: "PageHeader",
   props: {
-    pageTitle: {
+    title: {
       required: true,
+      type: String,
+    },
+    subtitle: {
+      type: String,
+    },
+    breadcrumbTitle: {
       type: String,
     },
   },

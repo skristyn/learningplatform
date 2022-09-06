@@ -1,5 +1,6 @@
 <template>
-  <h1>{{ pageTitle }}</h1>
+  <h1 class="title">{{ title }}</h1>
+  <h3 class="subtitle" v-if="subtitle">{{ subtitle }}</h3>
 </template>
 
 <script lang="ts">
@@ -8,8 +9,11 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "PageTitle",
   props: {
-    pageTitle: {
+    title: {
       required: true,
+      type: String,
+    },
+    subtitle: {
       type: String,
     },
   },
@@ -17,10 +21,15 @@ export default defineComponent({
 </script>
 
 <style scoped>
-h1 {
+.title {
   font-family: "Tourney", cursive;
   font-weight: 700;
   font-size: 40px;
   color: var(--var-color-teal);
+}
+
+.subtitle {
+  font-weight: normal;
+  margin-top: -17px;
 }
 </style>

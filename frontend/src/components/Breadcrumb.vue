@@ -17,7 +17,7 @@
 
     <!-- current page -->
     <span class="divider">></span>
-    <p>{{ pageTitle }}</p>
+    <p>{{ title }}</p>
   </nav>
 </template>
 
@@ -28,7 +28,7 @@ import { BreadcrumbTrail } from "@/types/BreadcrumbTrail";
 
 export default defineComponent({
   props: {
-    pageTitle: {
+    title: {
       required: true,
       type: String,
     },

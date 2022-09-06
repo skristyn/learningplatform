@@ -1,5 +1,5 @@
 <template>
-  <PageHeader pageTitle="Sanbox testing page" />
+  <PageHeader title="Sanbox testing page" />
   <p>this is a page for testing things</p>
 
   <router-link :to="{ name: 'SandboxSub' }">

@@ -1,5 +1,5 @@
 <template>
-  <PageHeader pageTitle="Sandbox SUB page" />
+  <PageHeader title="Sandbox SUB page" />
   <p>
     sub sandbox page. breadcrumb trail should have a crumb between home and the
     current component

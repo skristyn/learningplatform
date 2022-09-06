@@ -2,7 +2,7 @@
   <p v-if="!textbook">Loading...</p>
 
   <div v-else>
-    <PageHeader :pageTitle="textbook.title" />
+    <PageHeader :title="textbook.title" />
 
     <!-- TODO add progress bar -->
     <!-- TODO add button to continue latest lesson -->
