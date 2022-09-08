@@ -1,5 +1,5 @@
-export interface SectionSlide {
-  type: string;
+export interface Slide {
+  type: "headlineleftimage" | "imagerightblock" | "imagetopblock"; // TODO make sure this is the full list of all possible 'type's
   value: {
     heading: string;
     body: string;
@@ -22,5 +22,5 @@ export default interface Section {
   number: number;
   time_to_complete: number;
   completed: boolean;
-  slides: SectionSlide[];
+  slides: Slide[];
 }

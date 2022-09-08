@@ -1,11 +1,13 @@
 import router from "@/router";
 import Textbook from "@/types/Textbook";
 import Lesson from "@/types/Lesson";
-import Section from "@/types/Section";
+import Section, { Slide } from "@/types/Section";
 import User from "@/types/User";
 import { getToken, makeRequest } from "@/utils/api";
 import { createStore } from "vuex";
+import SlideImage from "@/types/SlideImage";
 
+// TODO persist login through refresh
 type State = {
   authToken: string | null;
   isAuthenticated: boolean;
@@ -13,6 +15,7 @@ type State = {
   textbook: Textbook | null;
   currentLesson: Lesson | null;
   currentSection: Section | null;
+  currentImage: SlideImage | null;
 };
 
 export default createStore({
@@ -23,6 +26,7 @@ export default createStore({
     textbook: null,
     currentLesson: null,
     currentSection: null,
+    currentImage: null,
   } as State,
   mutations: {
     setToken(state, token) {
@@ -50,6 +54,10 @@ export default createStore({
     setCurrentSection(state, section) {
       state.currentSection = section;
     },
+
+    setCurrentImage(state, image) {
+      state.currentImage = image;
+    },
   },
   actions: {
     async logIn(context) {
@@ -66,14 +74,14 @@ export default createStore({
     // TODO add loading and error handling
     async getUserData(context) {
       if (context.state.authToken) {
-        const result = await makeRequest("home", context.state.authToken);
+        const result = await makeRequest<User>("home", context.state.authToken);
         context.commit("setUser", result);
       }
     },
 
     async getDigitalStewardTextbook(context) {
       if (context.state.authToken) {
-        const result = await makeRequest(
+        const result = await makeRequest<Textbook>(
           "textbooks/4/",
           context.state.authToken
         );
@@ -83,7 +91,7 @@ export default createStore({
 
     async getCurrentLesson(context, id) {
       if (context.state.authToken) {
-        const result = await makeRequest(
+        const result = await makeRequest<Lesson>(
           `lessons/${id}/`,
           context.state.authToken
         );
@@ -93,11 +101,21 @@ export default createStore({
 
     async getCurrentSection(context, id) {
       if (context.state.authToken) {
-        const result = await makeRequest(
+        const result = await makeRequest<Section>(
           `sections/${id}/`,
           context.state.authToken
         );
         context.commit("setCurrentSection", result);
+      }
+    },
+
+    async getCurrentImage(context, id) {
+      if (context.state.authToken) {
+        const result = await makeRequest<SlideImage>(
+          `images/${id}/`,
+          context.state.authToken
+        );
+        context.commit("setCurrentImage", result);
       }
     },
   },

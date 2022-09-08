@@ -9,11 +9,11 @@
       <!-- TODO replace these with the real API response values -->
       <div class="title">
         <h1 v-if="!collapseSidebar">
-          {{ fakeLesson.unit }} // {{ fakeLesson.title }}
+          {{ lessonNumber }}.{{ section?.number }} // {{ section?.title }}
         </h1>
       </div>
-      <!-- TODO: double check where this should go -->
       <div class="exit">
+        <!-- TODO: make this into a router-link -->
         <p @click="back" v-if="collapseSidebar">Exit</p>
         <p @click="back" v-else>Exit Lesson</p>
       </div>
@@ -60,16 +60,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import store from "@/store";
 import Notes from "@/components/Notes.vue";
 
 export default defineComponent({
   components: { Notes },
   setup() {
-    // TODO replace this with a call to the api
-    const fakeLesson = { unit: "3.3", title: "Home Installation" };
+    const lessonNumber = computed(() => store.state.currentLesson?.number);
+    const section = computed(() => store.state.currentSection);
 
     const router = useRouter();
     const back = () => {
@@ -99,7 +100,8 @@ export default defineComponent({
     };
 
     return {
-      fakeLesson,
+      lessonNumber,
+      section,
       collapseSidebar,
       showNotes,
       back,
@@ -131,6 +133,7 @@ export default defineComponent({
 }
 
 .title h1 {
+  font-size: 34px;
   padding: 75px 75px 30px;
   margin: 0;
 }

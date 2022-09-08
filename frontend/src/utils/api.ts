@@ -1,8 +1,5 @@
 // Call makeRequest, pass in the token
-export const makeRequest = (
-  path: string,
-  token: string
-): Promise<Record<string, unknown>> => {
+export const makeRequest = <T>(path: string, token: string): Promise<T> => {
   const url = "http://localhost:8000/api/v1/" + path;
 
   const headers = new Headers({

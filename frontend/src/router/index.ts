@@ -48,13 +48,14 @@ const routes: Array<RouteRecordRaw> = [
       } as BreadcrumbTrail,
     },
   },
-  // {
-  //   path: "/lesson/", // TODO should this be training/lesson?.... at least needs `/:id` at end of route
-  //   name: "Lesson",
-  //   component: () =>
-  //     import(/* webpackChunkName: "lesson" */ "../views/Lesson.vue"),
-  //   meta: { layout: LessonLayout, requiresAuth: true },
-  // },
+  {
+    path: "/lesson/:lessonId/:sectionId",
+    name: "Lesson",
+    component: () =>
+      import(/* webpackChunkName: "lesson" */ "../views/Lesson.vue"),
+    props: true,
+    meta: { layout: LessonLayout, requiresAuth: true },
+  },
   {
     path: "/sandbox",
     name: "Sandbox",
