@@ -6,7 +6,6 @@
   >
     <!-- Sidebar header -->
     <div class="header">
-      <!-- TODO replace these with the real API response values -->
       <div class="title">
         <h1 v-if="!collapseSidebar">
           {{ lessonNumber }}.{{ section?.number }} // {{ section?.title }}
@@ -28,16 +27,18 @@
     <Notes v-if="showNotes" @close="toggleNotes" />
 
     <!-- Sidebar footer -->
-    <!-- TODO find out what these buttons need to do -->
     <div class="button-container">
-      <button aria-label="Chat" alt="Chat" title="Chat">
+      <!-- TODO implement chat -->
+      <!-- <button class="chat" aria-label="Chat" alt="Chat" title="Chat">
         <ion-icon
           class="button-icon"
           name="chatbubble-ellipses-outline"
         ></ion-icon>
         <p v-if="!collapseSidebar">chat</p>
-      </button>
+      </button> -->
+
       <button
+        class="notes"
         aria-label="Notes"
         alt="Notes"
         title="Notes"
@@ -47,11 +48,14 @@
         <ion-icon name="reader-outline"></ion-icon>
         <p v-if="!collapseSidebar">notes</p>
       </button>
-      <button aria-label="Message" alt="Message" title="Message">
+
+      <!-- TODO implement messaging -->
+      <!-- <button class="message" aria-label="Message" alt="Message" title="Message">
         <ion-icon name="mail-open-outline"></ion-icon>
         <p v-if="!collapseSidebar">message</p>
-      </button>
-      <button aria-label="Tips" alt="Tips" title="Tips">
+      </button> -->
+
+      <button class="tips" aria-label="Tips" alt="Tips" title="Tips">
         <ion-icon name="bulb-outline"></ion-icon>
         <p v-if="!collapseSidebar">tips</p>
       </button>
@@ -203,45 +207,45 @@ ion-icon {
   font-weight: 600;
 }
 
-.button-container button:nth-child(1) {
+.button-container .chat {
   border-top-color: salmon;
 }
 
-.button-container button:nth-child(1):hover,
-.button-container button:nth-child(1):hover p,
-.button-container button:nth-child(1):hover ion-icon {
+.button-container .chat:hover,
+.button-container .chat:hover p,
+.button-container .chat:hover ion-icon {
   color: salmon;
 }
 
-.button-container button:nth-child(2) {
+.button-container .notes {
   border-top-color: limegreen;
 }
 
-.button-container button:nth-child(2):hover,
-.button-container button:nth-child(2):hover p,
-.button-container button:nth-child(2):hover ion-icon,
-.button-container button:nth-child(2).active p,
-.button-container button:nth-child(2).active ion-icon {
+.button-container .notes:hover,
+.button-container .notes:hover p,
+.button-container .notes:hover ion-icon,
+.button-container .notes.active p,
+.button-container .notes.active ion-icon {
   color: limegreen;
 }
 
-.button-container button:nth-child(3) {
+.button-container .message {
   border-top-color: royalblue;
 }
 
-.button-container button:nth-child(3):hover,
-.button-container button:nth-child(3):hover p,
-.button-container button:nth-child(3):hover ion-icon {
+.button-container .message:hover,
+.button-container .message:hover p,
+.button-container .message:hover ion-icon {
   color: royalblue;
 }
 
-.button-container button:nth-child(4) {
+.button-container .tips {
   border-top-color: darkturquoise;
 }
 
-.button-container button:nth-child(4):hover,
-.button-container button:nth-child(4):hover p,
-.button-container button:nth-child(4):hover ion-icon {
+.button-container .tips:hover,
+.button-container .tips:hover p,
+.button-container .tips:hover ion-icon {
   color: darkturquoise;
 }
 
