@@ -21,4 +21,8 @@ export default {
   display: flex;
   height: 100vh;
 }
+
+main {
+  width: 100%;
+}
 </style>

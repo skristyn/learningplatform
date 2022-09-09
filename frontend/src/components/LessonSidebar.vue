@@ -39,8 +39,8 @@
 
       <button
         class="notes"
-        aria-label="Notes"
-        alt="Notes"
+        aria-label="Click to open notes"
+        alt="Notes page icon"
         title="Notes"
         :class="{ active: showNotes }"
         @click="toggleNotes"
@@ -55,7 +55,12 @@
         <p v-if="!collapseSidebar">message</p>
       </button> -->
 
-      <button class="tips" aria-label="Tips" alt="Tips" title="Tips">
+      <button
+        class="tips"
+        aria-label="Click to open tips"
+        alt="Lightbult icon"
+        title="Tips"
+      >
         <ion-icon name="bulb-outline"></ion-icon>
         <p v-if="!collapseSidebar">tips</p>
       </button>

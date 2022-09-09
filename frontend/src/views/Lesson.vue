@@ -1,7 +1,11 @@
 <template>
   <p v-if="!currentSlide">Loading...</p>
-  <div v-else>
+  <div class="lesson" v-else>
     <LessonSlide :slide="currentSlide" :image="currentImage" />
+    <LessonFooter
+      :currentIndex="currentIndex"
+      @onNavigate="currentIndex = $event"
+    />
   </div>
 </template>
 
@@ -9,10 +13,11 @@
 import store from "@/store";
 import { computed, defineComponent, reactive, toRefs, watch } from "vue";
 import LessonSlide from "@/components/LessonSlide.vue";
+import LessonFooter from "@/components/LessonFooter.vue";
 
 export default defineComponent({
   name: "Lesson",
-  components: { LessonSlide },
+  components: { LessonSlide, LessonFooter },
   props: {
     sectionId: {
       type: Number,
@@ -47,4 +52,10 @@ export default defineComponent({
 
 <style scoped>
 /* Scoped styles go here --- These only apply to ids and classes in this file*/
+.lesson {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  height: 100%;
+}
 </style>
