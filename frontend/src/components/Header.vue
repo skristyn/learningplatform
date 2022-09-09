@@ -4,10 +4,6 @@
       <h2 alt="Learning Platform">learning<br />platform</h2>
     </router-link>
     <div class="buttons" v-if="isLoggedIn">
-      <button aria-label="Community" alt="Community" title="Community">
-        <ion-icon name="people-outline"></ion-icon>
-      </button>
-
       <!-- Use Floating Vue library to create the dropdown menu with log out & other options -->
       <VDropdown :distance="6">
         <!-- This is the popover reference (for the events and position) -->
