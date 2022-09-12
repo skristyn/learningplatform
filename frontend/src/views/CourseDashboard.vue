@@ -5,6 +5,8 @@
     <PageHeader :title="textbook.title" />
 
     <!-- TODO add progress bar -->
+    <ProgressBar title="Your Progress" :percentComplete="25" />
+
     <!-- TODO add button to continue latest lesson -->
 
     <!-- when Tabs emits the onSelectedTab event, take its tabTitle and set selectedTab state to this string value -->
@@ -31,6 +33,7 @@ import PageHeader from "@/components/PageHeader.vue"; // @ is an alias to /src
 import Tabs from "@/components/Tabs.vue";
 import store from "@/store";
 import LessonList from "@/components/LessonList.vue";
+import ProgressBar from "@/components/ProgressBar.vue";
 
 export default defineComponent({
   name: "CourseDashboard",
@@ -38,6 +41,7 @@ export default defineComponent({
     PageHeader,
     Tabs,
     LessonList,
+    ProgressBar,
   },
   setup() {
     const tabs = [
@@ -53,6 +57,8 @@ export default defineComponent({
 
     store.dispatch("getDigitalStewardTextbook");
     const textbook = computed(() => store.state.textbook);
+
+    // calculate their progress through the textbook
 
     // We want to expand the first incomplete lesson, so find its ID
     const defaultExpandedId = computed(
