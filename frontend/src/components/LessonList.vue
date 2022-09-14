@@ -40,7 +40,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    // We want to expand the first incomplete lesson, so find its ID
+    // find the lesson id of the first incomplete lesson (we want it expanded by default)
     const defaultExpandedId = computed(
       () => props.lessons?.find((lesson) => !lesson.completed)?.id
     );

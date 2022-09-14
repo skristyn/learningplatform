@@ -20,6 +20,7 @@
     </div>
     <div class="buttonContainer">
       <DButton
+        size="large"
         text="Begin Lesson!"
         :to="{ name: 'Lesson', params: { sectionId: section.id } }"
       />

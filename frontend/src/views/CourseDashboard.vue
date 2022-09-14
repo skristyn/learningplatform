@@ -6,7 +6,19 @@
 
     <ProgressBar title="Your Progress" :percentComplete="percentComplete" />
 
-    <!-- TODO add button to continue latest lesson -->
+    <div class="nextUpContainer">
+      <DButton
+        size="small"
+        :text="`Continue Lesson ${nextUp.lesson?.lesson_num}.${nextUp.section?.section_num}: ${nextUp.section?.title}`"
+        :to="{
+          name: 'LessonIntro',
+          params: {
+            lessonId: nextUp.lesson?.id,
+            sectionId: nextUp.section?.id,
+          },
+        }"
+      />
+    </div>
 
     <!-- when Tabs emits the onSelectedTab event, take its tabTitle and set selectedTab state to this string value -->
     <Tabs
@@ -33,6 +45,7 @@ import Tabs from "@/components/Tabs.vue";
 import store from "@/store";
 import LessonList from "@/components/LessonList.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
+import DButton from "@/components/DButton.vue";
 
 export default defineComponent({
   name: "CourseDashboard",
@@ -41,6 +54,7 @@ export default defineComponent({
     Tabs,
     LessonList,
     ProgressBar,
+    DButton,
   },
   setup() {
     const tabs = [
@@ -86,18 +100,32 @@ export default defineComponent({
       return percentComplete;
     });
 
-    // We want to expand the first incomplete lesson, so find its ID
-    const defaultExpandedId = computed(
-      () => textbook.value?.lessons?.find((lesson) => !lesson.completed)?.id
-    );
+    // find the first undone lesson and section (we want a quick link to this)
+    const nextUp = computed(() => {
+      const lesson = store.state.textbook?.lessons?.find(
+        (lesson) => !lesson.completed
+      );
+
+      const section = lesson?.sections.find((section) => !section.completed);
+
+      return { lesson, section };
+    });
 
     return {
       tabs,
       ...toRefs(state),
       textbook,
       percentComplete,
-      defaultExpandedId,
+      nextUp,
     };
   },
 });
 </script>
+
+<style scoped>
+.nextUpContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 124px;
+}
+</style>

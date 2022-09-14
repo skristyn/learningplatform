@@ -3,7 +3,7 @@
     <div class="navBar">
       <button
         class="navButton"
-        :class="currentIndex === 0 ? 'hideButton' : ''"
+        :class="{ hideButton: currentIndex === 0 }"
         aria-label="Click to go to the previous slide"
         alt="Back button"
         title="Previous"
@@ -14,7 +14,7 @@
       </button>
       <button
         class="navButton"
-        :class="currentIndex === slidesCount - 1 ? 'hideButton' : ''"
+        :class="{ hideButton: currentIndex === slidesCount - 1 }"
         aria-label="Click to go to the next slide"
         alt="Forward button"
         title="Next"
