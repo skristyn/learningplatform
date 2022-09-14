@@ -4,8 +4,7 @@
   <div v-else>
     <PageHeader :title="textbook.title" />
 
-    <!-- TODO add progress bar -->
-    <ProgressBar title="Your Progress" :percentComplete="25" />
+    <ProgressBar title="Your Progress" :percentComplete="percentComplete" />
 
     <!-- TODO add button to continue latest lesson -->
 
@@ -59,13 +58,46 @@ export default defineComponent({
     const textbook = computed(() => store.state.textbook);
 
     // calculate their progress through the textbook
+    const percentComplete = computed(() => {
+      const sectionCounts = store.state.textbook?.lessons?.reduce(
+        ({ completed, total }, lesson) => {
+          const completedSectionCount = lesson.sections.filter(
+            (section) => section.completed
+          ).length;
+          const totalSectionCount = lesson.sections.length;
+
+          return {
+            completed: completed + completedSectionCount,
+            total: total + totalSectionCount,
+          };
+        },
+        { completed: 0, total: 0 }
+      );
+
+      // if an error occured and the textbook didn't return any sections, default to 0% complete
+      if (!sectionCounts?.total) {
+        return 0;
+      }
+
+      // ... otherwise, calculate % complete
+      const percentComplete =
+        (sectionCounts?.completed / sectionCounts?.total) * 100;
+
+      return percentComplete;
+    });
 
     // We want to expand the first incomplete lesson, so find its ID
     const defaultExpandedId = computed(
       () => textbook.value?.lessons?.find((lesson) => !lesson.completed)?.id
     );
 
-    return { tabs, ...toRefs(state), textbook, defaultExpandedId };
+    return {
+      tabs,
+      ...toRefs(state),
+      textbook,
+      percentComplete,
+      defaultExpandedId,
+    };
   },
 });
 </script>
