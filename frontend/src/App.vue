@@ -21,13 +21,14 @@ export default defineComponent({
 /* CSS variables that can be used in other places */
 :root {
   --var-color-almost-black: #2c3e50;
+  --var-color-blue-dark: #3f679c;
   --var-color-gray: #878787;
   --var-color-gray-lighter: rgb(236, 240, 245);
   --var-color-green: #8ac38c;
   --var-color-green-light: #badcbb;
   --var-color-green-lighter: #d0e7d0;
+  --var-color-pink: #f15882;
   --var-color-teal: rgb(29, 148, 163);
-  --var-color-blue-dark: #3f679c;
 }
 
 html,
