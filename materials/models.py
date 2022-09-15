@@ -327,17 +327,14 @@ class Notes(models.Model):
     """
     Students can take notes that they continuously update during a Section.
     """
-    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True)
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     modified = ModifiedDateTimeField(default=timezone.now)
 
     def __str__(self):
-        summary = self.tip_body
-        if len(summary) > 25:
-            summary = self.tip_body[:25] + "..."
-
-        return self.user.username + ": " + summary
+        return f"{self.user.username}'s notes for {self.section.description}"
 
 
 class SectionsSerializer(Field):
