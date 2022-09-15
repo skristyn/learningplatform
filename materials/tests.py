@@ -33,20 +33,25 @@ def build_student():
 
 
 class TestGrade(TestCase):
+    def setUp(self):
+        self.lesson = build_lesson()
+        self.student: User = build_student()
+        one, two = self.lesson.get_children()
+
+        self.one = one
+        self.two = two
+
     def test_create_grade(self):
-        section: Section = Section.add_root(title="First title")
-        student: User = User.objects.create(username="harvey")
+        Grade.objects.create(student=self.student, section=self.one.specific)
 
-        Grade.objects.create(student=student, section=section)
+        self.assertTrue(self.one.specific.grade_set.all())
 
-        self.assertTrue(section.grade_set.all())
 
     def test_check_section_completion(self):
         section: Section = Section.add_root(title="First title")
-        student: User = User.objects.create(username="harvey")
-        Grade.objects.create(student=student, section=section)
+        Grade.objects.create(student=self.student, section=section)
 
-        result = section.completed(student)
+        result = section.completed(self.student)
 
         self.assertTrue(result)
 
@@ -54,38 +59,34 @@ class TestGrade(TestCase):
         section: Section = Section.objects.create(
             title="First title", path="1010", depth=2
         )
-        student: User = User.objects.create(username="harvey")
 
-        result = section.completed(student)
+        result = section.completed(self.student)
 
         self.assertFalse(result)
 
     def test_check_lesson_completion(self):
         lesson = build_lesson()
-        student = build_student()
 
-        lesson._mark_complete(student)
+        lesson._mark_complete(self.student)
 
-        result = lesson.completed(student)
+        result = lesson.completed(self.student)
 
         self.assertTrue(result)
 
     def test_check_lesson_completetion_false(self):
         lesson = build_lesson()
-        student = build_student()
 
-        result = lesson.completed(student)
+        result = lesson.completed(self.student)
 
         self.assertFalse(result)
 
     def test_check_lesson_completion_partial(self):
         lesson = build_lesson()
-        student = build_student()
         Grade.objects.create(
-            student=student, section=lesson.get_children().specific().first()
+            student=self.student, section=lesson.get_children().specific().first()
         )
 
-        result = lesson.completed(student)
+        result = lesson.completed(self.student)
 
         self.assertFalse(result)
 
@@ -93,12 +94,11 @@ class TestGrade(TestCase):
         course = Textbook.add_root(title="test textbook")
         lesson = build_lesson(parent=course)
         lesson_two = build_lesson(title="second", parent=course)
-        student = build_student()
 
-        lesson._mark_complete(student)
-        lesson_two._mark_complete(student)
+        lesson._mark_complete(self.student)
+        lesson_two._mark_complete(self.student)
 
-        result = course.completed(student)
+        result = course.completed(self.student)
 
         self.assertTrue(result)
 
@@ -106,10 +106,9 @@ class TestGrade(TestCase):
         course = Textbook.add_root(title="test textbook")
         lesson = build_lesson(parent=course)
         lesson_two = build_lesson(title="second", parent=course)
-        student = build_student()
-        lesson._mark_complete(student)
+        lesson._mark_complete(self.student)
 
-        result = course.completed(student)
+        result = course.completed(self.student)
 
         self.assertFalse(result)
 
@@ -252,7 +251,9 @@ class TestAPI(APITestCase):
         self.client.force_login(user=student)
 
         response = self.client.post(
-            "/api/v1/grades/", {"section": section.id, "student": student.id}
+            "/api/v1/grades/", 
+            json.dumps({"section": section.id, "student": student.id}),
+            content_type="application/json"
         )
 
         self.assertTrue(Grade.objects.filter(section=section, student=student))
@@ -302,3 +303,21 @@ class TestTips(APITestCase):
 
         unpacked_body = json.loads(response.content)["items"]
         self.assertFalse(unpacked_body)
+
+    def test_create_tip(self):
+        section = self.lesson.sections.first().specific
+        self.client.force_login(self.student)
+
+        response = self.client.post(
+            '/api/v1/tips/',
+            json.dumps({
+                "student": self.student.pk,
+                "section": section.pk,
+                "slide_id": "1425349",
+                "tip_body": "Please have 5 dollars",
+            }),
+            content_type="application/json"
+        )
+        tips = Tip.objects.filter(section=section, user=self.student)
+
+        self.assertTrue(tips)

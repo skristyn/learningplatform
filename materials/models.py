@@ -67,7 +67,7 @@ class ImageRightBlock(SlideBlock):
     body = blocks.RichTextBlock()
 
 
-class QuestionBlock(SlideBlock):
+class QuestionBlock(blocks.StructBlock):
     """
     A slide that provides a multiple choice question and answer.
     """

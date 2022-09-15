@@ -1,4 +1,4 @@
-from typing import List, Callable
+import json
 from django.http.response import JsonResponse
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
@@ -11,9 +11,9 @@ from home.views import api_login_required
 
 class PrivateAPIViewSet(BaseAPIViewSet):
     """
-    Subclass the base api viewset checking if the user is authenticated and
-    returning a standard error response if not. There is probably a dryer way
-    to do this.
+    Subclass the base api viewset checking if the user is authenticated 
+    and returning a standard error response if not. There is probably a 
+    dryer way to do this.
     """
 
     @api_login_required
@@ -39,7 +39,7 @@ class GradeViewSet(BaseAPIViewSet):
     model = Grade
 
     @classmethod
-    def get_urlpatterns(cls) -> List[Callable]:
+    def get_urlpatterns(cls):
         """
         Returns a list of URL patterns for the endpoint. Each http method
         can be provided its own view method within the dictionaries provided to
@@ -57,9 +57,10 @@ class GradeViewSet(BaseAPIViewSet):
 
     @api_login_required
     def create_grade(self, request: HttpRequest) -> JsonResponse:
-        student = get_object_or_404(User, pk=request.POST["student"])
-        section = get_object_or_404(Section, pk=request.POST["section"])
-        Grade.objects.create(student=student, section=section)
+        body = json.loads(request.body)
+        student = get_object_or_404(User, pk=body["student"])
+        section = get_object_or_404(Section, pk=body["section"])
+        grade = Grade.objects.create(student=student, section=section)
 
         return JsonResponse(
             {"message": f"{section.title} was marked completed for {student.username}"}
@@ -73,7 +74,7 @@ class TipViewSet(PrivateAPIViewSet):
     model = Tip
     
     @classmethod
-    def get_urlpatterns(cls) -> List[Callable]:
+    def get_urlpatterns(cls):
         """
         This can be empty for now.
         """
@@ -88,7 +89,7 @@ class TipViewSet(PrivateAPIViewSet):
         ]
 
     @api_login_required
-    def listing_view(self, request) -> str:
+    def listing_view(self, request):
         if (id := request.query_params.get('slide_id')) is not None:
             tips = Tip.objects.filter(slide_id=id).order_by("-created_at")
         else:
@@ -114,10 +115,15 @@ class TipViewSet(PrivateAPIViewSet):
 
     @api_login_required
     def create_tip(self, request: HttpRequest) -> JsonResponse:
-        student = get_object_or_404(User, pk=request.POST["student"])
-        section = get_object_or_404(Section, pk=request.POST["section"])
-        slide = request.POST["slide"]
-        Tip.objects.create(user=student, section=section)
+        body = json.loads(request.body)
+        student = get_object_or_404(User, pk=body["student"])
+        section = get_object_or_404(Section, pk=body["section"])
+        Tip.objects.create(
+            user=student, 
+            section=section, 
+            slide_id=body["slide_id"],
+            tip_body=body["tip_body"],
+        )
 
         return JsonResponse(
             {"message": f"{student.username} added tip successfully."}
