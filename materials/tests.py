@@ -4,6 +4,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.db.models import signals
 from rest_framework.test import APITestCase
+from rest_framework.authtoken.models import Token
 from .models import Section, Grade, Lesson, Textbook, Tip
 
 
@@ -29,7 +30,10 @@ def build_lesson(title="Lesson One", parent=None):
 
 
 def build_student():
-    return User.objects.create(username="harvey", password="badpass")
+    password = "badpass"
+    student = User.objects.create(username="harvey", password="badpass")
+    student.cleartext_pass = password
+    return student
 
 
 class TestGrade(TestCase):
@@ -304,9 +308,10 @@ class TestTips(APITestCase):
         unpacked_body = json.loads(response.content)["items"]
         self.assertFalse(unpacked_body)
 
-    def test_create_tip(self):
+    def test_post_tip(self):
+        token = Token.objects.get(user=self.student)
+
         section = self.lesson.sections.first().specific
-        self.client.force_login(self.student)
 
         response = self.client.post(
             '/api/v1/tips/',
@@ -316,7 +321,8 @@ class TestTips(APITestCase):
                 "slide_id": "1425349",
                 "tip_body": "Please have 5 dollars",
             }),
-            content_type="application/json"
+            content_type="application/json",
+            HTTP_AUTHORIZATION = f"Token {token}",
         )
         tips = Tip.objects.filter(section=section, user=self.student)
 
