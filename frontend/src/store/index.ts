@@ -79,6 +79,7 @@ export default createStore({
       }
     },
 
+    // TODO once there are other courses/textbooks, this should become more generic in order to get any book
     async getDigitalStewardTextbook(context) {
       if (context.state.authToken) {
         const result = await makeRequest<Textbook>(

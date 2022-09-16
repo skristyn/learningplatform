@@ -59,8 +59,9 @@ export default defineComponent({
   setup() {
     const tabs = [
       { ionIconName: "book-outline", tabTitle: "Lessons" },
-      { ionIconName: "briefcase-outline", tabTitle: "Resources" },
-      { ionIconName: "clipboard-outline", tabTitle: "Project" },
+      // TODO uncomment these lines once the Resrouces and Projects endpoints are ready & populated
+      // { ionIconName: "briefcase-outline", tabTitle: "Resources" }, // currently not populated with data
+      // { ionIconName: "clipboard-outline", tabTitle: "Project" }, // endpoint is still in the works
     ];
 
     // the default tab is always Lessons
