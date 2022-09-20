@@ -1,6 +1,6 @@
 <template>
   <div class="lessonList">
-    <Expandable
+    <DExpandable
       v-for="lesson in lessons"
       :key="lesson.id"
       v-once
@@ -17,20 +17,20 @@
     >
       <!-- place the lesson's section list the expandable area -->
       <SectionList :sections="lesson.sections" :lessonId="lesson.id" />
-    </Expandable>
+    </DExpandable>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
 import { TextbookLesson } from "@/types/Textbook";
-import Expandable from "@/components/Expandable.vue";
+import DExpandable from "@/components/DExpandable.vue";
 import SectionList from "./SectionList.vue";
 
 export default defineComponent({
   name: "LessonList",
   components: {
-    Expandable,
+    DExpandable,
     SectionList,
   },
   props: {

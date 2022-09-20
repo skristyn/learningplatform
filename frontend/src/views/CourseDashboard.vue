@@ -2,9 +2,9 @@
   <p v-if="!textbook">Loading...</p>
 
   <div v-else>
-    <PageHeader :title="textbook.title" />
+    <DPageHeader :title="textbook.title" />
 
-    <ProgressBar title="Your Progress" :percentComplete="percentComplete" />
+    <DProgressBar title="Your Progress" :percentComplete="percentComplete" />
 
     <div class="nextUpContainer">
       <DButton
@@ -20,8 +20,8 @@
       />
     </div>
 
-    <!-- when Tabs emits the onSelectedTab event, take its tabTitle and set selectedTab state to this string value -->
-    <Tabs
+    <!-- when DTabs emits the onSelectedTab event, take its tabTitle and set selectedTab state to this string value -->
+    <DTabs
       :tabs="tabs"
       :selectedTab="selectedTab"
       @onSelectTab="selectedTab = $event"
@@ -40,20 +40,20 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive, toRefs } from "vue";
-import PageHeader from "@/components/PageHeader.vue"; // @ is an alias to /src
-import Tabs from "@/components/Tabs.vue";
+import DPageHeader from "@/components/DPageHeader.vue"; // @ is an alias to /src
+import DTabs from "@/components/DTabs.vue";
 import store from "@/store";
 import LessonList from "@/components/LessonList.vue";
-import ProgressBar from "@/components/ProgressBar.vue";
+import DProgressBar from "@/components/DProgressBar.vue";
 import DButton from "@/components/DButton.vue";
 
 export default defineComponent({
   name: "CourseDashboard",
   components: {
-    PageHeader,
-    Tabs,
+    DPageHeader,
+    DTabs,
     LessonList,
-    ProgressBar,
+    DProgressBar,
     DButton,
   },
   setup() {

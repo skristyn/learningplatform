@@ -1,5 +1,5 @@
 <template>
-  <PageHeader title="Sanbox testing page" />
+  <DPageHeader title="Sanbox testing page" />
   <p>this is a page for testing things</p>
 
   <router-link :to="{ name: 'SandboxSub' }">
@@ -9,12 +9,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import PageHeader from "@/components/PageHeader.vue"; // @ is an alias to /src
+import DPageHeader from "@/components/DPageHeader.vue"; // @ is an alias to /src
 
 export default defineComponent({
   name: "Sandbox",
   components: {
-    PageHeader,
+    DPageHeader,
   },
 });
 </script>

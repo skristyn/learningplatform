@@ -18,7 +18,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "ProgressBar",
+  name: "DProgressBar",
   props: {
     title: {
       type: String,

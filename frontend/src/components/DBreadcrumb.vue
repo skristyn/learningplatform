@@ -7,7 +7,7 @@
 
     <!-- optional parent component breadcrumb -->
     <!-- ... to add this to the breadcrumbs, 
-    add a breadcrumbTrail: IBreadcrumbTrail object to meta in router/index.ts -->
+    add a breadcrumbTrail: BreadcrumbTrail object to meta in router/index.ts -->
     <template v-if="breadcrumbTrail">
       <span class="divider">></span>
       <router-link :to="{ name: breadcrumbTrail.routeName }">{{
@@ -27,6 +27,7 @@ import { useRoute } from "vue-router";
 import { BreadcrumbTrail } from "@/types/BreadcrumbTrail";
 
 export default defineComponent({
+  name: "DBreadcrumb",
   props: {
     title: {
       required: true,

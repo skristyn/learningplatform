@@ -2,7 +2,7 @@
   <!-- TODO, you should be able to go to this page directly -->
   <p v-if="!textbookTitle || !lesson || !section">Loading...</p>
   <div v-else>
-    <PageHeader
+    <DPageHeader
       :title="textbookTitle"
       :subtitle="`Lesson ${lesson.number}: ${lesson.title}`"
       :breadcrumbTitle="`Lesson ${lesson.number}.${section?.section_num}`"
@@ -31,13 +31,13 @@
 <script lang="ts">
 import store from "@/store";
 import { computed, defineComponent } from "vue";
-import PageHeader from "@/components/PageHeader.vue";
+import DPageHeader from "@/components/DPageHeader.vue";
 import DButton from "@/components/DButton.vue"; // @ is an alias to /src
 
 export default defineComponent({
   name: "LessonIntro",
   components: {
-    PageHeader,
+    DPageHeader,
     DButton,
   },
   props: {

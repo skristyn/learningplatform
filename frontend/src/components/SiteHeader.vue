@@ -26,7 +26,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "Header",
+  name: "SiteHeader",
   computed: {
     isLoggedIn() {
       return this.$store.state.isAuthenticated;
