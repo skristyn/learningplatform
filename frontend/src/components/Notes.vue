@@ -33,6 +33,7 @@ import { defineComponent } from "vue";
 import { ref } from "vue";
 
 export default defineComponent({
+  name: "Notes",
   setup() {
     const note = ref<string>("");
     const notes = ref<string[]>([]);

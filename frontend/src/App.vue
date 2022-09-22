@@ -21,6 +21,7 @@ export default defineComponent({
 /* CSS variables that can be used in other places */
 :root {
   --var-color-almost-black: #2c3e50;
+  --var-color-blue-dark: #3f679c;
   --var-color-gray: #878787;
   --var-color-gray-lighter: rgb(236, 240, 245);
   --var-color-green: #8ac38c;
@@ -28,7 +29,9 @@ export default defineComponent({
   --var-color-green-lighter: #d0e7d0;
   --var-color-teal: #19A3B2;
   --var-color-blue-dark: #3f679c;
-  --var-color-pink: #F15882;
+  --var-color-pink: #f15882;
+  --var-color-pink-light: #f9d0db;
+  --var-color-pink-lighter: #fdecf1;
 }
 
 html,

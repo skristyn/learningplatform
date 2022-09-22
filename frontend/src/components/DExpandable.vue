@@ -26,7 +26,7 @@
 import { defineComponent, reactive, toRefs } from "vue";
 
 export default defineComponent({
-  name: "Expandable",
+  name: "DExpandable",
   props: {
     title: {
       required: true,

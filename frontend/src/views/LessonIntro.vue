@@ -2,7 +2,7 @@
   <!-- TODO, you should be able to go to this page directly -->
   <p v-if="!textbookTitle || !lesson || !section">Loading...</p>
   <div v-else>
-    <PageHeader
+    <DPageHeader
       :title="textbookTitle"
       :subtitle="`Lesson ${lesson.number}: ${lesson.title}`"
       :breadcrumbTitle="`Lesson ${lesson.number}.${section?.section_num}`"
@@ -19,11 +19,11 @@
       <p>{{ section.description }}</p>
     </div>
     <div class="buttonContainer">
-      <router-link
-        class="button"
+      <DButton
+        size="large"
+        text="Begin Lesson!"
         :to="{ name: 'Lesson', params: { sectionId: section.id } }"
-        >Begin Lesson!</router-link
-      >
+      />
     </div>
   </div>
 </template>
@@ -31,12 +31,14 @@
 <script lang="ts">
 import store from "@/store";
 import { computed, defineComponent } from "vue";
-import PageHeader from "@/components/PageHeader.vue"; // @ is an alias to /src
+import DPageHeader from "@/components/DPageHeader.vue";
+import DButton from "@/components/DButton.vue"; // @ is an alias to /src
 
 export default defineComponent({
   name: "LessonIntro",
   components: {
-    PageHeader,
+    DPageHeader,
+    DButton,
   },
   props: {
     lessonId: {
@@ -82,22 +84,5 @@ export default defineComponent({
 .buttonContainer {
   display: flex;
   justify-content: center;
-}
-
-.button {
-  display: inline-block; /* needed to add padding to this <a> tag */
-  border: 2px solid red;
-  border-radius: 10px;
-  padding: 18px 96px;
-  font-size: 26px;
-  font-weight: bold;
-}
-
-.button:link,
-.button:visited,
-.button:hover,
-.button:active {
-  text-decoration: none;
-  color: var(--var-color-almost-black);
 }
 </style>

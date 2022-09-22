@@ -1,19 +1,28 @@
-from typing import List, Callable
+import json
 from django.http.response import JsonResponse
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 from django.urls import path
 from django.contrib.auth.models import User
 from wagtail.api.v2.views import BaseAPIViewSet
-from .models import Textbook, Lesson, Grade, Section, Resource, ResourceAccess, Tip
+from .models import (
+    Note,
+    Textbook,
+    Lesson,
+    Grade,
+    Section,
+    Resource,
+    ResourceAccess,
+    Tip,
+)
 from home.views import api_login_required
 
 
 class PrivateAPIViewSet(BaseAPIViewSet):
     """
-    Subclass the base api viewset checking if the user is authenticated and
-    returning a standard error response if not. There is probably a dryer way
-    to do this.
+    Subclass the base api viewset checking if the user is authenticated
+    and returning a standard error response if not. There is probably a
+    dryer way to do this.
     """
 
     @api_login_required
@@ -39,7 +48,7 @@ class GradeViewSet(BaseAPIViewSet):
     model = Grade
 
     @classmethod
-    def get_urlpatterns(cls) -> List[Callable]:
+    def get_urlpatterns(cls):
         """
         Returns a list of URL patterns for the endpoint. Each http method
         can be provided its own view method within the dictionaries provided to
@@ -51,18 +60,23 @@ class GradeViewSet(BaseAPIViewSet):
                 cls.as_view({"get": "listing_view", "post": "create_grade"}),
                 name="listing",
             ),
-            path("<int:pk>/", cls.as_view({"get": "detail_view"}), name="detail"),
+            path(
+                "<int:pk>/", cls.as_view({"get": "detail_view"}), name="detail"
+            ),
             path("find/", cls.as_view({"get": "find_view"}), name="find"),
         ]
 
     @api_login_required
     def create_grade(self, request: HttpRequest) -> JsonResponse:
-        student = get_object_or_404(User, pk=request.POST["student"])
-        section = get_object_or_404(Section, pk=request.POST["section"])
-        Grade.objects.create(student=student, section=section)
+        body = json.loads(request.body)
+        student = get_object_or_404(User, pk=body["student"])
+        section = get_object_or_404(Section, pk=body["section"])
+        grade = Grade.objects.create(student=student, section=section)
 
         return JsonResponse(
-            {"message": f"{section.title} was marked completed for {student.username}"}
+            {
+                "message": f"{section.title} was marked completed for {student.username}"
+            }
         )
 
 
@@ -70,10 +84,11 @@ class TipViewSet(PrivateAPIViewSet):
     """
     Similar to the GradeViewSet a horrible hack that we all hate.
     """
+
     model = Tip
-    
+
     @classmethod
-    def get_urlpatterns(cls) -> List[Callable]:
+    def get_urlpatterns(cls):
         """
         This can be empty for now.
         """
@@ -83,13 +98,15 @@ class TipViewSet(PrivateAPIViewSet):
                 cls.as_view({"get": "listing_view", "post": "create_tip"}),
                 name="listing",
             ),
-            path("<int:pk>/", cls.as_view({"get": "detail_view"}), name="detail"),
+            path(
+                "<int:pk>/", cls.as_view({"get": "detail_view"}), name="detail"
+            ),
             path("find/", cls.as_view({"get": "find_view"}), name="find"),
         ]
 
     @api_login_required
-    def listing_view(self, request) -> str:
-        if (id := request.query_params.get('slide_id')) is not None:
+    def listing_view(self, request):
+        if (id := request.query_params.get("slide_id")) is not None:
             tips = Tip.objects.filter(slide_id=id).order_by("-created_at")
         else:
             tips = Tip.objects.all().order_by("-created_at")
@@ -100,24 +117,84 @@ class TipViewSet(PrivateAPIViewSet):
                 "body": tip.tip_body,
                 "slide": tip.slide_id,
                 "created_at": tip.created_at,
-            } for tip in tips
+            }
+            for tip in tips
         ]
         # would like to use drf Response object here, but getting an error.
         return JsonResponse(
-            {
-                "meta": {
-                    "total_count": len(items)
-                },
-                "items": items
-            }
+            {"meta": {"total_count": len(items)}, "items": items}
         )
 
     @api_login_required
     def create_tip(self, request: HttpRequest) -> JsonResponse:
-        student = get_object_or_404(User, pk=request.POST["student"])
-        section = get_object_or_404(Section, pk=request.POST["section"])
-        slide = request.POST["slide"]
-        Tip.objects.create(user=student, section=section)
+        body = json.loads(request.body)
+        student = get_object_or_404(User, pk=body["student"])
+        section = get_object_or_404(Section, pk=body["section"])
+        Tip.objects.create(
+            user=student,
+            section=section,
+            slide_id=body["slide_id"],
+            tip_body=body["tip_body"],
+        )
+
+        return JsonResponse(
+            {"message": f"{student.username} added tip successfully."}
+        )
+
+
+class NotesViewSet(PrivateAPIViewSet):
+    """
+    Similar to the GradeViewSet a horrible hack that we all hate.
+    """
+
+    model = Note
+
+    @classmethod
+    def get_urlpatterns(cls):
+        """
+        This can be empty for now.
+        """
+        return [
+            path(
+                "",
+                cls.as_view({"get": "listing_view", "post": "create_notes"}),
+                name="listing",
+            ),
+            path(
+                "<int:pk>/", cls.as_view({"get": "detail_view"}), name="detail"
+            ),
+            path("find/", cls.as_view({"get": "find_view"}), name="find"),
+        ]
+
+    @api_login_required
+    def listing_view(self, request):
+        notes = Note.objects.filter(user=request.user)
+        items = [
+            {
+                "username": note.user.username,
+                "user_id": note.user.pk,
+                "section": note.section.pk,
+                "body": note.body,
+                "created": note.created,
+                "modified": note.modified,
+            }
+            for note in notes
+        ]
+        # would like to use drf Response object here, but getting an error.
+        return JsonResponse(
+            {"meta": {"total_count": len(items)}, "items": items}
+        )
+
+    @api_login_required
+    def create_note(self, request: HttpRequest) -> JsonResponse:
+        body = json.loads(request.body)
+        student = get_object_or_404(User, pk=body["student"])
+        section = get_object_or_404(Section, pk=body["section"])
+        Note.objects.create(
+            user=student,
+            section=section,
+            body=body["body"], # should this append on the back end?
+        )
 
         return JsonResponse(
             {"message": f"{student.username} added tip successfully."}

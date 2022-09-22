@@ -18,7 +18,7 @@ import { Tab } from "@/types/Tab";
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
-  name: "Tabs",
+  name: "DTabs",
   props: {
     tabs: {
       required: true,

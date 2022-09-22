@@ -1,7 +1,7 @@
 <template>
   <div class="welcome">
     <div class="welcomeLeft">
-      <PageTitle title="Welcome!" />
+      <DPageTitle title="Welcome!" />
     </div>
     <div class="welcomeRight">
       <h3>Want to continue where you left off?</h3>
@@ -20,12 +20,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import PageTitle from "@/components/PageTitle.vue";
+import DPageTitle from "@/components/DPageTitle.vue";
 
 export default defineComponent({
   name: "Home",
   components: {
-    PageTitle,
+    DPageTitle,
   },
   async mounted() {
     this.$store.dispatch("getUserData");

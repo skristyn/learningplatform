@@ -12,10 +12,6 @@ from materials.views import (
     TipViewSet,
 )
 
-
-
-
-
 # The wagtail api router is slightly different than the vanilla drf api router,
 # so to deliver everything to the correct url we have to write ViewSets that
 # are based on the wagtail BaseAPIViewSet, which is a little annoying because

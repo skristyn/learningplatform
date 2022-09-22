@@ -1,5 +1,5 @@
 <template>
-  <PageTitle title="Hi! We’re glad you’re here." />
+  <DPageTitle title="Hi! We’re glad you’re here." />
 
   <div class="loginForm">
     <h2>Here for class?</h2>
@@ -20,12 +20,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import PageTitle from "@/components/PageTitle.vue";
+import DPageTitle from "@/components/DPageTitle.vue";
 
 export default defineComponent({
   name: "Login",
   components: {
-    PageTitle,
+    DPageTitle,
   },
   methods: {
     async logIn() {

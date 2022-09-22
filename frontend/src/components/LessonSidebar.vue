@@ -23,8 +23,9 @@
       <ion-icon name="chevron-back-outline"></ion-icon>
     </button>
 
-    <!-- Notes -->
+    <!-- Notes or Tips -->
     <Notes v-if="showNotes" @close="toggleNotes" />
+    <Tips v-if="showTips" @close="toggleTips" />
 
     <!-- Sidebar footer -->
     <div class="button-container">
@@ -60,6 +61,8 @@
         aria-label="Click to open tips"
         alt="Lightbult icon"
         title="Tips"
+        :class="{ active: showTips }"
+        @click="toggleTips"
       >
         <ion-icon name="bulb-outline"></ion-icon>
         <p v-if="!collapseSidebar">tips</p>
@@ -74,9 +77,11 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 import store from "@/store";
 import Notes from "@/components/Notes.vue";
+import Tips from "@/components/Tips.vue";
 
 export default defineComponent({
-  components: { Notes },
+  name: "LessonSidebar",
+  components: { Notes, Tips },
   setup() {
     const lessonNumber = computed(() => store.state.currentLesson?.number);
     const section = computed(() => store.state.currentSection);
@@ -88,12 +93,16 @@ export default defineComponent({
 
     const collapseSidebar = ref(false);
     const showNotes = ref(false);
+    const showTips = ref(false);
 
     const toggleSidebar = () => {
-      // if the notes are open, close them
-      // TODO should this warn about losing unsaved notes?
+      // if the notes or tips are open, close them
+      // TODO should this warn about losing unsaved notes/tips?
       if (showNotes.value) {
         toggleNotes();
+      }
+      if (showTips.value) {
+        toggleTips();
       }
       // collapse the sidebar
       collapseSidebar.value = !collapseSidebar.value;
@@ -104,8 +113,25 @@ export default defineComponent({
       if (collapseSidebar.value) {
         toggleSidebar();
       }
+      // if showing tips, hide them
+      if (showTips.value) {
+        toggleTips();
+      }
       // toggle whether or not to show the notes
       showNotes.value = !showNotes.value;
+    };
+
+    const toggleTips = () => {
+      // if the sidebar is collapsed, expand it
+      if (collapseSidebar.value) {
+        toggleSidebar();
+      }
+      // if showing notes, hide them
+      if (showNotes.value) {
+        toggleNotes();
+      }
+      // toggle whether or not to show the notes
+      showTips.value = !showTips.value;
     };
 
     return {
@@ -113,9 +139,11 @@ export default defineComponent({
       section,
       collapseSidebar,
       showNotes,
+      showTips,
       back,
       toggleSidebar,
       toggleNotes,
+      toggleTips,
     };
   },
 });
@@ -129,7 +157,8 @@ export default defineComponent({
   border-right: 3px solid var(--var-color-gray);
   color: var(--var-color-gray);
   margin: 0;
-  width: 400px;
+  width: 426px;
+  flex: 1 0 auto;
 }
 
 .header > * {
@@ -250,7 +279,9 @@ ion-icon {
 
 .button-container .tips:hover,
 .button-container .tips:hover p,
-.button-container .tips:hover ion-icon {
+.button-container .tips:hover ion-icon,
+.button-container .tips.active p,
+.button-container .tips.active ion-icon {
   color: darkturquoise;
 }
 

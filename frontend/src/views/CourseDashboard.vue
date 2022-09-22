@@ -2,13 +2,26 @@
   <p v-if="!textbook">Loading...</p>
 
   <div v-else>
-    <PageHeader :title="textbook.title" />
+    <DPageHeader :title="textbook.title" />
 
-    <!-- TODO add progress bar -->
-    <!-- TODO add button to continue latest lesson -->
+    <DProgressBar title="Your Progress" :percentComplete="percentComplete" />
 
-    <!-- when Tabs emits the onSelectedTab event, take its tabTitle and set selectedTab state to this string value -->
-    <Tabs
+    <div class="nextUpContainer">
+      <DButton
+        size="small"
+        :text="`Continue Lesson ${nextUp.lesson?.lesson_num}.${nextUp.section?.section_num}: ${nextUp.section?.title}`"
+        :to="{
+          name: 'LessonIntro',
+          params: {
+            lessonId: nextUp.lesson?.id,
+            sectionId: nextUp.section?.id,
+          },
+        }"
+      />
+    </div>
+
+    <!-- when DTabs emits the onSelectedTab event, take its tabTitle and set selectedTab state to this string value -->
+    <DTabs
       :tabs="tabs"
       :selectedTab="selectedTab"
       @onSelectTab="selectedTab = $event"
@@ -27,23 +40,28 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive, toRefs } from "vue";
-import PageHeader from "@/components/PageHeader.vue"; // @ is an alias to /src
-import Tabs from "@/components/Tabs.vue";
+import DPageHeader from "@/components/DPageHeader.vue"; // @ is an alias to /src
+import DTabs from "@/components/DTabs.vue";
 import store from "@/store";
 import LessonList from "@/components/LessonList.vue";
+import DProgressBar from "@/components/DProgressBar.vue";
+import DButton from "@/components/DButton.vue";
 
 export default defineComponent({
   name: "CourseDashboard",
   components: {
-    PageHeader,
-    Tabs,
+    DPageHeader,
+    DTabs,
     LessonList,
+    DProgressBar,
+    DButton,
   },
   setup() {
     const tabs = [
       { ionIconName: "book-outline", tabTitle: "Lessons" },
-      { ionIconName: "briefcase-outline", tabTitle: "Resources" },
-      { ionIconName: "clipboard-outline", tabTitle: "Project" },
+      // TODO uncomment these lines once the Resrouces and Projects endpoints are ready & populated
+      // { ionIconName: "briefcase-outline", tabTitle: "Resources" }, // currently not populated with data
+      // { ionIconName: "clipboard-outline", tabTitle: "Project" }, // endpoint is still in the works
     ];
 
     // the default tab is always Lessons
@@ -54,12 +72,61 @@ export default defineComponent({
     store.dispatch("getDigitalStewardTextbook");
     const textbook = computed(() => store.state.textbook);
 
-    // We want to expand the first incomplete lesson, so find its ID
-    const defaultExpandedId = computed(
-      () => textbook.value?.lessons?.find((lesson) => !lesson.completed)?.id
-    );
+    // calculate their progress through the textbook
+    const percentComplete = computed(() => {
+      const sectionCounts = store.state.textbook?.lessons?.reduce(
+        ({ completed, total }, lesson) => {
+          const completedSectionCount = lesson.sections.filter(
+            (section) => section.completed
+          ).length;
+          const totalSectionCount = lesson.sections.length;
 
-    return { tabs, ...toRefs(state), textbook, defaultExpandedId };
+          return {
+            completed: completed + completedSectionCount,
+            total: total + totalSectionCount,
+          };
+        },
+        { completed: 0, total: 0 }
+      );
+
+      // if an error occured and the textbook didn't return any sections, default to 0% complete
+      if (!sectionCounts?.total) {
+        return 0;
+      }
+
+      // ... otherwise, calculate % complete
+      const percentComplete =
+        (sectionCounts?.completed / sectionCounts?.total) * 100;
+
+      return percentComplete;
+    });
+
+    // find the first undone lesson and section (we want a quick link to this)
+    const nextUp = computed(() => {
+      const lesson = store.state.textbook?.lessons?.find(
+        (lesson) => !lesson.completed
+      );
+
+      const section = lesson?.sections.find((section) => !section.completed);
+
+      return { lesson, section };
+    });
+
+    return {
+      tabs,
+      ...toRefs(state),
+      textbook,
+      percentComplete,
+      nextUp,
+    };
   },
 });
 </script>
+
+<style scoped>
+.nextUpContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 124px;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <div class="mainContainer" :class="{ mainBackground: needsMainBackground }">
-    <Header />
+    <SiteHeader />
     <main>
       <slot />
     </main>
@@ -9,11 +9,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Header from "@/components/Header.vue"; // @ is an alias to /src
+import SiteHeader from "@/components/SiteHeader.vue"; // @ is an alias to /src
 
 export default defineComponent({
   name: "MainLayout",
-  components: { Header },
+  components: { SiteHeader },
   computed: {
     needsMainBackground() {
       const needsMainBackground =

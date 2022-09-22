@@ -1,5 +1,5 @@
 <template>
-  <PageHeader title="Sandbox SUB page" />
+  <DPageHeader title="Sandbox SUB page" />
   <p>
     sub sandbox page. breadcrumb trail should have a crumb between home and the
     current component
@@ -8,12 +8,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import PageHeader from "@/components/PageHeader.vue"; // @ is an alias to /src
+import DPageHeader from "@/components/DPageHeader.vue"; // @ is an alias to /src
 
 export default defineComponent({
   name: "SandboxSub",
   components: {
-    PageHeader,
+    DPageHeader,
   },
 });
 </script>

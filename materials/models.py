@@ -3,6 +3,7 @@ from django import forms
 from django.db import models
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
+from django.utils import timezone
 from rest_framework.serializers import Field
 from wagtail.core.models import Page
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
@@ -67,7 +68,7 @@ class ImageRightBlock(SlideBlock):
     body = blocks.RichTextBlock()
 
 
-class QuestionBlock(SlideBlock):
+class QuestionBlock(blocks.StructBlock):
     """
     A slide that provides a multiple choice question and answer.
     """
@@ -314,6 +315,28 @@ class Tip(models.Model):
         return self.user.username + ": " + summary
 
 
+class ModifiedDateTimeField(models.DateTimeField):
+    """
+    A datetime field that updates on every save of the model.
+    """
+    def pre_save(self, model_instance, add):
+        return timezone.now()
+
+
+class Note(models.Model):
+    """
+    Students can take notes that they continuously update during a Section.
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True)
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    modified = ModifiedDateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.user.username}'s notes for {self.section.description}"
+
+
 class SectionsSerializer(Field):
     """
     Serializes the section page model for display on the lesson view, pulls
@@ -465,8 +488,8 @@ class Grade(models.Model):
     complete.
     """
 
-    student: User = models.ForeignKey(User, on_delete=models.CASCADE)
-    section: Section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ["student", "section"]
