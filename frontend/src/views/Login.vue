@@ -40,4 +40,8 @@ export default defineComponent({
 .loginForm {
   text-align: center;
 }
+
+.title {
+  font-size: 3em;
+}
 </style>

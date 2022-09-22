@@ -26,8 +26,9 @@ export default defineComponent({
   --var-color-green: #8ac38c;
   --var-color-green-light: #badcbb;
   --var-color-green-lighter: #d0e7d0;
-  --var-color-teal: rgb(29, 148, 163);
+  --var-color-teal: #19A3B2;
   --var-color-blue-dark: #3f679c;
+  --var-color-pink: #F15882;
 }
 
 html,
@@ -88,4 +89,29 @@ h3 {
 ion-icon {
   color: var(--var-color-gray);
 }
+
+/* Form styling */
+
+input {
+  border: 1.5px solid #979797;
+  border-radius: 3px;
+  -webkit-box-shadow: inset 0px 2px 4px rgba(50, 50, 50, 0.15);
+  -moz-box-shadow: inset 0px 2px 4px rgba(50, 50, 50, 0.15);
+  box-shadow: inset 0px 2px 4px rgba(50, 50, 50, 0.15);
+  padding: .7em;
+  font-size: 1em;
+  margin-bottom: 1em;
+  width: 15em;
+}
+
+form button {
+  color: var(--var-color-pink);
+  font-weight: 800;
+  font-size: 1.75em;
+  padding: 10px;
+  border: 3px solid var(--var-color-pink);
+  border-radius: 8px;
+  background-color: #fff;
+}
+
 </style>
