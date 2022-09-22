@@ -1,5 +1,6 @@
 import logging
 import json
+import time
 from django.test import TestCase
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
@@ -265,15 +266,45 @@ class TestNotes(APITestCase):
     def setUp(self) -> None:
         self.lesson = build_lesson()
         self.student = build_student()
+        self.section = self.lesson.get_children().first().specific
 
     def test_create_note(self):
         Note.objects.create(
             user=self.student,
-            section=self.lesson.get_children().first().specific,
+            section=self.section,
             body="Here is a note that I'd like to remember for later"
         )
 
         self.assertTrue(Note.objects.all())
+
+    def test_update_note(self):
+        note = Note.objects.create(
+            user=self.student,
+            section=self.section,
+            body="Here is the initial text of the note"
+        )
+
+        later = Note.objects.get(pk=note.pk)
+        new_body = "Here is a new body"
+        later.body = new_body
+        later.save()
+
+        self.assertEqual(later.body, new_body)
+
+    def test_update_note_time(self):
+        note = Note.objects.create(
+            user=self.student,
+            section=self.section,
+            body="Here is the initial text of the note"
+        )
+        create_time = note.modified
+        time.sleep(0.5) 
+        later = Note.objects.get(pk=note.pk)
+        new_body = "Here is a new body"
+        later.body = new_body
+        later.save()
+
+        self.assertGreater(later.modified, create_time)
 
 
 class TestTips(APITestCase):

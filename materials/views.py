@@ -142,7 +142,7 @@ class TipViewSet(PrivateAPIViewSet):
         )
 
 
-class NotesViewSet(PrivateAPIViewSet):
+class NoteViewSet(PrivateAPIViewSet):
     """
     Similar to the GradeViewSet a horrible hack that we all hate.
     """
@@ -197,9 +197,19 @@ class NotesViewSet(PrivateAPIViewSet):
         )
 
         return JsonResponse(
-            {"message": f"{student.username} added tip successfully."}
+            {"message": f"{student.username} added note successfully."}
         )
 
+    @api_login_required
+    def update_note(self, request: HttpRequest, pk: int) -> JsonResponse:
+        body = json.loads(request.body)
+        student = request.user
+        Note.objects.update_or_create(
+            pk=pk,
+            body=body["body"],
+        )
+
+        return JsonResponse({"message": f"{student} updated note successfully."})
 
 # The wagtail BaseAPIViewSet provides listing and detail views when provided
 # a model.
