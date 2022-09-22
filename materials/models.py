@@ -323,7 +323,7 @@ class ModifiedDateTimeField(models.DateTimeField):
         return timezone.now()
 
 
-class Notes(models.Model):
+class Note(models.Model):
     """
     Students can take notes that they continuously update during a Section.
     """

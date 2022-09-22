@@ -6,7 +6,7 @@ from django.urls import path
 from django.contrib.auth.models import User
 from wagtail.api.v2.views import BaseAPIViewSet
 from .models import (
-    Notes,
+    Note,
     Textbook,
     Lesson,
     Grade,
@@ -147,7 +147,7 @@ class NotesViewSet(PrivateAPIViewSet):
     Similar to the GradeViewSet a horrible hack that we all hate.
     """
 
-    model = Notes
+    model = Note
 
     @classmethod
     def get_urlpatterns(cls):
@@ -168,7 +168,7 @@ class NotesViewSet(PrivateAPIViewSet):
 
     @api_login_required
     def listing_view(self, request):
-        notes = Notes.objects.filter(user=request.user)
+        notes = Note.objects.filter(user=request.user)
         items = [
             {
                 "username": note.user.username,
@@ -190,7 +190,7 @@ class NotesViewSet(PrivateAPIViewSet):
         body = json.loads(request.body)
         student = get_object_or_404(User, pk=body["student"])
         section = get_object_or_404(Section, pk=body["section"])
-        Notes.objects.create(
+        Note.objects.create(
             user=student,
             section=section,
             body=body["body"], # should this append on the back end?

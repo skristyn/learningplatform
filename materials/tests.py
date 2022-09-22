@@ -2,10 +2,9 @@ import logging
 import json
 from django.test import TestCase
 from django.contrib.auth.models import User
-from django.db.models import signals
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
-from .models import Section, Grade, Lesson, Textbook, Tip
+from .models import Note, Section, Grade, Lesson, Textbook, Tip
 
 
 logging.basicConfig(filename="testing.log", filemode="w", level=logging.DEBUG)
@@ -49,7 +48,6 @@ class TestGrade(TestCase):
         Grade.objects.create(student=self.student, section=self.one.specific)
 
         self.assertTrue(self.one.specific.grade_set.all())
-
 
     def test_check_section_completion(self):
         section: Section = Section.add_root(title="First title")
@@ -261,6 +259,21 @@ class TestAPI(APITestCase):
         )
 
         self.assertTrue(Grade.objects.filter(section=section, student=student))
+
+
+class TestNotes(APITestCase):
+    def setUp(self) -> None:
+        self.lesson = build_lesson()
+        self.student = build_student()
+
+    def test_create_note(self):
+        Note.objects.create(
+            user=self.student,
+            section=self.lesson.get_children().first().specific,
+            body="Here is a note that I'd like to remember for later"
+        )
+
+        self.assertTrue(Note.objects.all())
 
 
 class TestTips(APITestCase):
