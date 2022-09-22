@@ -1,7 +1,7 @@
 <template>
 <div class="login-grid">
   <div class="row">
-    <DPageTitle title="Hi! We’re glad you’re here." />
+    <h1 class="title">Hi! We’re glad you’re here.</h1>
   </div>
   <div class="form-row">
     <div class="loginForm">
@@ -27,13 +27,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import DPageTitle from "@/components/DPageTitle.vue";
 
 export default defineComponent({
   name: "Login",
-  components: {
-    DPageTitle,
-  },
   methods: {
     async logIn() {
       this.$store.dispatch("logIn");
@@ -55,6 +51,9 @@ button {
 
 .title {
   font-size: 3em;
+  font-family: "Tourney", cursive;
+  font-weight: 700;
+  color: var(--var-color-teal);
 }
 
 .login-grid {
