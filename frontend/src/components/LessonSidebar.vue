@@ -5,7 +5,7 @@
     aria-label="Sidebar"
   >
     <!-- Sidebar header -->
-    <div class="header">
+    <div class="sidebarHeader">
       <div class="title">
         <h1 v-if="!collapseSidebar">
           {{ lessonNumber }}.{{ section?.number }} // {{ section?.title }}
@@ -18,17 +18,20 @@
       </div>
     </div>
 
-    <!-- Sidebar collapse icon -->
-    <button class="collapse-icon" @click="toggleSidebar">
-      <ion-icon name="chevron-back-outline"></ion-icon>
-    </button>
+    <!-- Sidebar body -->
+    <div class="sidebarBody">
+      <!-- Notes or Tips -->
+      <Notes v-if="showNotes" @close="toggleNotes" />
+      <Tips v-else-if="showTips" @close="toggleTips" />
 
-    <!-- Notes or Tips -->
-    <Notes v-if="showNotes" @close="toggleNotes" />
-    <Tips v-if="showTips" @close="toggleTips" />
+      <!-- Sidebar collapse icon -->
+      <!-- <button class="collapse-icon" @click="toggleSidebar">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </button> -->
+    </div>
 
     <!-- Sidebar footer -->
-    <div class="button-container">
+    <div class="sidebarFooter">
       <!-- TODO implement chat -->
       <!-- <button class="chat" aria-label="Chat" alt="Chat" title="Chat">
         <ion-icon
@@ -157,11 +160,11 @@ export default defineComponent({
   border-right: 3px solid var(--var-color-gray);
   color: var(--var-color-gray);
   margin: 0;
-  width: 426px;
+  width: 400px;
   flex: 1 0 auto;
 }
 
-.header > * {
+.sidebarHeader > * {
   border-bottom: 1px solid var(--var-color-gray);
   margin: 0;
 }
@@ -195,9 +198,15 @@ ion-icon {
   --ionicon-stroke-width: 28px;
 }
 
+.sidebarBody {
+  padding: 0 38px 32px;
+  margin-top: auto;
+  overflow-y: auto;
+}
+
 .collapse-icon {
-  align-self: flex-end;
-  display: flex;
+  /* align-self: flex-end;
+  display: flex; */
   background: none;
   border: 2px solid limegreen;
   border-right-width: 3px;
@@ -211,14 +220,14 @@ ion-icon {
   font-size: 34px;
 }
 
-.button-container {
+.sidebarFooter {
   display: flex;
   justify-content: center;
   border-top: 2px solid gray;
   padding: 0 20px 15px;
 }
 
-.button-container button {
+.sidebarFooter button {
   background: none;
   border: none;
   cursor: pointer;
@@ -228,60 +237,60 @@ ion-icon {
   margin-top: -4px;
 }
 
-.button-container ion-icon {
+.sidebarFooter ion-icon {
   font-size: 58px;
   margin: 0 4px;
   cursor: pointer;
   pointer-events: none;
 }
 
-.button-container p {
+.sidebarFooter p {
   margin: 10px 0;
   color: gray;
   font-weight: 600;
 }
 
-.button-container .chat {
+.sidebarFooter .chat {
   border-top-color: salmon;
 }
 
-.button-container .chat:hover,
-.button-container .chat:hover p,
-.button-container .chat:hover ion-icon {
+.sidebarFooter .chat:hover,
+.sidebarFooter .chat:hover p,
+.sidebarFooter .chat:hover ion-icon {
   color: salmon;
 }
 
-.button-container .notes {
+.sidebarFooter .notes {
   border-top-color: limegreen;
 }
 
-.button-container .notes:hover,
-.button-container .notes:hover p,
-.button-container .notes:hover ion-icon,
-.button-container .notes.active p,
-.button-container .notes.active ion-icon {
+.sidebarFooter .notes:hover,
+.sidebarFooter .notes:hover p,
+.sidebarFooter .notes:hover ion-icon,
+.sidebarFooter .notes.active p,
+.sidebarFooter .notes.active ion-icon {
   color: limegreen;
 }
 
-.button-container .message {
+.sidebarFooter .message {
   border-top-color: royalblue;
 }
 
-.button-container .message:hover,
-.button-container .message:hover p,
-.button-container .message:hover ion-icon {
+.sidebarFooter .message:hover,
+.sidebarFooter .message:hover p,
+.sidebarFooter .message:hover ion-icon {
   color: royalblue;
 }
 
-.button-container .tips {
+.sidebarFooter .tips {
   border-top-color: darkturquoise;
 }
 
-.button-container .tips:hover,
-.button-container .tips:hover p,
-.button-container .tips:hover ion-icon,
-.button-container .tips.active p,
-.button-container .tips.active ion-icon {
+.sidebarFooter .tips:hover,
+.sidebarFooter .tips:hover p,
+.sidebarFooter .tips:hover ion-icon,
+.sidebarFooter .tips.active p,
+.sidebarFooter .tips.active ion-icon {
   color: darkturquoise;
 }
 
@@ -307,12 +316,12 @@ ion-icon {
   left: 106px;
 }
 
-.sidebar.collapsed .button-container {
+.sidebar.collapsed .sidebarFooter {
   flex-flow: column nowrap;
   border-top: none;
 }
 
-.sidebar.collapsed .button-container button {
+.sidebar.collapsed .sidebarFooter button {
   border-top: none;
   padding: 16px 0 0;
   margin: 0 0 16px;
