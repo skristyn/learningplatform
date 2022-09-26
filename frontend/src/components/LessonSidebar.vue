@@ -41,7 +41,8 @@
         <p v-if="!collapseSidebar">chat</p>
       </button> -->
 
-      <button
+      <!-- TODO implement notes -->
+      <!-- <button
         class="notes"
         aria-label="Click to open notes"
         alt="Notes page icon"
@@ -51,7 +52,7 @@
       >
         <ion-icon name="reader-outline"></ion-icon>
         <p v-if="!collapseSidebar">notes</p>
-      </button>
+      </button> -->
 
       <!-- TODO implement messaging -->
       <!-- <button class="message" aria-label="Message" alt="Message" title="Message">
