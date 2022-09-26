@@ -23,11 +23,6 @@
       <!-- Notes or Tips -->
       <Notes v-if="showNotes" @close="toggleNotes" />
       <Tips v-else-if="showTips" @close="toggleTips" />
-
-      <!-- Sidebar collapse icon -->
-      <!-- <button class="collapse-icon" @click="toggleSidebar">
-        <ion-icon name="chevron-back-outline"></ion-icon>
-      </button> -->
     </div>
 
     <!-- Sidebar footer -->
@@ -73,6 +68,15 @@
       </button>
     </div>
   </aside>
+
+  <!-- Sidebar collapse icon -->
+  <button
+    class="collapseIcon"
+    :class="{ collapsed: collapseSidebar }"
+    @click="toggleSidebar"
+  >
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </button>
 </template>
 
 <script lang="ts">
@@ -205,19 +209,19 @@ ion-icon {
   overflow-y: auto;
 }
 
-.collapse-icon {
-  /* align-self: flex-end;
-  display: flex; */
+.collapseIcon {
+  cursor: pointer;
   background: none;
   border: 2px solid limegreen;
   border-right-width: 3px;
   border-radius: 16px 0 0 16px;
   padding: 16px 0;
-  margin-right: -3px;
-  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: 240px;
+  margin-left: -39px;
 }
 
-.collapse-icon ion-icon {
+.collapseIcon ion-icon {
   font-size: 34px;
 }
 
@@ -310,11 +314,9 @@ ion-icon {
   visibility: hidden;
 }
 
-.sidebar.collapsed .collapse-icon {
-  position: absolute;
-  top: 330px;
+.collapseIcon.collapsed {
   rotate: 180deg;
-  left: 106px;
+  margin-left: -3px;
 }
 
 .sidebar.collapsed .sidebarFooter {

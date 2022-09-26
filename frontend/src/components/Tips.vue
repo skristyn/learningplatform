@@ -88,8 +88,7 @@ export default defineComponent({
       }
       tip.value = "";
 
-      // setVisible(TipsView.THANKS);
-      setVisible(TipsView.TIPS);
+      setVisible(TipsView.THANKS);
     };
 
     return {
