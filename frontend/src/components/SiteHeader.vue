@@ -57,7 +57,7 @@ header {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  padding: 30px;
+  padding: 30px 5vw;
 }
 
 .headerBackground {

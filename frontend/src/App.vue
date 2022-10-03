@@ -61,11 +61,11 @@ body {
 }
 
 main {
-  padding: 40px;
+  padding: 5vw;
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 2.5rem;
 }
 
 h2 {
@@ -92,4 +92,5 @@ h3 {
 ion-icon {
   color: var(--var-color-gray);
 }
+
 </style>

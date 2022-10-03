@@ -24,7 +24,7 @@ export default defineComponent({
 .title {
   font-family: "Tourney", cursive;
   font-weight: 700;
-  font-size: 40px;
+  font-size: 2.8rem;
   color: var(--var-color-teal);
 }
 
