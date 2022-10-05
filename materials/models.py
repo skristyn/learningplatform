@@ -36,7 +36,6 @@ class SlideBlock(blocks.StructBlock):
     This slide block overwrites the 'get_prep_value' method to allow wrapping 
     a tips endpoint within the block.
     """
-    heading = blocks.CharBlock()
     body = blocks.RichTextBlock()
 
 
@@ -334,7 +333,7 @@ class Note(models.Model):
     modified = ModifiedDateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.user.username}'s notes for {self.section.description}"
+        return f"{self.user.username}'s notes for {self.section.title}"
 
 
 class SectionsSerializer(Field):

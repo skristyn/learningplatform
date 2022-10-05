@@ -10,6 +10,7 @@ from materials.views import (
     TextbookViewSet,
     ResourceViewSet,
     TipViewSet,
+    NoteViewSet,
 )
 
 # The wagtail api router is slightly different than the vanilla drf api router,
@@ -56,5 +57,6 @@ api_router.register_endpoint("sections", SectionViewSet)
 api_router.register_endpoint("resources", ResourceViewSet)
 api_router.register_endpoint("grades", GradeViewSet)
 api_router.register_endpoint("tips", TipViewSet)
+api_router.register_endpoint("notes", NoteViewSet)
 api_router.register_endpoint("images", ImagesAPIViewSet)
 api_router.register_endpoint("", RootViewSet)

@@ -68,6 +68,7 @@ class GradeViewSet(BaseAPIViewSet):
 
     @api_login_required
     def create_grade(self, request: HttpRequest) -> JsonResponse:
+        print(request.body)
         body = json.loads(request.body)
         student = get_object_or_404(User, pk=body["student"])
         section = get_object_or_404(Section, pk=body["section"])
@@ -157,11 +158,13 @@ class NoteViewSet(PrivateAPIViewSet):
         return [
             path(
                 "",
-                cls.as_view({"get": "listing_view", "post": "create_notes"}),
+                cls.as_view({"get": "listing_view", "post": "create_note"}),
                 name="listing",
             ),
             path(
-                "<int:pk>/", cls.as_view({"get": "detail_view"}), name="detail"
+                "<int:pk>/",
+                cls.as_view({"get": "detail_view", "post": "update_note"}),
+                name="detail",
             ),
             path("find/", cls.as_view({"get": "find_view"}), name="find"),
         ]
@@ -171,6 +174,7 @@ class NoteViewSet(PrivateAPIViewSet):
         notes = Note.objects.filter(user=request.user)
         items = [
             {
+                "id": note.pk,
                 "username": note.user.username,
                 "user_id": note.user.pk,
                 "section": note.section.pk,
@@ -193,7 +197,7 @@ class NoteViewSet(PrivateAPIViewSet):
         Note.objects.create(
             user=student,
             section=section,
-            body=body["body"], # should this append on the back end?
+            body=body["body"],  # should this append on the back end?
         )
 
         return JsonResponse(
@@ -204,12 +208,14 @@ class NoteViewSet(PrivateAPIViewSet):
     def update_note(self, request: HttpRequest, pk: int) -> JsonResponse:
         body = json.loads(request.body)
         student = request.user
-        Note.objects.update_or_create(
-            pk=pk,
-            body=body["body"],
+        note = get_object_or_404(Note, pk=pk)
+        note.body = body["body"]
+        note.save()
+
+        return JsonResponse(
+            {"message": f"{student} updated note successfully."}
         )
 
-        return JsonResponse({"message": f"{student} updated note successfully."})
 
 # The wagtail BaseAPIViewSet provides listing and detail views when provided
 # a model.
