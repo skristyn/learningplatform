@@ -92,7 +92,7 @@ class QuestionBlock(blocks.StructBlock):
 
 
 class UrlSerializer(Field):
-    def to_representation(self, parent: Page) -> List[dict]:
+    def to_representation(self, parent: Page):
         return get_object_detail_url(
             self.context["router"], 
             self.context["request"], 
