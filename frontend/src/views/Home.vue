@@ -6,10 +6,18 @@
     </div>
     <div class="welcomeRight">
       <h3>Want to continue where you left off?</h3>
-      <router-link to="/course-dashboard">Go to course overview</router-link>
+      <div style="display: inline-block;"><button id="continue-button">1:5 Name of Lesson</button></div>
+      <div class="overview-link"><p>Or, <router-link to="/course-dashboard">go to course overview</router-link></p></div>
     </div>
   <div class="announcement" v-if="user">
     Announcement: {{ user.announcement }}
+  </div>
+
+  <div class="resource">
+    <img src="../assets/home-left-pattern.svg" />
+  </div>
+  <div class="community">
+    <img src="../assets/home-right-pattern.svg" />
   </div>
   <!-- TODO: create these buttons when the following links exist -->
   <!-- <div class="links">
@@ -43,7 +51,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .landing-grid {
   display: grid;
   grid-template-columns: minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr);
@@ -71,10 +79,30 @@ export default defineComponent({
 .welcomeLeft {
   margin-bottom: 76px;
   grid-area: welcome;
+  padding-right: 50px;
 }
 
 .welcomeLeft p {
   font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.resource {
+  grid-area: resource;
+}
+
+.resource img {
+  width: 60%;
+}
+
+.community {
+  grid-area: community;
+  text-align: right;
+}
+
+.community img {
+  width: 40%;
+  margin-top: 10vw;
 }
 
 .welcomeRight {
@@ -83,18 +111,19 @@ export default defineComponent({
   background-position: top left;
   background-size: 100% auto;
   background-repeat: no-repeat;
-  justify-self: stretch;
   min-height: 25.5vw;
   padding-left: 20vw;
+  h3 {
+    font-weight: 900;
+    margin-top: 32px;
+    margin-bottom: 38px;
+  }
 }
 
-.welcomeRight h3 {
-  font-weight: 900;
-}
-
-.welcomeRight a {
+.welcomeRight p {
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  margin-top: 0;
 }
 
 .welcomeRight a:visited {
@@ -110,5 +139,28 @@ export default defineComponent({
   text-align: center;
   font-size: 1.6rem;
   font-weight: 500;
+  margin-bottom: 9vw;
+}
+
+#continue-button {
+  height: 2.9em;
+  border: 7px solid;
+  border-image: url('../assets/pink-stamp-button.svg') 33;
+  border-image-width: 28px;
+  background: #fff;
+  cursor: pointer;
+  line-height: .15rem;
+  font-weight: 700;
+  color: #F15882;
+  font-size: 1.3rem;
+  margin-right: 25px;
+  border-image-outset: 1;
+  float: left;
+  padding: 0 10px;
+}
+
+.overview-link {
+  display: inline-block;
+  width: 40%;
 }
 </style>
