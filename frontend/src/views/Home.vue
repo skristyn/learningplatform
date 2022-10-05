@@ -1,21 +1,26 @@
 <template>
-  <div class="welcome">
+<div class="landing-grid">
     <div class="welcomeLeft">
       <DPageTitle title="Welcome!" />
+      <p>Just adding some test text to see how this will look on the page. A random encouraging phrase will go here.</p>
     </div>
     <div class="welcomeRight">
       <h3>Want to continue where you left off?</h3>
       <router-link to="/course-dashboard">Go to course overview</router-link>
     </div>
-  </div>
   <div class="announcement" v-if="user">
     Announcement: {{ user.announcement }}
   </div>
   <!-- TODO: create these buttons when the following links exist -->
   <!-- <div class="links">
-    <router-link to="/resource-kit">Resource Kit</router-link>
-    <router-link to="/community">Community</router-link>
+    <div class="resource">
+      <router-link to="/resource-kit">Resource Kit</router-link>
+    </div>
+    <div class="community">
+      <router-link to="/community">Community</router-link>
+    </div>
   </div> -->
+</div> <!-- end landing-grid -->
 </template>
 
 <script lang="ts">
@@ -39,15 +44,48 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.welcome {
-  display: flex;
-  flex-flow: row wrap;
-  margin-bottom: 76px;
+.landing-grid {
+  display: grid;
+  grid-template-columns: minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr);
+  grid-template-rows: auto;
+  grid-template-areas:
+    "welcome welcome welcome welcome welcome continue continue continue continue continue continue continue"
+    "announcement announcement announcement announcement announcement announcement announcement announcement announcement announcement announcement announcement"
+    "resource resource resource resource resource resource community community community community community community";
+  column-gap: 1rem;
+  row-gap: 2rem;
 }
 
-.welcomeLeft,
+@media screen and (max-width: 850px) {
+  .landing-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "welcome"
+      "continue"
+      "announcement"
+      "resource"
+      "community";
+  }
+}
+
+.welcomeLeft {
+  margin-bottom: 76px;
+  grid-area: welcome;
+}
+
+.welcomeLeft p {
+  font-size: 1.2rem;
+}
+
 .welcomeRight {
-  flex: 1 0 auto;
+  grid-area: continue;
+  background-image: url('../assets/home-continue-pattern.svg');
+  background-position: top left;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  justify-self: stretch;
+  min-height: 25.5vw;
+  padding-left: 20vw;
 }
 
 .welcomeRight h3 {
@@ -56,7 +94,7 @@ export default defineComponent({
 
 .welcomeRight a {
   font-weight: bold;
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 
 .welcomeRight a:visited {
@@ -64,12 +102,13 @@ export default defineComponent({
 }
 
 .announcement {
+  grid-area: announcement;
   background-color: var(--var-color-gray-lighter);
-  margin-left: -40px;
-  margin-right: -40px;
+  margin-left: -5vw;
+  margin-right: -5vw;
   padding: 26px 40px;
   text-align: center;
-  font-size: 26px;
+  font-size: 1.6rem;
   font-weight: 500;
 }
 </style>

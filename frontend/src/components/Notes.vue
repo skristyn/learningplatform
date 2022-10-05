@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO refactor this whole component -->
   <div class="container">
     <!-- notes display -->
     <div v-if="showInput" class="notes">

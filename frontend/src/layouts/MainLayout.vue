@@ -27,6 +27,7 @@ export default defineComponent({
 <style scoped>
 .mainContainer {
   height: 100%;
+  
 }
 
 .mainBackground {
