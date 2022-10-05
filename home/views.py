@@ -13,7 +13,6 @@ def api_login_required(view_func):
     Wraps a view function to return an error message if a user accessing the API
     is not logged in.
     """
-
     def private_view_func(instance, request, *args, **kwargs):
         # First try to auth with token in header
         auth_header = request.META.get("HTTP_AUTHORIZATION")
@@ -85,9 +84,6 @@ class HomeViewSet(BaseAPIViewSet):
         # if the user is not logged in, they'll have all kinds of errors.
 
         router = self.get_serializer_context()["router"]
-        course = request.user.enrollment.active_course
-        next_section = course.specific.next_section(request.user)
-        next_lesson = next_section.get_parent()
 
         # The api_view decorator expects to wrap a simple function-based django views
         # not a wagtail APIViewset method...so wrapping an inner function. All knees
@@ -95,32 +91,47 @@ class HomeViewSet(BaseAPIViewSet):
 
         @api_view(["GET"])
         def inner_view(request, *args, **kwargs):
+            course = request.user.enrollment.active_course
+            if course is not None:
+                next_section = course.specific.next_section(request.user)
+                next_lesson = next_section.get_parent()
 
-            return Response(
-                {
-                    "current_course": {
-                        "title": course.title,
-                        "detail_url": get_object_detail_url(
-                            router, request, Textbook, course.pk
-                        ),
-                    },
-                    "current_lesson": {
-                        "title": next_lesson.title,
-                        "lesson_num": next_lesson.specific.number,
-                        "detail_url": get_object_detail_url(
-                            router, request, Lesson, next_lesson.pk
-                        ),
-                    },
-                    "next_section": {
-                        "title": next_section.title,
-                        "section_num": next_section.specific.number,
-                        "detail_url": get_object_detail_url(
-                            router, request, Section, next_section.pk
-                        ),
-                    },
-                    "announcement": Announcement.objects.latest("date").text,
-                }
-            )
+                return Response(
+                    {
+                        "current_user": {
+                            "username": request.user.username,
+                            "id": request.user.id,
+                        },
+                        "current_course": {
+                            "title": course.title,
+                            "detail_url": get_object_detail_url(
+                                router, request, Textbook, course.pk
+                            ),
+                        },
+                        "current_lesson": {
+                            "title": next_lesson.title,
+                            "lesson_num": next_lesson.specific.number,
+                            "detail_url": get_object_detail_url(
+                                router, request, Lesson, next_lesson.pk
+                            ),
+                        },
+                        "next_section": {
+                            "title": next_section.title,
+                            "section_num": next_section.specific.number,
+                            "detail_url": get_object_detail_url(
+                                router, request, Section, next_section.pk
+                            ),
+                        },
+                        "announcement": Announcement.objects.latest("date").text,
+                    }
+                )
+
+            return Response({
+                "current_user": {
+                    "username": request.user.username,
+                    "id": request.user.id,
+                },
+            })
 
         return inner_view(request._request)
 
