@@ -114,8 +114,9 @@ class TipViewSet(PrivateAPIViewSet):
         # tips -- will probably need to add paginations later.
         items = [
             {
+                "id": tip.id,
                 "user": tip.user.username,
-                "body": tip.tip_body,
+                "body": tip.body,
                 "slide": tip.slide_id,
                 "created_at": tip.created_at,
             }
@@ -142,6 +143,17 @@ class TipViewSet(PrivateAPIViewSet):
             {"message": f"{student.username} added tip successfully."}
         )
 
+    @api_login_required
+    def update_tip(self, request: HttpRequest, pk: int) -> JsonResponse:
+        body = json.loads(request.body)
+        student = request.user
+        tip = get_object_or_404(Tip, pk=pk)
+        tip.body = body["body"]
+        tip.save()
+
+        return JsonResponse(
+            {"message": f"{student} updated tip successfully."}
+        )
 
 class NoteViewSet(PrivateAPIViewSet):
     """

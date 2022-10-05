@@ -10,8 +10,8 @@ if __name__ == "__main__":
     # Post username and password to /api/v1/token-auth
 
     body = {
-        "username": "mikev", 
-        "password": "c4ardPlayer"
+        "username": "user_one", 
+        "password": "badpass"
     }
     
     ######## 
@@ -111,3 +111,47 @@ if __name__ == "__main__":
         json=body
     )
 
+    # TIPS
+
+    ######## EXAMPLE POST CALL 
+    # Post new tip to endpoint /api/v1/tips/
+    
+    body={
+        "student":2,
+        "section": section_obj["id"],
+        "body": "Hello, I thought that this might pelp hout."
+    }
+
+    ########
+
+    response = requests.post(
+        base_url + "tips/",
+        headers={"Authorization": f"Token {token}"},
+        json=body
+    )
+
+    response = requests.get(base_url + "tips/",
+        headers={"Authorization": f"Token {token}"})
+
+    print(response.content)
+    tips_obj = json.loads(response.content)
+    items = tips_obj["items"]
+
+    tip = items[0]
+    id = tip["id"]
+    
+    ######## EXAMPLE UPDATE CALL
+    # Post tip updates to endpoint /api/v1/tips/{tip_pk}/
+    # must have trailing '/' !
+
+    body={
+        "body": "Hello, I thought that this might help out."
+    }
+
+    ########
+
+    response = requests.post(
+        base_url + f"tips/{id}/",
+        headers={"Authorization": f"Token {token}"},
+        json=body
+    )

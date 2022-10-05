@@ -303,13 +303,13 @@ class Tip(models.Model):
     slide_id = models.CharField(max_length=36, blank=False, null=False)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    tip_body = models.CharField(max_length=560, blank=False, null=False)
+    body = models.CharField(max_length=560, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        summary = self.tip_body
+        summary = self.body
         if len(summary) > 25:
-            summary = self.tip_body[:25] + "..."
+            summary = self.body[:25] + "..."
 
         return self.user.username + ": " + summary
 
