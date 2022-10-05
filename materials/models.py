@@ -36,6 +36,7 @@ class SlideBlock(blocks.StructBlock):
     This slide block overwrites the 'get_prep_value' method to allow wrapping 
     a tips endpoint within the block.
     """
+    heading = blocks.CharBlock(max_length=200, null=True, blank=True)
     body = blocks.RichTextBlock()
 
 
@@ -74,9 +75,13 @@ class QuestionBlock(blocks.StructBlock):
 
     question = blocks.TextBlock()
     choice_1 = blocks.TextBlock()
+    explanation_1 = blocks.TextBlock()
     choice_2 = blocks.TextBlock()
+    explanation_2 = blocks.TextBlock()
     choice_3 = blocks.TextBlock()
+    explanation_3 = blocks.TextBlock()
     choice_4 = blocks.TextBlock()
+    explanation_4 = blocks.TextBlock()
     choices = (
         ("1", "1"),
         ("2", "2"),
