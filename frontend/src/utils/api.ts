@@ -12,13 +12,12 @@ export const makeRequest = <T>(path: string, token: string): Promise<T> => {
   }).then((response) => response.json());
 };
 
-export const getToken = (): Promise<{ token: string }> => {
+export const getToken = (
+  username: string,
+  password: string
+): Promise<{ token: string }> => {
   // define path to get the token
   const url = "http://localhost:8000/api/v1/token-auth";
-
-  // TODO don't hard code the username+password
-  const username = "user_one";
-  const password = "bad_password";
 
   const formData = new FormData();
   formData.append("username", username);

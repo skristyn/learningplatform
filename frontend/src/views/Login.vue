@@ -7,8 +7,12 @@
       <div class="loginForm">
         <h2>Here for class?</h2>
         <form @submit="logIn">
-          <input type="text" /><br />
-          <input type="password" /><br />
+          <input type="text" placeholder="Username" v-model="username" /><br />
+          <input
+            type="password"
+            placeholder="Password"
+            v-model="password"
+          /><br />
           <button>Sign In</button>
         </form>
       </div>
@@ -31,9 +35,18 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "Login",
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
   methods: {
     async logIn() {
-      this.$store.dispatch("logIn");
+      this.$store.dispatch("logIn", {
+        username: this.username,
+        password: this.password,
+      });
     },
   },
 });

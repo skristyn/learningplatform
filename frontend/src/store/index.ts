@@ -60,8 +60,8 @@ export default createStore({
     },
   },
   actions: {
-    async logIn(context) {
-      const response = await getToken();
+    async logIn(context, { username, password }) {
+      const response = await getToken(username, password);
 
       if (response.token) {
         context.commit("setToken", response.token);

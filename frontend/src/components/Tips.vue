@@ -81,6 +81,7 @@ export default defineComponent({
   name: "Tips",
   setup() {
     const tip = ref<string>("");
+    // TODO fetch stored tips for the lesson
     const tips = ref<string[]>([]);
     const visible = ref<TipsView>(TipsView.TIPS);
 
@@ -89,7 +90,7 @@ export default defineComponent({
     };
 
     // TODO shareTip should also send the tips[] update to the server
-    // TODO sanitize input from user
+    // TODO decide if we should sanitize input from users?
     const shareTip = () => {
       if (tip.value.trim() !== "") {
         tips.value.push(tip.value);
