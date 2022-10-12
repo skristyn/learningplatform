@@ -9,9 +9,25 @@
 
 <script>
 import { defineComponent } from "vue";
+import { makeRequest } from "./utils/api";
 
 export default defineComponent({
   name: "App",
+  async mounted() {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const result = await makeRequest("/home", token);
+
+      if (result instanceof Error) {
+        console.log("The user token is invalid");
+        return;
+      }
+
+      // otherwise the token is valid
+      this.$store.dispatch("logInWithToken", token);
+    }
+  },
 });
 </script>
 
@@ -91,5 +107,4 @@ h3 {
 ion-icon {
   color: var(--var-color-gray);
 }
-
 </style>

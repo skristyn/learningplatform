@@ -1,13 +1,12 @@
 import router from "@/router";
 import Textbook from "@/types/Textbook";
 import Lesson from "@/types/Lesson";
-import Section, { Slide } from "@/types/Section";
+import Section from "@/types/Section";
 import User from "@/types/User";
 import { getToken, makeRequest } from "@/utils/api";
 import { createStore } from "vuex";
 import SlideImage from "@/types/SlideImage";
 
-// TODO persist login through refresh
 type State = {
   authToken: string | null;
   isAuthenticated: boolean;
@@ -65,6 +64,16 @@ export default createStore({
 
       if (response.token) {
         context.commit("setToken", response.token);
+        localStorage.setItem("token", response.token);
+        router.push({ name: "Home" });
+      } else {
+        throw new Error("bad login"); // TODO should replace this with something else to tell user login failed
+      }
+    },
+
+    async logInWithToken(context, token) {
+      if (token) {
+        context.commit("setToken", token);
         router.push({ name: "Home" });
       } else {
         throw new Error("bad login"); // TODO should replace this with something else to tell user login failed
@@ -73,6 +82,7 @@ export default createStore({
 
     async logOut(context) {
       context.commit("removeToken");
+      localStorage.removeItem("token");
       router.push({ name: "Login" });
     },
 
