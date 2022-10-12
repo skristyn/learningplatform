@@ -37,15 +37,26 @@
         >
           <ion-icon class="closeIcon" name="close-circle-outline"></ion-icon>
         </button>
-        <textarea
-          name="tip"
-          aria-label="Tip to share"
-          placeholder="Enter new tip to share"
-          v-model="tip"
-        ></textarea>
-        <button class="shareButton" type="submit" :disabled="!tip">
-          Share
-        </button>
+        <div class="formBorder">
+          <textarea
+            name="tip"
+            aria-label="Tip to share"
+            placeholder="Enter new tip to share"
+            v-model="tip"
+          ></textarea>
+          <div class="formFooter">
+            <button
+              class="cancelButton"
+              alt="Button to close tip input"
+              @click="setVisible(TipsView.TIPS)"
+            >
+              Cancel
+            </button>
+            <button class="shareButton" type="submit" :disabled="!tip">
+              Share
+            </button>
+          </div>
+        </div>
       </form>
     </div>
 
@@ -77,11 +88,8 @@ export default defineComponent({
       visible.value = show;
     };
 
-    // TODO add a cancel button
-    // TODO shareTip should also send the tips[] update to the database
-    // TODO adding tip should end with thank-you
-    // TODO tips should scroll
-    // TODO sanitize input
+    // TODO shareTip should also send the tips[] update to the server
+    // TODO sanitize input from user
     const shareTip = () => {
       if (tip.value.trim() !== "") {
         tips.value.push(tip.value);
@@ -134,12 +142,21 @@ ion-icon {
   pointer-events: none;
 }
 
-.closeButton {
-  margin: 0 -18px -20px 0;
+.closeButton,
+.cancelButton,
+.shareButton {
+  cursor: pointer;
+}
+
+.closeButton,
+.cancelButton {
   /* hide the default styles for the buttons */
   background: none;
   border: none;
-  cursor: pointer;
+}
+
+.closeButton {
+  margin: 0 -18px -20px 0;
 }
 
 .closeIcon {
@@ -148,9 +165,10 @@ ion-icon {
   background: white;
 }
 
-.shareButton {
-  margin: -29px 5px 0;
-  cursor: pointer;
+.cancelButton {
+  color: var(--var-color-blue-dark);
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 .form {
@@ -161,7 +179,25 @@ ion-icon {
 
 .form textarea {
   resize: none;
+  border: none;
   height: 150px;
+  width: 98%;
+  margin: 2px auto 8px;
+}
+
+.formBorder {
   width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-end;
+  border: 1px solid var(--var-color-gray);
+}
+
+.formFooter {
+  margin: 0 8px 8px;
+}
+
+.formFooter button {
+  margin-left: 10px;
 }
 </style>

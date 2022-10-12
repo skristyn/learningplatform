@@ -211,7 +211,7 @@ ion-icon {
 
 .collapseIcon {
   cursor: pointer;
-  background: none;
+  background: white;
   border: 2px solid limegreen;
   border-right-width: 3px;
   border-radius: 16px 0 0 16px;

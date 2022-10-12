@@ -28,7 +28,6 @@ export default defineComponent({
   --var-color-green-light: #badcbb;
   --var-color-green-lighter: #d0e7d0;
   --var-color-teal: #19a3b2;
-  --var-color-blue-dark: #3f679c;
   --var-color-pink: #f15882;
   --var-color-pink-light: #f9d0db;
   --var-color-pink-lighter: #fdecf1;
