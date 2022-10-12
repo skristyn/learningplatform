@@ -34,8 +34,8 @@ export default createStore({
       state.isAuthenticated = true;
     },
 
-    // TODO make this into an action instead of a mutation
-    logOut(state) {
+    removeToken(state) {
+      state.authToken = null;
       state.isAuthenticated = false;
     },
 
@@ -69,6 +69,11 @@ export default createStore({
       } else {
         throw new Error("bad login"); // TODO should replace this with something else to tell user login failed
       }
+    },
+
+    async logOut(context) {
+      context.commit("removeToken");
+      router.push({ name: "Login" });
     },
 
     // TODO add loading and error handling

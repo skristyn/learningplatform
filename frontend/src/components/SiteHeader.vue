@@ -41,7 +41,7 @@ export default defineComponent({
   methods: {
     async logOut() {
       if (this.$store.state.isAuthenticated) {
-        await this.$store.commit("logOut");
+        await this.$store.dispatch("logOut");
 
         if (!this.$store.state.isAuthenticated) {
           this.$router.push({ name: "Login" });
