@@ -13,6 +13,7 @@
             placeholder="Password"
             v-model="password"
           /><br />
+          <p v-if="loginError" class="loginError">{{ loginError.message }}</p>
           <button>Sign In</button>
         </form>
       </div>
@@ -31,6 +32,7 @@
 </template>
 
 <script lang="ts">
+import Message from "@/types/Message";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -40,6 +42,13 @@ export default defineComponent({
       username: "",
       password: "",
     };
+  },
+  computed: {
+    loginError() {
+      return this.$store.state.messages.find(
+        (msg: Message) => msg.messageType === "login"
+      );
+    },
   },
   methods: {
     async logIn() {
@@ -61,6 +70,10 @@ export default defineComponent({
 
 button {
   float: right;
+}
+
+.loginError {
+  color: var(--var-color-pink);
 }
 
 .title {
