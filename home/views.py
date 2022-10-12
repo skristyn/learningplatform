@@ -8,6 +8,16 @@ from materials.models import Textbook, Section, Lesson
 from .models import HomePage, Announcement
 
 
+def resolve_user_from_request(request):
+    print("resolve_user_from_request ran")
+    auth_header = request.META.get("HTTP_AUTHORIZATION")
+    print(auth_header)
+    _, key = auth_header.split()
+    token = Token.objects.get(key=key)
+    print(token)
+    return token.user
+
+
 def api_login_required(view_func):
     """
     Wraps a view function to return an error message if a user accessing the API

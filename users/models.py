@@ -72,7 +72,7 @@ class Profile(models.Model):
     course_runner_complete: models.BooleanField = models.BooleanField(default=False)
     user_completed: models.BooleanField = models.BooleanField(default=False)
 
-    user: User = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_picture = models.ImageField(
         default="default.png", upload_to=user_picture_path
     )

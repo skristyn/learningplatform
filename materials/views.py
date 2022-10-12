@@ -15,7 +15,7 @@ from .models import (
     ResourceAccess,
     Tip,
 )
-from home.views import api_login_required
+from home.views import api_login_required, resolve_user_from_request
 
 
 class PrivateAPIViewSet(BaseAPIViewSet):
@@ -68,11 +68,10 @@ class GradeViewSet(BaseAPIViewSet):
 
     @api_login_required
     def create_grade(self, request: HttpRequest) -> JsonResponse:
-        print(request.body)
         body = json.loads(request.body)
         student = get_object_or_404(User, pk=body["student"])
         section = get_object_or_404(Section, pk=body["section"])
-        grade = Grade.objects.create(student=student, section=section)
+        _ = Grade.objects.create(student=student, section=section)
 
         return JsonResponse(
             {
@@ -183,7 +182,8 @@ class NoteViewSet(PrivateAPIViewSet):
 
     @api_login_required
     def listing_view(self, request):
-        notes = Note.objects.filter(user=request.user)
+        print(resolve_user_from_request(request))
+        notes = Note.objects.filter(user=resolve_user_from_request(request))
         items = [
             {
                 "id": note.pk,

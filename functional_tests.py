@@ -11,16 +11,28 @@ if __name__ == "__main__":
 
     body = {
         "username": "user_one", 
-        "password": "badpass"
+        "password": "badpassword"
     }
     
     ######## 
 
     # pull out token to send on subsequent requests
-    response = requests.post(base_url + "token-auth", 
-        data=body)
-
+    response = requests.post(
+            base_url + "token-auth", 
+            json=body
+    )
     token = json.loads(response.content)["token"]
+
+
+    #### Example call for user info
+
+    response = requests.get(
+        base_url + "whoami",
+        headers={"Authorization": f"Token {token}"}
+    )
+
+    assert json.loads(response.content)["pk"] is not None
+
 
     # Check base endpoint
     response = requests.get(base_url, 
@@ -41,7 +53,7 @@ if __name__ == "__main__":
     
     section_obj = json.loads(response.content)
 
-    # GRADES
+    # GRADES - This is how you mark a section complete
 
     ######## EXAMPLE POST CALL
     # Post 'grade' to endpoint /api/v1/grades/
@@ -62,10 +74,8 @@ if __name__ == "__main__":
     )
     
     # Get notes
-
     response = requests.get(base_url + "notes/",
         headers={"Authorization": f"Token {token}"})
-
     
     # NOTES
 
@@ -73,7 +83,7 @@ if __name__ == "__main__":
     # Post new note to endpoint /api/v1/notes/
     
     body={
-        "student":2,
+        "student": 2,
         "section": section_obj["id"],
         "body": "Here is some text of a new note."
     }
@@ -85,6 +95,8 @@ if __name__ == "__main__":
         headers={"Authorization": f"Token {token}"},
         json=body
     )
+
+    print(response.content)
 
     response = requests.get(base_url + "notes/",
         headers={"Authorization": f"Token {token}"})
@@ -133,7 +145,6 @@ if __name__ == "__main__":
     response = requests.get(base_url + "tips/",
         headers={"Authorization": f"Token {token}"})
 
-    print(response.content)
     tips_obj = json.loads(response.content)
     items = tips_obj["items"]
 
@@ -155,3 +166,4 @@ if __name__ == "__main__":
         headers={"Authorization": f"Token {token}"},
         json=body
     )
+

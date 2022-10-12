@@ -12,6 +12,7 @@ from materials.views import (
     TipViewSet,
     NoteViewSet,
 )
+from users.views import UserApiViewSet
 
 # The wagtail api router is slightly different than the vanilla drf api router,
 # so to deliver everything to the correct url we have to write ViewSets that
@@ -59,4 +60,5 @@ api_router.register_endpoint("grades", GradeViewSet)
 api_router.register_endpoint("tips", TipViewSet)
 api_router.register_endpoint("notes", NoteViewSet)
 api_router.register_endpoint("images", ImagesAPIViewSet)
+api_router.register_endpoint("whoami", UserApiViewSet)
 api_router.register_endpoint("", RootViewSet)
