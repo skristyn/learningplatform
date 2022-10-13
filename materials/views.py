@@ -99,7 +99,7 @@ class TipViewSet(PrivateAPIViewSet):
                 name="listing",
             ),
             path(
-                "<int:pk>/", cls.as_view({"get": "detail_view"}), name="detail"
+                "<int:pk>/", cls.as_view({"get": "detail_view", "post": "update_tip"}), name="detail"
             ),
             path("find/", cls.as_view({"get": "find_view"}), name="find"),
         ]
@@ -129,13 +129,13 @@ class TipViewSet(PrivateAPIViewSet):
     @api_login_required
     def create_tip(self, request: HttpRequest) -> JsonResponse:
         body = json.loads(request.body)
-        student = get_object_or_404(User, pk=body["student"])
+        student = resolve_user_from_request(request)
         section = get_object_or_404(Section, pk=body["section"])
         Tip.objects.create(
             user=student,
             section=section,
             slide_id=body["slide_id"],
-            tip_body=body["tip_body"],
+            body=body["body"], # 😭
         )
 
         return JsonResponse(
@@ -204,7 +204,7 @@ class NoteViewSet(PrivateAPIViewSet):
     @api_login_required
     def create_note(self, request: HttpRequest) -> JsonResponse:
         body = json.loads(request.body)
-        student = get_object_or_404(User, pk=body["student"])
+        student = resolve_user_from_request(request)
         section = get_object_or_404(Section, pk=body["section"])
         Note.objects.create(
             user=student,

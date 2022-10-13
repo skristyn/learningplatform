@@ -83,7 +83,6 @@ if __name__ == "__main__":
     # Post new note to endpoint /api/v1/notes/
     
     body={
-        "student": 2,
         "section": section_obj["id"],
         "body": "Here is some text of a new note."
     }
@@ -95,8 +94,6 @@ if __name__ == "__main__":
         headers={"Authorization": f"Token {token}"},
         json=body
     )
-
-    print(response.content)
 
     response = requests.get(base_url + "notes/",
         headers={"Authorization": f"Token {token}"})
@@ -127,10 +124,11 @@ if __name__ == "__main__":
 
     ######## EXAMPLE POST CALL 
     # Post new tip to endpoint /api/v1/tips/
-    
-    body={
-        "student":2,
+    # Slide id is found on each slide object
+
+    body = {
         "section": section_obj["id"],
+        "slide_id": "23bc49dc-f684-4128-96a7-1e840aed613d",
         "body": "Hello, I thought that this might pelp hout."
     }
 
@@ -142,7 +140,7 @@ if __name__ == "__main__":
         json=body
     )
 
-    response = requests.get(base_url + "tips/",
+    response = requests.get(base_url + "tips/?slide_id=23bc49dc-f684-4128-96a7-1e840aed613d",
         headers={"Authorization": f"Token {token}"})
 
     tips_obj = json.loads(response.content)
@@ -167,3 +165,9 @@ if __name__ == "__main__":
         json=body
     )
 
+    response = requests.get(base_url + "tips/?slide_id=23bc49dc-f684-4128-96a7-1e840aed613d",
+        headers={"Authorization": f"Token {token}"})
+
+    tips_obj = json.loads(response.content)
+
+    print(tips_obj["items"])
