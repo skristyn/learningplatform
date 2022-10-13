@@ -318,7 +318,7 @@ class TestTips(APITestCase):
             section=section, 
             user=self.student, 
             slide_id="1234", 
-            tip_body="Pizza requirements"
+            body="Pizza requirements"
         )
 
         self.assertTrue(Tip.objects.all())
@@ -329,7 +329,7 @@ class TestTips(APITestCase):
             section=section, 
             user=self.student, 
             slide_id="142534", 
-            tip_body="Pizza requirements"
+            body="Pizza requirements"
         )
         self.client.force_login(self.student)
         response = self.client.get("/api/v1/tips/?slide_id=142534")
@@ -344,7 +344,7 @@ class TestTips(APITestCase):
             section=section, 
             user=self.student, 
             slide_id="1425349", 
-            tip_body="Pizza requirements"
+            body="Pizza requirements"
         )
         self.client.force_login(self.student)
         response = self.client.get("/api/v1/tips/?slide_id=142534000")
@@ -363,7 +363,7 @@ class TestTips(APITestCase):
                 "student": self.student.pk,
                 "section": section.pk,
                 "slide_id": "1425349",
-                "tip_body": "Please have 5 dollars",
+                "body": "Please have 5 dollars",
             }),
             content_type="application/json",
             HTTP_AUTHORIZATION = f"Token {token}",
