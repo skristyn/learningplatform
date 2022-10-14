@@ -14,10 +14,16 @@
   </div>
 
   <div class="resource">
-    <img src="../assets/home-left-pattern.svg" />
+    <div class="resource-relative">
+      <img src="../assets/home-left-pattern.svg" />
+      <div id="resource-link"><a href="#">Resource Kit</a></div>
+    </div>
   </div>
   <div class="community">
-    <img src="../assets/home-right-pattern.svg" />
+    <div class="community-relative">
+      <img src="../assets/home-right-pattern.svg" />
+      <div id="community-link"><a href="#">Community</a></div>
+    </div>
   </div>
   <!-- TODO: create these buttons when the following links exist -->
   <!-- <div class="links">
@@ -92,7 +98,12 @@ export default defineComponent({
 }
 
 .resource img {
-  width: 60%;
+}
+
+#resource-link {
+  position: absolute;
+  bottom: 0;
+  right: 4vw;
 }
 
 .community {
@@ -101,8 +112,17 @@ export default defineComponent({
 }
 
 .community img {
-  width: 40%;
+  width: 55%;
   margin-top: 10vw;
+}
+
+.resource-relative {
+  position: relative;
+  width: 60%;
+}
+
+.community-relative {
+  position: relative;
 }
 
 .welcomeRight {
