@@ -65,7 +65,7 @@ export default defineComponent({
   grid-template-areas:
     "welcome welcome welcome welcome welcome continue continue continue continue continue continue continue"
     "announcement announcement announcement announcement announcement announcement announcement announcement announcement announcement announcement announcement"
-    "resource resource resource resource resource resource community community community community community community";
+    ". resource resource resource resource resource community community community community community .";
   column-gap: 1rem;
   row-gap: 2rem;
 }
@@ -93,8 +93,13 @@ export default defineComponent({
   font-weight: 500;
 }
 
-.resource {
+.resource, .community {
   grid-area: resource;
+  a {
+    font-size: 2.1vw;
+    font-weight: 900;
+    color: var(--var-color-blue-dark);
+  }
 }
 
 .resource img {
@@ -103,7 +108,14 @@ export default defineComponent({
 #resource-link {
   position: absolute;
   bottom: 0;
-  right: 4vw;
+  right: 1vw;
+}
+
+#community-link {
+  position: absolute;
+  bottom: 10%;
+  left: 0;
+  margin-left: -1vw;
 }
 
 .community {
@@ -112,17 +124,18 @@ export default defineComponent({
 }
 
 .community img {
-  width: 55%;
   margin-top: 10vw;
 }
 
 .resource-relative {
   position: relative;
-  width: 60%;
+  width: 70%;
 }
 
 .community-relative {
   position: relative;
+  width: 65%;
+  margin-left: 35%;
 }
 
 .welcomeRight {
@@ -149,6 +162,64 @@ export default defineComponent({
 .welcomeRight a:visited {
   color: var(--var-color-blue-dark);
 }
+
+
+@media screen and (max-width: 850px) {
+  .resource, .community {
+  a {
+    font-size: 5.2vw;
+  }
+}
+  .community-relative {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 587px) {
+  .overview-link[data-v-fae5bece] {
+    display: inline-block;
+    width: 80%;
+    margin-top:10px;
+    background-color: #fff;
+  }
+}
+
+/*
+
+@media screen and (max-width: 1490px) {
+  #community-link {
+    margin-left: -1.5vw;
+  }
+  #resource-link {
+    right: 0;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  #community-link {
+    margin-left: -1.5vw;
+  }
+  #resource-link {
+    right: 0;
+  }
+  .resource, .community {
+  a {
+    font-size: 1.7em;
+    font-weight: 900;
+  }
+}
+}
+
+@media screen and (max-width: 1095px) {
+  .resource, .community {
+  a {
+    font-size: 1.5em;
+    font-weight: 900;
+  }
+}
+}
+
+*/
 
 .announcement {
   grid-area: announcement;
