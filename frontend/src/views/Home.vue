@@ -82,6 +82,7 @@ export default defineComponent({
   }
 }
 
+/* top row */
 .welcomeLeft {
   margin-bottom: 76px;
   grid-area: welcome;
@@ -93,6 +94,42 @@ export default defineComponent({
   font-weight: 500;
 }
 
+.welcomeRight {
+  grid-area: continue;
+  background-image: url('../assets/home-continue-pattern.svg');
+  background-position: top left;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  min-height: 25.5vw;
+  padding-left: 20vw;
+  h3 {
+    font-weight: 900;
+    margin-top: 32px;
+    margin-bottom: 38px;
+  }
+}
+
+.welcomeRight p {
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin-top: 0;
+}
+
+.welcomeRight a:visited {
+  color: var(--var-color-blue-dark);
+}
+
+@media screen and (max-width: 587px) {
+  .overview-link[data-v-fae5bece] {
+    display: inline-block;
+    width: 80%;
+    margin-top:10px;
+    background-color: #fff;
+  }
+}
+
+/* bottom row */
+
 .resource, .community {
   grid-area: resource;
   a {
@@ -100,9 +137,6 @@ export default defineComponent({
     font-weight: 900;
     color: var(--var-color-blue-dark);
   }
-}
-
-.resource img {
 }
 
 #resource-link {
@@ -136,33 +170,8 @@ export default defineComponent({
   position: relative;
   width: 65%;
   margin-left: 35%;
+  margin-bottom: 70px;
 }
-
-.welcomeRight {
-  grid-area: continue;
-  background-image: url('../assets/home-continue-pattern.svg');
-  background-position: top left;
-  background-size: 100% auto;
-  background-repeat: no-repeat;
-  min-height: 25.5vw;
-  padding-left: 20vw;
-  h3 {
-    font-weight: 900;
-    margin-top: 32px;
-    margin-bottom: 38px;
-  }
-}
-
-.welcomeRight p {
-  font-weight: bold;
-  font-size: 1.3rem;
-  margin-top: 0;
-}
-
-.welcomeRight a:visited {
-  color: var(--var-color-blue-dark);
-}
-
 
 @media screen and (max-width: 850px) {
   .resource, .community {
@@ -174,52 +183,6 @@ export default defineComponent({
     margin-top: 20px;
   }
 }
-
-@media screen and (max-width: 587px) {
-  .overview-link[data-v-fae5bece] {
-    display: inline-block;
-    width: 80%;
-    margin-top:10px;
-    background-color: #fff;
-  }
-}
-
-/*
-
-@media screen and (max-width: 1490px) {
-  #community-link {
-    margin-left: -1.5vw;
-  }
-  #resource-link {
-    right: 0;
-  }
-}
-
-@media screen and (max-width: 1250px) {
-  #community-link {
-    margin-left: -1.5vw;
-  }
-  #resource-link {
-    right: 0;
-  }
-  .resource, .community {
-  a {
-    font-size: 1.7em;
-    font-weight: 900;
-  }
-}
-}
-
-@media screen and (max-width: 1095px) {
-  .resource, .community {
-  a {
-    font-size: 1.5em;
-    font-weight: 900;
-  }
-}
-}
-
-*/
 
 .announcement {
   grid-area: announcement;
