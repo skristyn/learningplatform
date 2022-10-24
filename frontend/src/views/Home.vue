@@ -1,40 +1,44 @@
 <template>
-<div class="landing-grid">
+  <div class="landing-grid">
     <div class="welcomeLeft">
       <DPageTitle title="Welcome!" />
-      <p>Just adding some test text to see how this will look on the page. A random encouraging phrase will go here.</p>
+      <p>
+        Just adding some test text to see how this will look on the page. A
+        random encouraging phrase will go here.
+      </p>
     </div>
     <div class="welcomeRight">
       <h3>Want to continue where you left off?</h3>
-      <div style="display: inline-block;"><button id="continue-button">1:5 Name of Lesson</button></div>
-      <div class="overview-link"><p>Or, <router-link to="/course-dashboard">go to course overview</router-link></p></div>
+      <div style="display: inline-block">
+        <button id="continue-button">1:5 Name of Lesson</button>
+      </div>
+      <div class="overview-link">
+        <p>
+          Or,
+          <router-link to="/course-dashboard"
+            >go to course overview</router-link
+          >
+        </p>
+      </div>
     </div>
-  <div class="announcement" v-if="user">
-    Announcement: {{ user.announcement }}
-  </div>
+    <div class="announcement" v-if="user">
+      Announcement: {{ user.announcement }}
+    </div>
 
-  <div class="resource">
-    <div class="resource-relative">
-      <img src="../assets/home-left-pattern.svg" />
-      <div id="resource-link"><a href="#">Resource Kit</a></div>
-    </div>
-  </div>
-  <div class="community">
-    <div class="community-relative">
-      <img src="../assets/home-right-pattern.svg" />
-      <div id="community-link"><a href="#">Community</a></div>
-    </div>
-  </div>
-  <!-- TODO: create these buttons when the following links exist -->
-  <!-- <div class="links">
     <div class="resource">
-      <router-link to="/resource-kit">Resource Kit</router-link>
+      <div class="resource-relative">
+        <img src="../assets/home-left-pattern.svg" />
+        <div id="resource-link"><a href="#">Resource Kit</a></div>
+      </div>
     </div>
     <div class="community">
-      <router-link to="/community">Community</router-link>
+      <div class="community-relative">
+        <img src="../assets/home-right-pattern.svg" />
+        <div id="community-link"><a href="#">Community</a></div>
+      </div>
     </div>
-  </div> -->
-</div> <!-- end landing-grid -->
+  </div>
+  <!-- end landing-grid -->
 </template>
 
 <script lang="ts">
@@ -60,7 +64,13 @@ export default defineComponent({
 <style lang="scss" scoped>
 .landing-grid {
   display: grid;
-  grid-template-columns: minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr);
+  grid-template-columns: minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(
+      30px,
+      1fr
+    ) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(
+      30px,
+      1fr
+    ) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr);
   grid-template-rows: auto;
   grid-template-areas:
     "welcome welcome welcome welcome welcome continue continue continue continue continue continue continue"
@@ -96,7 +106,7 @@ export default defineComponent({
 
 .welcomeRight {
   grid-area: continue;
-  background-image: url('../assets/home-continue-pattern.svg');
+  background-image: url("../assets/home-continue-pattern.svg");
   background-position: top left;
   background-size: 100% auto;
   background-repeat: no-repeat;
@@ -123,14 +133,15 @@ export default defineComponent({
   .overview-link[data-v-fae5bece] {
     display: inline-block;
     width: 80%;
-    margin-top:10px;
+    margin-top: 10px;
     background-color: #fff;
   }
 }
 
 /* bottom row */
 
-.resource, .community {
+.resource,
+.community {
   grid-area: resource;
   a {
     font-size: 2.1vw;
@@ -174,11 +185,12 @@ export default defineComponent({
 }
 
 @media screen and (max-width: 850px) {
-  .resource, .community {
-  a {
-    font-size: 5.2vw;
+  .resource,
+  .community {
+    a {
+      font-size: 5.2vw;
+    }
   }
-}
   .community-relative {
     margin-top: 20px;
   }
@@ -199,13 +211,13 @@ export default defineComponent({
 #continue-button {
   height: 2.9em;
   border: 7px solid;
-  border-image: url('../assets/pink-stamp-button.svg') 33;
+  border-image: url("../assets/pink-stamp-button.svg") 33;
   border-image-width: 28px;
   background: #fff;
   cursor: pointer;
-  line-height: .15rem;
+  line-height: 0.15rem;
   font-weight: 700;
-  color: #F15882;
+  color: #f15882;
   font-size: 1.3rem;
   margin-right: 25px;
   border-image-outset: 1;
