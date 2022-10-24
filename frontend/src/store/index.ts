@@ -6,7 +6,7 @@ import User from "@/types/User";
 import { getToken, makeRequest } from "@/utils/api";
 import { createStore } from "vuex";
 import SlideImage from "@/types/SlideImage";
-import Message from "@/types/Message";
+import Alert from "@/types/Alert";
 
 type State = {
   authToken: string | null;
@@ -16,7 +16,7 @@ type State = {
   currentLesson: Lesson | null;
   currentSection: Section | null;
   currentImage: SlideImage | null;
-  messages: Message[];
+  alerts: Alert[];
 };
 
 export default createStore({
@@ -28,7 +28,7 @@ export default createStore({
     currentLesson: null,
     currentSection: null,
     currentImage: null,
-    messages: [],
+    alerts: [],
   } as State,
   mutations: {
     setToken(state, token) {
@@ -61,14 +61,14 @@ export default createStore({
       state.currentImage = image;
     },
 
-    addMessage(state, message) {
-      state.messages.push(message);
+    addAlert(state, alert) {
+      state.alerts.push(alert);
     },
 
-    removeMessage(state, messageType) {
-      // set messages state to everything that isn't of the indicated messageType
-      state.messages = state.messages.filter(
-        (msg) => msg.messageType !== messageType
+    removeAlert(state, alertType) {
+      // set alerts state to everything that isn't of the indicated alertType
+      state.alerts = state.alerts.filter(
+        (alert) => alert.alertType !== alertType
       );
     },
   },
@@ -79,12 +79,12 @@ export default createStore({
       if (response.token) {
         context.commit("setToken", response.token);
         localStorage.setItem("token", response.token);
-        context.commit("removeMessage", "login");
+        context.commit("removeAlert", "login");
         router.push({ name: "Home" });
       } else {
-        context.commit("addMessage", {
-          message: "Sorry, could not log in",
-          messageType: "login",
+        context.commit("addAlert", {
+          alert: "Sorry, could not log in",
+          alertType: "login",
         });
         throw new Error("bad login");
       }
