@@ -1,5 +1,4 @@
-// Call makeRequest, pass in the token
-export const makeRequest = <T>(path: string, token: string): Promise<T> => {
+export const getRequest = <T>(path: string, token: string): Promise<T> => {
   const url = "http://localhost:8000/api/v1/" + path;
 
   const headers = new Headers({
@@ -8,6 +7,24 @@ export const makeRequest = <T>(path: string, token: string): Promise<T> => {
 
   return fetch(url, {
     method: "GET",
+    headers: headers,
+  }).then((response) => response.json());
+};
+
+export const postRequest = <T>(
+  path: string,
+  body: Record<string, unknown>,
+  token: string
+): Promise<T> => {
+  const url = "http://localhost:8000/api/v1/" + path;
+
+  const headers = new Headers({
+    Authorization: `Token ${token}`,
+  });
+
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(body),
     headers: headers,
   }).then((response) => response.json());
 };

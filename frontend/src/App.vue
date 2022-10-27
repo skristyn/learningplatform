@@ -9,7 +9,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import { makeRequest } from "./utils/api";
+import { getRequest } from "./utils/api";
 
 export default defineComponent({
   name: "App",
@@ -17,7 +17,7 @@ export default defineComponent({
     const token = localStorage.getItem("token");
 
     if (token) {
-      const result = await makeRequest("/home", token);
+      const result = await getRequest("/home", token);
 
       if (result instanceof Error) {
         console.log("The user token is invalid");

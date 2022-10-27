@@ -5,7 +5,7 @@
       <h3>Tips</h3>
       <div>
         <ul v-if="tips.length" class="tipsList">
-          <li v-for="(tip, index) in tips" :key="index">{{ tip }}</li>
+          <li v-for="(tip, index) in tips" :key="index">{{ tip.body }}</li>
         </ul>
         <p v-else class="callToAction">
           No one has left a tip here yet! Click the "Share a new tip" button
@@ -69,7 +69,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import store from "@/store";
+import { Tip } from "@/types/Tip";
+import { computed, defineComponent, ref } from "vue";
 
 enum TipsView {
   TIPS = "tips",
@@ -82,8 +84,10 @@ export default defineComponent({
   setup() {
     const tip = ref<string>("");
     // TODO fetch stored tips for the lesson
-    const tips = ref<string[]>([]);
+    // const tips = ref<string[]>([]);
     const visible = ref<TipsView>(TipsView.TIPS);
+
+    const tips = computed(() => store.state.currentTips);
 
     const setVisible = (show: TipsView) => {
       visible.value = show;
@@ -92,8 +96,15 @@ export default defineComponent({
     // TODO shareTip should also send the tips[] update to the server
     // TODO decide if we should sanitize input from users?
     const shareTip = () => {
+      console.log("tip shared: ", tip.value);
+
       if (tip.value.trim() !== "") {
-        tips.value.push(tip.value);
+        // Only populate the new tip with the body,
+        // and the Vuex store will handle adding the section and slide id
+        const newTip = { body: tip.value } as Tip;
+
+        tips.value.push(newTip);
+        store.dispatch("updateTips", newTip);
       }
       tip.value = "";
 
