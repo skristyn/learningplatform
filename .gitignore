@@ -36,3 +36,6 @@ pnpm-debug.log*
 *.sln
 *.sw?
 notes.md
+
+# test secrets
+secrets.toml
