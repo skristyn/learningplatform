@@ -9,7 +9,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import { makeRequest } from "./utils/api";
+import { getRequest } from "./utils/api";
 
 export default defineComponent({
   name: "App",
@@ -17,7 +17,7 @@ export default defineComponent({
     const token = localStorage.getItem("token");
 
     if (token) {
-      const result = await makeRequest("/home", token);
+      const result = await getRequest("/home", token);
 
       if (result instanceof Error) {
         console.log("The user token is invalid");
@@ -37,7 +37,8 @@ export default defineComponent({
 /* CSS variables that can be used in other places */
 :root {
   --var-color-almost-black: #2c3e50;
-  --var-color-blue-dark: #3f679c;
+  --var-color-blue-dark: #0f4284;
+  --var-color-blue-mid: #3f679c;
   --var-color-gray: #878787;
   --var-color-gray-lighter: rgb(236, 240, 245);
   --var-color-green: #8ac38c;
@@ -56,7 +57,7 @@ body {
 
 body {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   margin: 0;
   padding: 0;
 }

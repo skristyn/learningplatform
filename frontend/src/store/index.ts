@@ -3,10 +3,11 @@ import Textbook from "@/types/Textbook";
 import Lesson from "@/types/Lesson";
 import Section from "@/types/Section";
 import User from "@/types/User";
-import { getToken, makeRequest } from "@/utils/api";
+import { getToken, getRequest, postRequest } from "@/utils/api";
 import { createStore } from "vuex";
 import SlideImage from "@/types/SlideImage";
-import Message from "@/types/Message";
+import Alert from "@/types/Alert";
+import { Tip, TipResponse } from "@/types/Tip";
 
 type State = {
   authToken: string | null;
@@ -15,8 +16,10 @@ type State = {
   textbook: Textbook | null;
   currentLesson: Lesson | null;
   currentSection: Section | null;
+  currentSlide: string | null;
   currentImage: SlideImage | null;
-  messages: Message[];
+  currentTips: Tip[];
+  alerts: Alert[];
 };
 
 export default createStore({
@@ -27,8 +30,10 @@ export default createStore({
     textbook: null,
     currentLesson: null,
     currentSection: null,
+    currentSlide: null,
     currentImage: null,
-    messages: [],
+    currentTips: [],
+    alerts: [],
   } as State,
   mutations: {
     setToken(state, token) {
@@ -57,18 +62,26 @@ export default createStore({
       state.currentSection = section;
     },
 
+    setCurrentSlide(state, slide) {
+      state.currentSlide = slide;
+    },
+
     setCurrentImage(state, image) {
       state.currentImage = image;
     },
 
-    addMessage(state, message) {
-      state.messages.push(message);
+    setCurrentTips(state, tipResponse) {
+      state.currentTips = tipResponse.items;
     },
 
-    removeMessage(state, messageType) {
-      // set messages state to everything that isn't of the indicated messageType
-      state.messages = state.messages.filter(
-        (msg) => msg.messageType !== messageType
+    addAlert(state, alert) {
+      state.alerts.push(alert);
+    },
+
+    removeAlert(state, alertType) {
+      // set alerts state to everything that isn't of the indicated alertType
+      state.alerts = state.alerts.filter(
+        (alert) => alert.alertType !== alertType
       );
     },
   },
@@ -79,12 +92,12 @@ export default createStore({
       if (response.token) {
         context.commit("setToken", response.token);
         localStorage.setItem("token", response.token);
-        context.commit("removeMessage", "login");
+        context.commit("removeAlert", "login");
         router.push({ name: "Home" });
       } else {
-        context.commit("addMessage", {
-          message: "Sorry, could not log in",
-          messageType: "login",
+        context.commit("addAlert", {
+          alert: "Sorry, could not log in",
+          alertType: "login",
         });
         throw new Error("bad login");
       }
@@ -108,7 +121,7 @@ export default createStore({
     // TODO add loading and error handling
     async getUserData(context) {
       if (context.state.authToken) {
-        const result = await makeRequest<User>("home", context.state.authToken);
+        const result = await getRequest<User>("home", context.state.authToken);
         context.commit("setUser", result);
       }
     },
@@ -116,7 +129,7 @@ export default createStore({
     // TODO once there are other courses/textbooks, this should become more generic in order to get any book
     async getDigitalStewardTextbook(context) {
       if (context.state.authToken) {
-        const result = await makeRequest<Textbook>(
+        const result = await getRequest<Textbook>(
           "textbooks/4/",
           context.state.authToken
         );
@@ -126,7 +139,7 @@ export default createStore({
 
     async getCurrentLesson(context, id) {
       if (context.state.authToken) {
-        const result = await makeRequest<Lesson>(
+        const result = await getRequest<Lesson>(
           `lessons/${id}/`,
           context.state.authToken
         );
@@ -136,7 +149,7 @@ export default createStore({
 
     async getCurrentSection(context, id) {
       if (context.state.authToken) {
-        const result = await makeRequest<Section>(
+        const result = await getRequest<Section>(
           `sections/${id}/`,
           context.state.authToken
         );
@@ -146,13 +159,40 @@ export default createStore({
 
     async getCurrentImage(context, id) {
       if (context.state.authToken) {
-        const result = await makeRequest<SlideImage>(
+        const result = await getRequest<SlideImage>(
           `images/${id}/`,
           context.state.authToken
         );
         context.commit("setCurrentImage", result);
       }
     },
+
+    async getCurrentTips(context, id) {
+      if (context.state.authToken) {
+        const result = await getRequest<TipResponse>(
+          `tips/?slide_id=${id}`,
+          context.state.authToken
+        );
+        context.commit("setCurrentTips", result);
+        context.commit("setCurrentSlide", id);
+      }
+    },
+
+    // TODO add way to handle errors from the server
+    async updateTips(context, body) {
+      if (context.state.authToken) {
+        await postRequest<Record<string, unknown>>(
+          `tips/`,
+          {
+            ...body,
+            slide_id: context.state.currentSlide,
+            section: context.state.currentSection?.id,
+          },
+          context.state.authToken
+        );
+      }
+    },
   },
+
   modules: {},
 });
