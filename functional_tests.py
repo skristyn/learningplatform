@@ -1,17 +1,23 @@
+import tomli
 import json
 import requests
+
+# load username and password for test
+with open('secrets.toml', 'rb') as f:
+    secrets = tomli.load(f)
+
 """
 Here are examples of calls to the api
 """
 if __name__ == "__main__":
-    base_url = "http://localhost:8000/api/v1/"
+    base_url = secrets["test_server"]["base_url"]
     
     ######## EXAMPLE CALL
     # Post username and password to /api/v1/token-auth
 
     body = {
-        "username": "user_one", 
-        "password": "badpassword"
+        "username": secrets["test_user"]["username"], 
+        "password": secrets["test_user"]["password"]
     }
     
     ######## 
@@ -42,13 +48,13 @@ if __name__ == "__main__":
     assert "sections" in json.loads(response.content).keys()
     assert "resources" in json.loads(response.content).keys()
 
-    response = requests.get(base_url + "home/", 
+    response = requests.get(base_url + "home", 
         headers={"Authorization": f"Token {token}"})
 
     home_view = json.loads(response.content)
 
     next_url = home_view["next_section"]["detail_url"]
-    response = requests.get(next_url,
+    response = requests.get(base_url + next_url,
         headers={"Authorization": f"Token {token}"})
     
     section_obj = json.loads(response.content)

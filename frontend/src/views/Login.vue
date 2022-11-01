@@ -13,7 +13,7 @@
             placeholder="Password"
             v-model="password"
           /><br />
-          <p v-if="loginError" class="loginError">{{ loginError.message }}</p>
+          <p v-if="loginError" class="loginError">{{ loginError.alert }}</p>
           <button>Sign In</button>
         </form>
       </div>
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import Message from "@/types/Message";
+import Alert from "@/types/Alert";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -45,8 +45,8 @@ export default defineComponent({
   },
   computed: {
     loginError() {
-      return this.$store.state.messages.find(
-        (msg: Message) => msg.messageType === "login"
+      return this.$store.state.alerts.find(
+        (alert: Alert) => alert.alertType === "login"
       );
     },
   },

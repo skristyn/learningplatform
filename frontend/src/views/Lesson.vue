@@ -38,8 +38,9 @@ export default defineComponent({
 
     // whenever currentSlide changes, fetch the image for the slide
     // TODO verify that slides always have an image
-    watch(currentSlide, (newValue) => {
-      store.dispatch("getCurrentImage", newValue?.value.image);
+    watch(currentSlide, (newSlide) => {
+      store.dispatch("getCurrentImage", newSlide?.value.image);
+      store.dispatch("getCurrentTips", newSlide?.id);
     });
 
     // get the image to display from global state
