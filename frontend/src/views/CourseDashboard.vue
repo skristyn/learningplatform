@@ -4,8 +4,6 @@
   <div v-else>
     <DPageHeader :title="textbook.title" />
 
-    <DProgressBar title="Your Progress" :percentComplete="percentComplete" />
-
     <div class="nextUpContainer">
       <DButton
         size="small"
@@ -19,6 +17,8 @@
         }"
       />
     </div>
+
+    <DProgressBar title="Your Progress" :percentComplete="percentComplete" />
 
     <!-- when DTabs emits the onSelectedTab event, take its tabTitle and set selectedTab state to this string value -->
     <DTabs
@@ -127,6 +127,7 @@ export default defineComponent({
 .nextUpContainer {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 124px;
+  margin-bottom: 40px;
+  margin-top: 100px;
 }
 </style>

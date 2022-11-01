@@ -39,6 +39,7 @@ export default defineComponent({
   --var-color-almost-black: #2c3e50;
   --var-color-blue-dark: #0f4284;
   --var-color-blue-mid: #3f679c;
+  --var-color-blue-lightest: #F4F7F9;
   --var-color-gray: #878787;
   --var-color-gray-lighter: rgb(236, 240, 245);
   --var-color-green: #8ac38c;
