@@ -31,7 +31,9 @@
       <span v-html="slide?.value.body"></span>
     </div>
   </div>
-  <button v-if="isLastSlide" @click="markComplete">Mark lesson complete</button>
+  <button v-if="isLastSlide" @click="markComplete" class="markCompleteButton">
+    Mark lesson complete
+  </button>
 </template>
 
 <script lang="ts">
@@ -104,6 +106,11 @@ export default defineComponent({
 
 .imagerightblock img {
   margin-left: 30px;
+}
+
+.markCompleteButton {
+  width: fit-content;
+  margin: auto;
 }
 
 /* styles to fade in the slides */
