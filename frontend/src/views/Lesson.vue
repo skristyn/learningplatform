@@ -1,7 +1,11 @@
 <template>
   <p v-if="!currentSlide">Loading...</p>
   <div class="lesson" v-else>
-    <LessonSlide :slide="currentSlide" :image="currentImage" />
+    <LessonSlide
+      :slide="currentSlide"
+      :slideIndex="currentIndex"
+      :image="currentImage"
+    />
     <LessonFooter
       :currentIndex="currentIndex"
       @onNavigate="currentIndex = $event"

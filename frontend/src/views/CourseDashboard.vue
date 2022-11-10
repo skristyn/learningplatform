@@ -4,7 +4,7 @@
   <div v-else>
     <DPageHeader :title="textbook.title" />
 
-    <div class="nextUpContainer">
+    <div v-if="nextUp.lesson" class="nextUpContainer">
       <DButton
         size="small"
         :text="`Continue Lesson ${nextUp.lesson?.lesson_num}.${nextUp.section?.section_num}: ${nextUp.section?.title}`"

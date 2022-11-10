@@ -51,7 +51,7 @@ export default defineComponent({
     DPageTitle,
   },
   async mounted() {
-    this.$store.dispatch("getUserData");
+    this.$store.dispatch("getUserProgress");
   },
   computed: {
     user() {
@@ -64,13 +64,13 @@ export default defineComponent({
 <style lang="scss" scoped>
 .landing-grid {
   display: grid;
-  grid-template-columns: minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(
+  grid-template-columns:
+    minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr)
+    minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(
       30px,
       1fr
-    ) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(
-      30px,
-      1fr
-    ) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr);
+    )
+    minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr);
   grid-template-rows: auto;
   grid-template-areas:
     "welcome welcome welcome welcome welcome continue continue continue continue continue continue continue"

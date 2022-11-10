@@ -17,7 +17,7 @@ export default defineComponent({
     const token = localStorage.getItem("token");
 
     if (token) {
-      const result = await getRequest("/home", token);
+      const result = await getRequest("/whoami", token);
 
       if (result instanceof Error) {
         console.log("The user token is invalid");
@@ -26,6 +26,7 @@ export default defineComponent({
 
       // otherwise the token is valid
       this.$store.dispatch("logInWithToken", token);
+      this.$store.dispatch("getUser");
     }
   },
 });

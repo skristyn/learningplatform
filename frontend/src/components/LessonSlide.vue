@@ -31,9 +31,11 @@
       <span v-html="slide?.value.body"></span>
     </div>
   </div>
+  <button v-if="isLastSlide" @click="markComplete">Mark lesson complete</button>
 </template>
 
 <script lang="ts">
+import store from "@/store";
 import { Slide } from "@/types/Section";
 import SlideImage from "@/types/SlideImage";
 import { computed, defineComponent, PropType } from "vue";
@@ -44,6 +46,9 @@ export default defineComponent({
     slide: {
       type: Object as PropType<Slide>,
       required: true,
+    },
+    slideIndex: {
+      type: Number,
     },
     image: {
       type: Object as PropType<SlideImage | null>,
@@ -56,7 +61,18 @@ export default defineComponent({
       () => "http://localhost:8000" + props.image?.meta.download_url
     );
 
-    return { image_src };
+    const isLastSlide = computed(
+      () =>
+        props.slideIndex ===
+        (store.state.currentSection?.slides.length || 0) - 1
+    );
+
+    const markComplete = () => {
+      // the button says "lesson", but this action is done on sections (see store/index.ts)
+      store.dispatch("markSectionComplete");
+    };
+
+    return { image_src, isLastSlide, markComplete };
   },
 });
 </script>
