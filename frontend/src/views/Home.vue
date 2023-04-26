@@ -51,7 +51,7 @@ export default defineComponent({
     DPageTitle,
   },
   async mounted() {
-    this.$store.dispatch("getUserData");
+    this.$store.dispatch("getUserProgress");
   },
   computed: {
     user() {
@@ -64,13 +64,13 @@ export default defineComponent({
 <style lang="scss" scoped>
 .landing-grid {
   display: grid;
-  grid-template-columns: minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(
+  grid-template-columns:
+    minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr)
+    minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(
       30px,
       1fr
-    ) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr) minmax(
-      30px,
-      1fr
-    ) minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr);
+    )
+    minmax(30px, 1fr) minmax(30px, 1fr) minmax(30px, 1fr);
   grid-template-rows: auto;
   grid-template-areas:
     "welcome welcome welcome welcome welcome continue continue continue continue continue continue continue"
@@ -117,16 +117,18 @@ export default defineComponent({
     margin-top: 32px;
     margin-bottom: 38px;
   }
+  a:visited {
+    color: var(--var-color-blue-mid);
+  }
+  a:visited {
+    color: var(--var-color-blue-dark);
+  }
 }
 
 .welcomeRight p {
   font-weight: bold;
   font-size: 1.3rem;
   margin-top: 0;
-}
-
-.welcomeRight a:visited {
-  color: var(--var-color-blue-dark);
 }
 
 @media screen and (max-width: 587px) {
@@ -153,7 +155,7 @@ export default defineComponent({
 #resource-link {
   position: absolute;
   bottom: 0;
-  right: 1vw;
+  right: 0;
 }
 
 #community-link {

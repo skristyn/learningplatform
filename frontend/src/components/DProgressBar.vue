@@ -37,7 +37,12 @@ export default defineComponent({
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+  justify-content: center;
   margin-bottom: 44px;
+  margin-top: 50px;
+  background-color: var(--var-color-blue-lightest);
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 
 .title {
@@ -52,6 +57,7 @@ export default defineComponent({
   overflow: hidden;
   height: 38px;
   width: 100%;
+  max-width: 1000px;
 }
 
 .progressFill {

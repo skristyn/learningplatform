@@ -3,6 +3,7 @@ import Textbook from "@/types/Textbook";
 import Lesson from "@/types/Lesson";
 import Section from "@/types/Section";
 import User from "@/types/User";
+import UserProgress from "@/types/UserProgress";
 import { getToken, getRequest, postRequest } from "@/utils/api";
 import { createStore } from "vuex";
 import SlideImage from "@/types/SlideImage";
@@ -13,6 +14,7 @@ type State = {
   authToken: string | null;
   isAuthenticated: boolean;
   user: User | null;
+  userProgress: UserProgress | null;
   textbook: Textbook | null;
   currentLesson: Lesson | null;
   currentSection: Section | null;
@@ -27,6 +29,7 @@ export default createStore({
     authToken: null,
     isAuthenticated: false,
     user: null,
+    userProgress: null,
     textbook: null,
     currentLesson: null,
     currentSection: null,
@@ -48,6 +51,10 @@ export default createStore({
 
     setUser(state, user) {
       state.user = user;
+    },
+
+    setUserProgress(state, userProgress) {
+      state.userProgress = userProgress;
     },
 
     setTextbook(state, textbook) {
@@ -119,10 +126,24 @@ export default createStore({
     },
 
     // TODO add loading and error handling
-    async getUserData(context) {
+    async getUser(context) {
       if (context.state.authToken) {
-        const result = await getRequest<User>("home", context.state.authToken);
+        const result = await getRequest<User>(
+          "whoami",
+          context.state.authToken
+        );
         context.commit("setUser", result);
+      }
+    },
+
+    // TODO add loading and error handling
+    async getUserProgress(context) {
+      if (context.state.authToken) {
+        const result = await getRequest<UserProgress>(
+          "home",
+          context.state.authToken
+        );
+        context.commit("setUserProgress", result);
       }
     },
 
@@ -187,6 +208,20 @@ export default createStore({
             ...body,
             slide_id: context.state.currentSlide,
             section: context.state.currentSection?.id,
+          },
+          context.state.authToken
+        );
+      }
+    },
+
+    // TODO error handling
+    async markSectionComplete(context) {
+      if (context.state.authToken) {
+        await postRequest<Record<string, unknown>>(
+          `grades/`,
+          {
+            section: context.state.currentSection?.id,
+            student: context.state.user?.id,
           },
           context.state.authToken
         );
