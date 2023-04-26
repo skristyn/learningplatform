@@ -11,7 +11,7 @@ Here are examples of calls to the api
 """
 if __name__ == "__main__":
     base_url = secrets["test_server"]["base_url"]
-    
+
     ######## EXAMPLE CALL
     # Post username and password to /api/v1/token-auth
 

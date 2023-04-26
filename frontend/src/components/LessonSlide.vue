@@ -53,7 +53,7 @@ export default defineComponent({
   setup(props) {
     const image_src = computed(
       // TODO update this URL when the files are hosted elsewhere
-      () => "http://localhost:8000" + props.image?.meta.download_url
+      () => "http://ugly.photography" + props.image?.meta.download_url
     );
 
     return { image_src };

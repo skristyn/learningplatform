@@ -1,5 +1,5 @@
 export const getRequest = <T>(path: string, token: string): Promise<T> => {
-  const url = "http://localhost:8000/api/v1/" + path;
+  const url = "http://ugly.photography/api/v1/" + path;
 
   const headers = new Headers({
     Authorization: `Token ${token}`,
@@ -16,7 +16,7 @@ export const postRequest = <T>(
   body: Record<string, unknown>,
   token: string
 ): Promise<T> => {
-  const url = "http://localhost:8000/api/v1/" + path;
+  const url = "http://ugly.photography/api/v1/" + path;
 
   const headers = new Headers({
     Authorization: `Token ${token}`,
@@ -34,8 +34,7 @@ export const getToken = (
   password: string
 ): Promise<{ token: string }> => {
   // define path to get the token
-  const url = "http://localhost:8000/api/v1/token-auth";
-
+  const url = "http://ugly.photography/api/v1/token-auth";
   const formData = new FormData();
   formData.append("username", username);
   formData.append("password", password);
