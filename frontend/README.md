@@ -45,6 +45,16 @@ npm run serve
 npm run build
 ```
 
+Built files are placed in `./dist/production`.
+
+### Compiles for development
+
+```
+npm run build-dev
+```
+
+Built files are placed in `./dist/development`.
+
 ### Lints and fixes files
 
 ```
@@ -54,3 +64,10 @@ npm run lint
 ### Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+Vue configuration files for production and development are available in
+`.env` and `.env.development`, respectively. The following environment
+variables are recognized:
+
+* `VUE_APP_API_URL` is the URL of the API server root endpoint. For example,
+    in development mode this value is set to `VUE_APP_API_URL=http://localhost:8000`.

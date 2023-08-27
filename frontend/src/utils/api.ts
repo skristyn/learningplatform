@@ -1,5 +1,5 @@
 export const getRequest = <T>(path: string, token: string): Promise<T> => {
-  const url = "http://ugly.photography/api/v1/" + path;
+  const url = process.env.VUE_APP_API_URL + "/api/v1/" + path;
 
   const headers = new Headers({
     Authorization: `Token ${token}`,
@@ -16,7 +16,7 @@ export const postRequest = <T>(
   body: Record<string, unknown>,
   token: string
 ): Promise<T> => {
-  const url = "http://ugly.photography/api/v1/" + path;
+  const url = process.env.VUE_APP_API_URL + "/api/v1/" + path;
 
   const headers = new Headers({
     Authorization: `Token ${token}`,
@@ -34,7 +34,7 @@ export const getToken = (
   password: string
 ): Promise<{ token: string }> => {
   // define path to get the token
-  const url = "http://ugly.photography/api/v1/token-auth";
+  const url = process.env.VUE_APP_API_URL + "/api/v1/token-auth";
   const formData = new FormData();
   formData.append("username", username);
   formData.append("password", password);

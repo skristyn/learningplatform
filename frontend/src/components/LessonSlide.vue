@@ -60,7 +60,7 @@ export default defineComponent({
   setup(props) {
     const image_src = computed(
       // TODO update this URL when the files are hosted elsewhere
-      () => "http://ugly.photography" + props.image?.meta.download_url
+      () => process.env.VUE_APP_API_URL + props.image?.meta.download_url
     );
 
     const isLastSlide = computed(
