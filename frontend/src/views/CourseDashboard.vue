@@ -4,6 +4,10 @@
   <div v-else>
     <DPageHeader :title="textbook.title" />
 
+    <div class="announcement" v-if="userProgress && userProgress.announcement">
+      Announcement: {{ userProgress.announcement }}
+    </div>
+
     <div v-if="nextUp.lesson" class="nextUpContainer">
       <DButton
         size="small"
@@ -55,6 +59,11 @@ export default defineComponent({
     LessonList,
     DProgressBar,
     DButton,
+  },
+  computed: {
+    userProgress() {
+      return this.$store.state.userProgress;
+    },
   },
   setup() {
     const tabs = [
@@ -129,5 +138,17 @@ export default defineComponent({
   justify-content: flex-end;
   margin-bottom: 40px;
   margin-top: 100px;
+}
+
+.announcement {
+  grid-area: announcement;
+  background-color: var(--var-color-gray-lighter);
+  margin-left: -5vw;
+  margin-right: -5vw;
+  padding: 26px 40px;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 9vw;
 }
 </style>
