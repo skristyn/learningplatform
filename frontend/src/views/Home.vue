@@ -21,7 +21,7 @@
         </p>
       </div>
     </div>
-    <div class="announcement" v-if="user">
+    <div class="announcement" v-if="user.announcement">
       Announcement: {{ user.announcement }}
     </div>
 
