@@ -21,7 +21,7 @@
         </p>
       </div>
     </div>
-    <div class="announcement" v-if="userProgress.announcement">
+    <div class="announcement" v-if="userProgress && userProgress.announcement">
       Announcement: {{ userProgress.announcement }}
     </div>
 
