@@ -21,8 +21,8 @@
         </p>
       </div>
     </div>
-    <div class="announcement" v-if="user">
-      Announcement: {{ user.announcement }}
+    <div class="announcement" v-if="userProgress && userProgress.announcement">
+      Announcement: {{ userProgress.announcement }}
     </div>
 
     <div class="resource">
@@ -56,6 +56,9 @@ export default defineComponent({
   computed: {
     user() {
       return this.$store.state.user;
+    },
+    userProgress() {
+      return this.$store.state.userProgress;
     },
   },
 });
