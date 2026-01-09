@@ -102,6 +102,13 @@ class HomeViewSet(BaseAPIViewSet):
         @api_view(["GET"])
         def inner_view(request, *args, **kwargs):
             course = request.user.enrollment.active_course
+
+            # Get announcement regardless of course status
+            try:
+                announcement_text = Announcement.objects.latest("date").text
+            except Announcement.DoesNotExist:
+                announcement_text = "No announcements at this time."
+
             if course is not None:
                 next_section = course.specific.next_section(request.user)
                 next_lesson = next_section.get_parent()
@@ -132,7 +139,7 @@ class HomeViewSet(BaseAPIViewSet):
                                 router, request, Section, next_section.pk
                             ),
                         },
-                        "announcement": Announcement.objects.latest("date").text,
+                        "announcement": announcement_text
                     }
                 )
 
@@ -141,6 +148,8 @@ class HomeViewSet(BaseAPIViewSet):
                     "username": request.user.username,
                     "id": request.user.id,
                 },
+                "announcement": announcement_text,
+                "message": "No active course enrollment found."
             })
 
         return inner_view(request._request)

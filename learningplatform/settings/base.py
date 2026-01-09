@@ -27,8 +27,12 @@ INSTALLED_APPS = [
     "home",
     "search",
     "materials",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "corsheaders",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
+    "wagtail.contrib.routable_page",
     "wagtail.embeds",
     "wagtail.sites",
     "wagtail.users",
@@ -37,13 +41,10 @@ INSTALLED_APPS = [
     "wagtail.images",
     "wagtail.search",
     "wagtail.admin",
-    "wagtail.core",
-    "modelcluster",
-    "bootstrapform",
+    "wagtail.api.v2",
+    "wagtail.locales",
+    "wagtail",
     "taggit",
-    "rest_framework",
-    "rest_framework.authtoken",
-    "corsheaders",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -186,3 +187,4 @@ WAGTAIL_FRONTEND_LOGIN_URL = "/accounts/login/"
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = "http://example.com"
+WAGTAILADMIN_BASE_URL = "http://example.com"

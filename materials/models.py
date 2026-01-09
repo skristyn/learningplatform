@@ -5,16 +5,17 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.utils import timezone
 from rest_framework.serializers import Field
-from wagtail.core.models import Page
+from wagtail.models import Page
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core import blocks
+from wagtail.fields import RichTextField, StreamField
+from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.api import APIField
 from wagtail.api.v2.utils import get_object_detail_url, get_base_url
-from wagtail.core.query import PageQuerySet
+from wagtail.query import PageQuerySet
 from home.models import HomePage
+
 
 """
 The first several block classes represent slide types.
@@ -136,7 +137,7 @@ def represent(slide, tip_url):
 # The endpoint we want is .../tips/?slide=<slide_id>
 
 class SlidesSerializer(Field):
-    def to_representation(self, slides, *args, **kwargs):
+    def to_representation(self, slides):
         base_url = get_base_url(self.context["request"])
         tip_listing_endpoint = self.context["router"].get_model_listing_urlpath(Tip)
         tip_listing_full_url = base_url + tip_listing_endpoint
@@ -222,13 +223,14 @@ class Section(RoutablePageMixin, Page):
             ("headlineleftimage", HeadlineLeftImageBlock()),
             ("imagetopblock", ImageTopBlock()),
             ("imagerightblock", ImageRightBlock()),
-        ]
+        ],
+        use_json_field=True
     )
 
     content_panels = Page.content_panels + [
         FieldPanel("description"),
         FieldPanel("time_to_complete"),
-        StreamFieldPanel("slides"),
+        FieldPanel("slides"),
     ]
 
     api_fields = [
@@ -457,16 +459,18 @@ class LessonsSerializer(Field):
     Serializes the lesson page model like the SectionsSerializer.
     """
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.sections_serializer = SectionsSerializer()
+
     def to_representation(self, lessons: List[Lesson]) -> List[dict]:
         """
-        The current context must be added to the sections serializer instance context.
-        There is probably a better way to do this, but for now this will suffice.
+        Serializes lessons with their nested sections.
         """
         request = self.context["request"]
 
-        # !
-        sections_serializer = SectionsSerializer()
-        sections_serializer._context = self.context
+        # Pass context to nested serializer
+        self.sections_serializer._context = self.context
 
         return [
             {
@@ -478,7 +482,7 @@ class LessonsSerializer(Field):
                 "detail_url": get_object_detail_url(
                     self.context["router"], request, Lesson, lesson.pk
                 ),
-                "sections": sections_serializer.to_representation(
+                "sections": self.sections_serializer.to_representation(
                     lesson.specific.sections
                 ),
             }

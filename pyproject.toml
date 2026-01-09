@@ -1,28 +1,11 @@
-[tool.poetry]
+[project]
 name = "learningplatform"
 version = "0.1.0"
-description = "Learning management system for EII training."
-authors = ["mvickers <vickers.mike@gmail.com>"]
-
-[tool.poetry.dependencies]
-python = "^3.8"
-wagtail = "^2.15.1"
-pinax-messages = "^3.0.0"
-pinax-templates = "^2.0.6"
-
-[tool.poetry.dev-dependencies]
-mypy = "^0.910"
-pylint = "^2.12.2"
-black = "^21.12b0"
-pytest-django = "^4.5.2"
-django-stubs = "^1.9.0"
-types-Pillow = "^8.3.11"
-djangorestframework-stubs = "^1.4.0"
-coverage = "^6.2"
-PyYAML = "^6.0"
-uritemplate = "^4.1.1"
-drf-spectacular = {extras = ["sidecar"], version = "^0.21.1"}
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "django>=6.0.1",
+    "django-cors-headers>=4.9.0",
+    "wagtail>=7.2.1",
+]

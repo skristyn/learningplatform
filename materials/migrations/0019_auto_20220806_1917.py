@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 import django.utils.timezone
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.images.blocks
 
 
@@ -23,6 +23,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='section',
             name='slides',
-            field=wagtail.core.fields.StreamField([('resource', wagtail.core.blocks.StructBlock([('resource', wagtail.images.blocks.ImageChooserBlock())])), ('baseblock', wagtail.core.blocks.StructBlock([('heading', wagtail.core.blocks.CharBlock()), ('body', wagtail.core.blocks.RichTextBlock())])), ('questionblock', wagtail.core.blocks.StructBlock([('heading', wagtail.core.blocks.CharBlock()), ('body', wagtail.core.blocks.RichTextBlock()), ('question', wagtail.core.blocks.TextBlock()), ('choice_1', wagtail.core.blocks.TextBlock()), ('choice_2', wagtail.core.blocks.TextBlock()), ('choice_3', wagtail.core.blocks.TextBlock()), ('choice_4', wagtail.core.blocks.TextBlock()), ('correct', wagtail.core.blocks.ChoiceBlock(choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')]))])), ('headlineleftimage', wagtail.core.blocks.StructBlock([('heading', wagtail.core.blocks.CharBlock()), ('body', wagtail.core.blocks.RichTextBlock()), ('image', wagtail.images.blocks.ImageChooserBlock(required=True))])), ('imagetopblock', wagtail.core.blocks.StructBlock([('heading', wagtail.core.blocks.CharBlock()), ('body', wagtail.core.blocks.RichTextBlock()), ('image', wagtail.images.blocks.ImageChooserBlock(required=True))])), ('imagerightblock', wagtail.core.blocks.StructBlock([('heading', wagtail.core.blocks.CharBlock()), ('body', wagtail.core.blocks.RichTextBlock()), ('image', wagtail.images.blocks.ImageChooserBlock(required=True))]))]),
+            field=wagtail.fields.StreamField([('resource', wagtail.blocks.StructBlock([('resource', wagtail.images.blocks.ImageChooserBlock())])), ('baseblock', wagtail.blocks.StructBlock([('heading', wagtail.blocks.CharBlock()), ('body', wagtail.blocks.RichTextBlock())])), ('questionblock', wagtail.blocks.StructBlock([('heading', wagtail.blocks.CharBlock()), ('body', wagtail.blocks.RichTextBlock()), ('question', wagtail.blocks.TextBlock()), ('choice_1', wagtail.blocks.TextBlock()), ('choice_2', wagtail.blocks.TextBlock()), ('choice_3', wagtail.blocks.TextBlock()), ('choice_4', wagtail.blocks.TextBlock()), ('correct', wagtail.blocks.ChoiceBlock(choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')]))])), ('headlineleftimage', wagtail.blocks.StructBlock([('heading', wagtail.blocks.CharBlock()), ('body', wagtail.blocks.RichTextBlock()), ('image', wagtail.images.blocks.ImageChooserBlock(required=True))])), ('imagetopblock', wagtail.blocks.StructBlock([('heading', wagtail.blocks.CharBlock()), ('body', wagtail.blocks.RichTextBlock()), ('image', wagtail.images.blocks.ImageChooserBlock(required=True))])), ('imagerightblock', wagtail.blocks.StructBlock([('heading', wagtail.blocks.CharBlock()), ('body', wagtail.blocks.RichTextBlock()), ('image', wagtail.images.blocks.ImageChooserBlock(required=True))]))]),
         ),
     ]

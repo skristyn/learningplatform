@@ -1,7 +1,7 @@
 from django.db import models
 from django.shortcuts import reverse, redirect
-from wagtail.core.models import Page
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.models import Page
+from wagtail.admin.panels import FieldPanel
 
 
 class Announcement(models.Model):
@@ -29,8 +29,17 @@ class HomePage(Page):
         context: dict = super().get_context(request)
         course = request.user.enrollment.active_course
         context["course"] = course
-        context["announcement"] = Announcement.objects.latest("date")
-        context["next_section"] = course.specific.next_section(request.user)
+
+        try:
+            context["announcement"] = Announcement.objects.latest("date").text
+        except Announcement.DoesNotExist:
+            context["announcement"] = "No announcements at this time."
+
+        if course is not None:
+            context["next_section"] = course.specific.next_section(request.user)
+        else:
+            context["next_section"] = None
+
         return context
 
     def serve(self, request, *args, **kwargs):
