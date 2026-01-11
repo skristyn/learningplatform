@@ -6,7 +6,6 @@
     v-if="slide.type === 'headlineleftimage'"
     class="fadeIn headlineleftimage"
   >
-    <img class="slideImage" :src="image_src" :alt="image?.title" />
     <div>
       <h2 v-if="slide?.value.heading">
         {{ slide.value.heading }}
